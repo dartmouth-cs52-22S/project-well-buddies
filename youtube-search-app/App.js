@@ -6,7 +6,7 @@ import { LogBox } from "react-native";
 LogBox.ignoreAllLogs();
 
 const App = (props) => {
-  <Text>Hello world!</Text>
+  <Text>hello world!</Text>
   return <MainTabBar />;
 };
 
