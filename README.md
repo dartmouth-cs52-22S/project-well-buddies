@@ -15,10 +15,16 @@ TODO: how to get the project dev environment up and running, npm install etc
 
 ## Deployment
 
-TODO: how to deploy the project
+TBD
 
 ## Authors
 
-TODO: list of authors
+Eunice You-Chi Liu
+Annie Qiu
+Elizabeth Frey
+Alina Chadwick
+Rheanna Toney
+Zhiyan Zhong
 
 ## Acknowledgments
+Thank you for our group's TAs, Catherine and Samiha, and Tim's help.
