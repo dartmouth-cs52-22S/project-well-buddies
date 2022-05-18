@@ -19,12 +19,12 @@ TBD
 
 ## Authors
 
-Eunice You-Chi Liu
-Annie Qiu
-Elizabeth Frey
-Alina Chadwick
-Rheanna Toney
-Zhiyan Zhong
+Eunice You-Chi Liu,
+Annie Qiu,
+Elizabeth Frey,
+Alina Chadwick,
+Rheanna Toney,
+Zhiyan Zhong,
 
 ## Acknowledgments
 Thank you for our group's TAs, Catherine and Samiha, and Tim's help.
