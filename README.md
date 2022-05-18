@@ -24,7 +24,7 @@ Eunice You-Chi Liu,
 Annie Qiu,
 Elizabeth Frey,
 Alina Chadwick,
-Rheanna Toney,
+Rheanna Nesa Toney,
 Zhiyan Zhong,
 
 ## Acknowledgments
