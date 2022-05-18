@@ -25,7 +25,7 @@ Annie Qiu,
 Elizabeth Frey,
 Alina Chadwick,
 Rheanna Nesa Toney,
-Zhiyan Zhong,
+Zhiyan Zhong
 
 ## Acknowledgments
 Thank you for our group's TAs, Catherine and Samiha, and Tim's help.
