@@ -4,7 +4,7 @@
 [*how?*](https://help.github.com/articles/about-readmes/#relative-links-and-image-paths-in-readme-files)
 
 TODO: short project description, some sample screenshots or mockups
-
+Link to mockups: https://www.figma.com/files/project/56608073/WellBuddies?fuid=1101923148892677410
 ## Architecture
 
 TODO:  descriptions of code organization and tools and libraries used
@@ -12,7 +12,7 @@ TODO:  descriptions of code organization and tools and libraries used
 ## Setup
 
 TODO: how to get the project dev environment up and running, npm install etc
-We used some of the code from the React Native short assignment as part of this set up.
+We used some of the code from the React Native short assignment as part of this set up. 
 
 ## Deployment
 
