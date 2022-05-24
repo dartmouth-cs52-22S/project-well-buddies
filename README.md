@@ -1,8 +1,8 @@
 # Well-Buddies
 
-Link to mockups: https://www.figma.com/files/project/56608073/WellBuddies?fuid=1101923148892677410 <br>
-Link to frontend: exp://exp.host/@wellbuddies123/wellbuddies?release-channel=default <br>
-To access the frontend url please make sure you are logged into wellbuddies' accounts: <br>
+- Link to mockups: https://www.figma.com/files/project/56608073/WellBuddies?fuid=1101923148892677410 <br>
+- Link to frontend: exp://exp.host/@wellbuddies123/wellbuddies?release-channel=default <br>
+- To access the frontend url please make sure you are logged into wellbuddies' accounts: <br>
 **username**: wellbuddies123 <br>
 **password**: @wellbuddies
 
