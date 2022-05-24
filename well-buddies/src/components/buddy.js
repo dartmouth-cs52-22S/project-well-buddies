@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, componentDidMount } from 'react';
 import { Icon } from 'react-native-elements'
 import {
   StyleSheet,
@@ -14,17 +14,19 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 
 
 export default class Buddy extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-          isEditing: false,
-        };
-      }
-    editMode = () => {
-    this.setState((prevState) => ({
-        isEditing: !prevState.isEditing,
-    }));
-    };
+  constructor(props) {
+      super(props);
+      this.state = {
+        isEditing: false,
+      };
+    }
+  editMode = () => {
+  this.setState((prevState) => ({
+      isEditing: !prevState.isEditing,
+  }));
+  };
+
+  
 
   render() {
     if (this.state.isEditing === false) {
@@ -42,7 +44,7 @@ export default class Buddy extends Component {
             <View style={styles.header}>
                 <Text style={styles.name}>Your Buddy</Text>       
                 </View>
-            <Image style={{width: 250, height: 250}} source={require('./assets/buddy.png')}/>
+            <Image style={{width: 250, height: 250}} source={require('../assets/buddy.png')}/>
             <View style={styles.body}>
                 <Text style={styles.age}>Age: 10 days</Text>
                 <Text style={styles.birthday}>Birthday: May 10, 2022</Text>
@@ -58,7 +60,7 @@ export default class Buddy extends Component {
             <View style={styles.header}>
                 <Text style={styles.name}>Your Buddy</Text>       
                 </View>
-            <Image style={{width: 250, height: 250}} source={require('../image/buddy.png')}/>
+            <Image style={{width: 250, height: 250}} source={require('../assets/buddy.png')}/>
             <View style={styles.body}>
                 <Text style={styles.age}>Age: 10 days</Text>
                 <Text style={styles.birthday}>Birthday: May 10, 2022</Text>
