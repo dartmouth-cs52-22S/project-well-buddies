@@ -1,10 +1,11 @@
 # Well-Buddies
 
-![Team Photo](Insert a Team Photo URL here)
-[*how?*](https://help.github.com/articles/about-readmes/#relative-links-and-image-paths-in-readme-files)
+- Link to mockups: https://www.figma.com/files/project/56608073/WellBuddies?fuid=1101923148892677410 <br>
+- Link to frontend: exp://exp.host/@wellbuddies123/wellbuddies?release-channel=default <br>
+- To access the frontend url please make sure you are logged into wellbuddies' accounts: <br>
+**username**: wellbuddies123 <br>
+**password**: @wellbuddies
 
-TODO: short project description, some sample screenshots or mockups
-Link to mockups: https://www.figma.com/files/project/56608073/WellBuddies?fuid=1101923148892677410
 ## Architecture
 
 TODO:  descriptions of code organization and tools and libraries used
