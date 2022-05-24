@@ -16,7 +16,7 @@ class UserProfile extends Component {
               </View>
 
               <View style={styles.userImageBox}>
-                <Image source={require('../images/user_profile.jpeg')} style={styles.profileImage}></Image>
+                <Image source={require('../assets/user_profile.jpeg')} style={styles.profileImage}></Image>
               </View>
 
             <Ionicons name={'edit'} size={26} color='#FFFF' style={styles.editIcon} />
@@ -72,7 +72,7 @@ class UserProfile extends Component {
                     <View style={styles.buddyContainer}>
                         <Text style={styles.buddyImageText}>Buddy Name</Text>
                         <View style={styles.buddyImageContainer}>
-                        <Image source={require('../images/cat_head.png')} style={styles.buddyImage}></Image>
+                        <Image source={require('../assets/cat_head.png')} style={styles.buddyImage}></Image>
                         </View>
                     </View>
 

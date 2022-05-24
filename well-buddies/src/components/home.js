@@ -5,7 +5,7 @@ class Home extends Component {
     render() {
       return (
         <View style={styles.container}>
-            <ImageBackground source={require('../images/background.jpg')} resizeMode="cover" style={styles.image}>
+            <ImageBackground source={require('../assets/background.jpg')} resizeMode="cover" style={styles.image}>
             <Text style={styles.welcome}>
               Welcome!
             </Text >
