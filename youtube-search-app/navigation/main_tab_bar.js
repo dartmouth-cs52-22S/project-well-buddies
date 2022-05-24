@@ -6,6 +6,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import About from '../components/about';
 import Ionicons from 'react-native-vector-icons/FontAwesome';
 import SearchTab from './search_tab';
+import Calendar from '../components/calendar';
 
 const Tab = createBottomTabNavigator();
 
@@ -26,6 +27,10 @@ const MainTabBar = () => {
             else if (route.name === 'Search') {
               iconName = 'search';
             }
+            // Adding the search icon
+            else if (route.name === 'Calendar') {
+            iconName = 'calendar';
+            }
         
             // Return the respective icon
             return <Ionicons name={iconName} size={26} color={focused ? '#58AADA' : 'grey'} />;
@@ -34,6 +39,7 @@ const MainTabBar = () => {
       >
         <Tab.Screen name="Search" component={SearchTab} />
         <Tab.Screen name="About" component={About} />
+        <Tab.Screen name="Calendar" component={Calendar} />
       </Tab.Navigator>
     </NavigationContainer>
   );
