@@ -3,7 +3,7 @@ import { StyleSheet, View, Text, Image, ImageBackground, TouchableOpacity } from
 import { Button } from 'react-native-elements';
 import Ionicons from 'react-native-vector-icons/FontAwesome';
 
-class UserProfile extends Component {
+class Profile extends Component {
   render() {
     return (
     <View style={styles.pageContainer}>       
@@ -308,4 +308,4 @@ goalTextBox: {
 },
 });
 
-export default UserProfile;
+export default Profile;
