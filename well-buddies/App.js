@@ -1,5 +1,5 @@
 import React from 'react';
-import MainTabBar from './navigation/main_tab_bar';
+import MainTabBar from './src/navigation/main_tab_bar';
 import { LogBox } from "react-native";
 
 // disable really annoying in app warnings

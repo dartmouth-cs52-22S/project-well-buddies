@@ -1,7 +1,25 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, Image } from 'react-native';
+import apiTest from '../services/well-buddies-api';
 
 class Home extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      message: "loading..."
+    };
+  }
+
+  async componentDidMount() {
+    try {
+      const res = await apiTest();
+      this.setState({message: res.message})
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -9,6 +27,9 @@ class Home extends Component {
           style={styles.image}
           source={{ uri: 'https://facebook.github.io/react/logo-og.png' }}
         />
+        <Text>
+          {this.state.message}
+        </Text>
         <Text>
           This app was written in React-Native.
         </Text>
