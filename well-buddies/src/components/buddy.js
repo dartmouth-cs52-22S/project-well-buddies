@@ -42,7 +42,7 @@ export default class Buddy extends Component {
             <View style={styles.header}>
                 <Text style={styles.name}>Your Buddy</Text>       
                 </View>
-            <Image style={{width: 250, height: 250}} source={require('../image/buddy.png')}/>
+            <Image style={{width: 250, height: 250}} source={require('./assets/buddy.png')}/>
             <View style={styles.body}>
                 <Text style={styles.age}>Age: 10 days</Text>
                 <Text style={styles.birthday}>Birthday: May 10, 2022</Text>
