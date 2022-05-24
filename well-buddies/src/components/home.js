@@ -1,53 +1,64 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, Image } from 'react-native';
-import apiTest from '../services/well-buddies-api';
+import { StyleSheet, View, Text, Image, ImageBackground } from 'react-native';
 
 class Home extends Component {
+    render() {
+      return (
+        <View style={styles.container}>
+            <ImageBackground source={require('../images/background.jpg')} resizeMode="cover" style={styles.image}>
+            <Text style={styles.welcome}>
+              Welcome!
+            </Text >
+            <View style={styles.calendarContainer}>
+              <Text style={styles.calendarContainerText}>
+                  Today at a glance
+              </Text >
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      message: "loading..."
-    };
-  }
+              <View style={styles.calendarContainerInfo}>
+                <Text style={styles.calendarContainerTextTemp}>
+                  info from calendar component goes here
+                </Text >   
+              </View >
 
-  async componentDidMount() {
-    try {
-      const res = await apiTest();
-      this.setState({message: res.message})
-    } catch (e) {
-      console.error(e);
+            </View>
+        </ImageBackground>  
+        </View>
+      );
     }
   }
 
-  render() {
-    return (
-      <View style={styles.container}>
-        <Image
-          style={styles.image}
-          source={{ uri: 'https://facebook.github.io/react/logo-og.png' }}
-        />
-        <Text>
-          {this.state.message}
-        </Text>
-        <Text>
-          This app was written in React-Native.
-        </Text>
-      </View>
-    );
-  }
-}
+  const styles = StyleSheet.create({
+    image: {
+      width: 400,
+      height: '100%',
+      },
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'space-around',
-    alignItems: 'center',
-  },
-  image: {
-    width: 400,
-    height: 300,
-  },
-});
+    welcome: {
+      margin: 16,
+      fontSize: 25,
+      color: 'white',
+    },
 
-export default Home;
+    calendarContainerInfo: {
+      width: 400,
+      height: 200,
+      backgroundColor: 'white',
+    },
+
+    calendarContainerText: {
+      color: 'white',
+      fontSize: 18,
+      marginBottom: 15,
+      marginLeft: 16,  
+    },
+
+    calendarContainerTextTemp: {
+      color: 'black',
+      height:'35%',
+      textAlign:'center',
+      marginTop: '20%',
+    },
+    
+  });
+  
+  export default Home;
