@@ -7,8 +7,7 @@ import { LogBox } from "react-native";
 LogBox.ignoreAllLogs();
 
 const App = (props) => {
-  //<Text>hello world!</Text>
-  return <RootNavigator auth={false} />;
+  return (<RootNavigator auth={true} />);
 };
 
 
