@@ -1,6 +1,0 @@
-module Pods_wellbuddies {
-  umbrella header "Pods-wellbuddies-umbrella.h"
-
-  export *
-  module * { export * }
-}
