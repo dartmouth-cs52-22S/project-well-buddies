@@ -12,8 +12,14 @@ TODO:  descriptions of code organization and tools and libraries used
 
 ## Setup
 
-TODO: how to get the project dev environment up and running, npm install etc
-We used some of the code from the React Native short assignment as part of this set up. 
+``` bash
+cd well-buddies
+npm install
+cd ios
+pod install
+cd ..
+expo run:ios
+```
 
 ## Deployment
 
