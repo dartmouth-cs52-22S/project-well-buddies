@@ -7,7 +7,7 @@ LogBox.ignoreAllLogs();
 
 const App = (props) => {
   //<Text>hello world!</Text>
-  return <MainTabBar />;
+  return <RootNavigator auth={true} />;
 };
 
 
