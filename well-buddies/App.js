@@ -1,13 +1,13 @@
 import React from 'react';
 import MainTabBar from './src/navigation/main_tab_bar';
+import RootNavigator from './src/navigation/AppNavigator';
 import { LogBox } from "react-native";
 
 // disable really annoying in app warnings
 LogBox.ignoreAllLogs();
 
 const App = (props) => {
-  // <Text>hello world!</Text>
-  return <MainTabBar />;
+  return (<RootNavigator auth={true} />);
 };
 
 
