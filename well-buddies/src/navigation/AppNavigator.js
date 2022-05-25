@@ -1,6 +1,6 @@
 import React from 'react';
 import MainTabBar from './main_tab_bar';
-import Landing from './landing';
+import Landing from '../components/onboarding/landing';
 
 const RootNavigator = (props) => {
   if (props.auth) {
