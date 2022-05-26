@@ -26,7 +26,7 @@ export function getCalendarEvents(accessToken) {
   return new Promise((resolve, reject) => {
     axios.get(`${API_URL}primary/events?access_token=${accessToken}`)
       .then((response) => {
-        resolve(response.data);
+        resolve(response);
       })
       .catch((error) => {
         console.log(`calendar api error: ${error}`);
