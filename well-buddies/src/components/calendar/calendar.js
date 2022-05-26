@@ -1,3 +1,5 @@
+/* eslint-disable react/destructuring-assignment */
+/* eslint-disable react/function-component-definition */
 import React, { useEffect, useState } from 'react';
 import {
   StyleSheet, View, Text,
@@ -7,15 +9,15 @@ import {
   GoogleSigninButton,
   statusCodes,
 } from '@react-native-google-signin/google-signin';
-import { getPrimaryCalendar, getCalendarEvents } from '../services/google-cal-api';
+import { connect } from 'react-redux';
+// import { getPrimaryCalendar, getCalendarEvents } from '../../services/google-cal-api';
+import { fetchEvents } from '../../state/actions/calendar';
 
-function Calendar() {
+const Calendar = (props) => {
   const [loggedIn, setloggedIn] = useState(false);
   const [userInfo, setuserInfo] = useState([]);
   const [accessToken, setAccessToken] = useState('');
-  const [calendarEvents, setEvents] = useState([]);
-  // const CALENDER_CLIENT_ID = '301956188397-pbr5kqsk2mina10bq4i67uvb92v8p6l3.apps.googleusercontent.com';
-  // const FIREBASE_CLIENT_ID = '529502837326-a50ihbbtkesh1qag5r1ce3doccd9jffl.apps.googleusercontent.com';
+  // const [calendarEvents, setEvents] = useState([]);
   const CLIENT_ID_IOS = '301956188397-rtuq8kgubluo5ismq4g9pq4cn9bag7ul.apps.googleusercontent.com';
 
   useEffect(() => {
@@ -23,7 +25,10 @@ function Calendar() {
       iosClientId: CLIENT_ID_IOS,
       scopes: ['https://www.googleapis.com/auth/calendar'],
     });
-    getCalendars();
+    // getCalendars();
+    if (accessToken) {
+      props.fetchEvents(accessToken);
+    }
   }, [loggedIn, accessToken]);
 
   const signIn = async () => {
@@ -73,25 +78,29 @@ function Calendar() {
     console.log('add scpope', scope);
   };
 
-  const getCalendars = async () => {
-    if (accessToken) {
-      try {
-        const primaryCal = await getPrimaryCalendar(accessToken);
-        console.log('primary calendar', primaryCal);
-        const events = await getCalendarEvents(accessToken);
-        // const calEvents = events.items.map((event) => <Text>{event.summary}</Text>);
-        setEvents(events);
-        console.log('events', events);
-      } catch (error) {
-        console.log('get cal error', error);
-      }
-    }
-  };
+  // const getCalendars = async () => {
+  //   if (accessToken) {
+  //     try {
+  //       const primaryCal = await getPrimaryCalendar(accessToken);
+  //       console.log('primary calendar', primaryCal);
+  //       const events = await getCalendarEvents(accessToken);
+  //       // const calEvents = events.items.map((event) => <Text>{event.summary}</Text>);
+  //       setEvents(events);
+  //       console.log('events', events);
+  //     } catch (error) {
+  //       console.log('get cal error', error);
+  //     }
+  //   }
+  // };
 
   let currentEvents = null;
 
-  if (calendarEvents.items) {
-    currentEvents = calendarEvents.items.map((event) => { return <Text>{event.summary}</Text>; });
+  // if (calendarEvents.items) {
+  //   currentEvents = calendarEvents.items.map((event) => { return <Text>{event.summary}</Text>; });
+  // }
+
+  if (props.events) {
+    currentEvents = props.events.map((event) => { return <Text>{event.summary}</Text>; });
   }
 
   return (
@@ -116,7 +125,7 @@ function Calendar() {
       />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -130,4 +139,8 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Calendar;
+const mapStateToProps = (state) => ({
+  events: state.events.all,
+});
+
+export default connect(mapStateToProps, { fetchEvents })(Calendar);
