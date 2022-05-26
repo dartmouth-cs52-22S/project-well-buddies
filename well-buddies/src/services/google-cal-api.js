@@ -10,8 +10,12 @@ const API_KEY = 'AIzaSyCvvnoQG--w8CR6pVkOMxqm-cid2ZNDZxY';
 // };
 
 export function getPrimaryCalendar(accessToken) {
+  const params = {
+    access_token: accessToken,
+  };
+
   return new Promise((resolve, reject) => {
-    axios.get(`${API_URL}primary?access_token=${accessToken}`)
+    axios.get(`${API_URL}primary`, { params })
       .then((response) => {
         resolve(response.data);
       })
@@ -23,8 +27,29 @@ export function getPrimaryCalendar(accessToken) {
 }
 
 export function getCalendarEvents(accessToken) {
+  const params = {
+    access_token: accessToken,
+  };
+
   return new Promise((resolve, reject) => {
-    axios.get(`${API_URL}primary/events?access_token=${accessToken}`)
+    axios.get(`${API_URL}primary/events`, { params })
+      .then((response) => {
+        resolve(response);
+      })
+      .catch((error) => {
+        console.log(`calendar api error: ${error}`);
+        reject(error);
+      });
+  });
+}
+
+export function getCalendarEvent(accessToken, eventID) {
+  const params = {
+    access_token: accessToken,
+  };
+
+  return new Promise((resolve, reject) => {
+    axios.get(`${API_URL}primary/events/${eventID}`, { params })
       .then((response) => {
         resolve(response);
       })
