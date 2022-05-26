@@ -12,6 +12,11 @@ TODO:  descriptions of code organization and tools and libraries used
 
 ## Setup
 
+If you haven't installed pods, run the following
+``` bash
+brew install pods
+```
+
 ``` bash
 cd well-buddies
 npm install

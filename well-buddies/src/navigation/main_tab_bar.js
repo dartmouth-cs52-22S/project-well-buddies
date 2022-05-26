@@ -1,4 +1,4 @@
-
+/* eslint-disable react/no-unstable-nested-components */
 import React from 'react';
 import { Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
@@ -8,12 +8,12 @@ import Ionicons from 'react-native-vector-icons/FontAwesome';
 // import SearchTab from './search_tab';
 import Home from '../components/home';
 import Buddy from '../components/buddy';
-import Calendar from '../components/calendar';
+import Calendar from '../components/calendar/calendar';
 import Profile from '../components/profile';
 
 const Tab = createBottomTabNavigator();
 
-const MainTabBar = () => {
+function MainTabBar() {
   return (
     <NavigationContainer>
       <Tab.Navigator
@@ -21,7 +21,6 @@ const MainTabBar = () => {
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused }) => {
             let iconName;
-        
             // // Customize the icon we display based on the tab route
             // if (route.name === 'About') {
             //   iconName = 'info-circle';
@@ -32,17 +31,14 @@ const MainTabBar = () => {
             // }
             if (route.name === 'Home') {
               iconName = 'home';
-            }
-            else if (route.name === 'Buddy') {
+            } else if (route.name === 'Buddy') {
               iconName = 'paw';
-            }
-            else if (route.name === 'Calendar') {
+            } else if (route.name === 'Calendar') {
               iconName = 'calendar';
-            }
-            else if (route.name === 'Profile') {
+            } else if (route.name === 'Profile') {
               iconName = 'user';
             }
-        
+
             // Return the respective icon
             return <Ionicons name={iconName} size={26} color={focused ? '#58AADA' : 'grey'} />;
           },
@@ -57,7 +53,6 @@ const MainTabBar = () => {
       </Tab.Navigator>
     </NavigationContainer>
   );
-};
-
+}
 
 export default MainTabBar;
