@@ -25,6 +25,7 @@ function CalendarTitle(props) {
         mode="date"
         onCancel={() => setModalVisible(false)}
         onConfirm={handleConfirm}
+        date={new Date(props.date)}
       />
       <TouchableOpacity underlayColor="#D7E1EA"
         onPress={() => {
