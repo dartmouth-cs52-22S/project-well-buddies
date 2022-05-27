@@ -1,28 +1,32 @@
-import React, { Component } from 'react';
-import {
-  StyleSheet, View, Text, Image, ImageBackground, TouchableOpacity,
-} from 'react-native';
+import React from 'react';
+import { SafeAreaView, StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
 import { Button } from 'react-native-elements';
 import Ionicons from 'react-native-vector-icons/FontAwesome';
+import { signoutUser } from '../state/actions/user';
+// import { useNavigate } from 'react-router-dom';
+// import { useDispatch } from 'react-redux';
 
-class Profile extends Component {
-  render() {
+function Profile() {
+
+  // const dispatch = useDispatch();
+  // const navigate = useNavigate();
+
+  // const signOutAction = () => { 
+  //   dispatch(signoutUser(navigate));
+  // };
+
     return (
-      <View style={styles.pageContainer}>
+    <SafeAreaView>
+    <View style={styles.pageContainer}>       
         <View style={styles.header}>
 
           <View style={styles.userInfoBox}>
 
-            <View style={styles.userNameBox}>
-              <Text style={styles.userName}>User Name</Text>
+            <TouchableOpacity>
+            <Ionicons name={'edit'} size={26} color='#45587C' style={styles.editIcon} />
+            </TouchableOpacity>
+             
             </View>
-
-            <View style={styles.userImageBox}>
-              <Image source={require('../assets/user_profile.jpeg')} style={styles.profileImage} />
-            </View>
-
-            <Ionicons name="edit" size={26} color="#FFFF" style={styles.editIcon} />
-            {/* <Ionicons name={'edit'} size={26} color='#FFFF' style={styles.editIcon} onPress={() => this.props.navigation.navigate('/')} /> */}
 
           </View>
 
@@ -44,13 +48,24 @@ class Profile extends Component {
         </View>
 
         <View style={styles.contentContainer}>
-          <View style={styles.contentItem}>
-            <Text style={styles.title}>Emotion History</Text>
-            <View style={styles.contentItemMood}>
-              <View style={styles.todayMoodContainer}>
-                <Text style={styles.todayMoodText}>Today's Mood</Text>
-                <View style={styles.todayMoodIcon}>
-                  <Ionicons name="meh-o" size={70} color="#D0E5F0" />
+            <View style={styles.contentItem}>
+                <Text style={styles.title}>Emotion History</Text>
+                <View style={styles.contentItemMood}>
+                    <View style={styles.todayMoodContainer}>
+                        <Text style={styles.todayMoodText}>Today's Mood</Text>
+                        <View style={styles.todayMoodIcon}>
+                            <Ionicons name={'meh-o'} size={70} color='#D0E5F0' />
+                        </View>
+                    </View>
+
+                    <View style={styles.historyMoodContainer}>
+                        <View style={styles.historyMoodBox}>
+                            <View style={styles.historyMoodIcon}>
+                                <Ionicons name={'calendar-check-o'} size={70} color='#A1CFE9' style={styles.calendarIcon} />
+                            </View>
+                            <Text style={styles.historyMoodText}>View History</Text>
+                        </View>      
+                    </View>          
                 </View>
               </View>
 
@@ -69,42 +84,44 @@ class Profile extends Component {
 
           <View style={styles.contentItem}>
             <Text style={styles.title}>Buddy</Text>
-            <View style={styles.contentItemBuddy}>
-              <View style={styles.buddyContainer}>
-                <Text style={styles.buddyImageText}>Buddy Name</Text>
-                <View style={styles.buddyImageContainer}>
-                  <Image source={require('../assets/cat_head.png')} style={styles.buddyImage} />
+                <View style={styles.contentItemBuddy}>
+                    <View style={styles.buddyContainer}>
+                        <Text style={styles.buddyImageText}>Buddy Name</Text>
+                        <View style={styles.buddyImageContainer}>
+                        <Image source={require('../assets/cat_head.png')} style={styles.buddyImage}></Image>
+                        </View>
+                    </View>
+                    <View style={styles.buddyInfoContainer}>
+                        <View style={styles.historyMoodBox}>
+                            <View style={styles.historyMoodIcon}>
+                                <Text>Buddy info</Text>
+                            </View>
+                        </View>          
+                    </View>
                 </View>
               </View>
-
-              <View style={styles.buddyInfoContainer}>
-                <View style={styles.historyMoodBox}>
-                  <View style={styles.historyMoodIcon}>
-                    <Text>Buddy info</Text>
-                  </View>
-                </View>
-
-              </View>
-
             </View>
-          </View>
-
-          <View style={styles.contentItem}>
-            <Text style={styles.title}>Goals and Preferences</Text>
-            <View style={styles.contentItemBox}>
-              <View style={styles.goalTextBox}>
-                <Text>Goal: Exercise More</Text>
-                <Text>Distress Preferences: Reading, Sleeping</Text>
-              </View>
-
-            </View>
-          </View>
+        </View> 
+        <View style={styles.buttonContainer}>
+            <Button
+                style={styles.signoutButton}
+                title='Sign Out'
+                titleStyle={{
+                  color: "white",
+                  fontSize: 15,
+              }}
+              buttonStyle={{
+                backgroundColor: "#A1CFE9",
+            }}
+                // onPress={signOutAction}
+              /> 
         </View>
-      </View>
-
+    </View>  
+    </SafeAreaView>
+      
     );
   }
-}
+
 
 const styles = StyleSheet.create({
 
@@ -118,8 +135,9 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '23%',
     backgroundColor: '#3D5DE',
-    flexDirection: 'column',
-    alignItems: 'center',
+    flexDirection:'column',
+    alignItems:'center',
+    backgroundColor:'#B3D5DE',
   },
 
   userInfoBox: {
@@ -132,7 +150,7 @@ const styles = StyleSheet.create({
   },
 
   userNameBox: {
-    backgroundColor: '#B3D5DE',
+    backgroundColor: "#B3D5DE",
     width: '30%',
     height: 100,
     alignItems: 'center',
@@ -172,12 +190,12 @@ const styles = StyleSheet.create({
   eventItemText: {
     fontSize: 13,
     alignItems: 'center',
-    color: '#45587C',
-  },
-
-  userName: {
-    color: '#45587C',
-    fontSize: 20,
+    color:'#45587C',
+},
+     
+  userName:{
+    color:'#45587C',
+    fontSize: 18,
   },
 
   profileImage: {
@@ -187,9 +205,9 @@ const styles = StyleSheet.create({
   },
 
   contentContainer: {
-    height: '75%',
-    backgroundColor: '#F6F6EE',
-    justifyContent: 'center',
+    height: '60%',
+    backgroundColor:'#F6F6EE',
+    justifyContent:'center',
   },
 
   title: {
@@ -197,7 +215,7 @@ const styles = StyleSheet.create({
   },
 
   contentItem: {
-    height: '33.333%',
+    height:'50%',
     backgroundColor: '#F6F6EE',
     marginHorizontal: 16,
     justifyContent: 'flex-end',
@@ -235,6 +253,7 @@ const styles = StyleSheet.create({
     height: '100%',
   },
 
+<<<<<<< HEAD
   historyMoodBox: {
     backgroundColor: '#F4F5F4',
     alignItems: 'center',
@@ -307,6 +326,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 13,
   },
+=======
+  buttonContainer: {
+    height:'17%',
+    justifyContent:'center',
+  },
+
+  signoutButton: {
+    width:'30%',
+    alignSelf:'center',
+  },
+
+>>>>>>> c85e858f78f03a7fb7ffd5a5dee352443fb94e93
 });
 
 export default Profile;
