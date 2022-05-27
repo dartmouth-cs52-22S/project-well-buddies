@@ -1,10 +1,8 @@
 import axios from 'axios';
 
 const API_URL = 'https://well-buddies-api-ac5z.onrender.com/api';
-const API_KEY = '';
 
 const apiTest = () => {
-
   return new Promise((resolve, reject) => {
     axios.get(API_URL)
       .then((response) => {

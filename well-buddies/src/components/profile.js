@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
   },
 
   eventItemText: {
-    fontSize: 13,
+    fontSize: '13',
     alignItems: 'center',
     color:'#45587C',
 },

@@ -1,6 +1,6 @@
 import React from 'react';
 import Svg, {
-  Defs, Ellipse, Path, RadialGradient, Rect, Stop,
+  Defs, Ellipse, Path, RadialGradient, Rect, Stop, LinearGradient,
 } from 'react-native-svg';
 
 function Cat() {
@@ -37,15 +37,15 @@ function Cat() {
       <Path d="M143.136 367.777C145.674 367.015 149.684 364.122 145.421 358.64" stroke="#5A2305" strokeWidth="3.31132" strokeLinecap="round" strokeLinejoin="round" />
       <Path d="M152.523 280.981L151 353.311C154.299 352.549 161.05 352.397 161.659 357.879C162.42 364.731 161.659 366.254 156.33 368.538" stroke="#5A2305" strokeWidth="3.31132" strokeLinecap="round" strokeLinejoin="round" />
       <Defs>
-        <linearGradient id="paint0_linear_125_2526" x1="196.137" y1="330.396" x2="252.331" y2="301.759" gradientUnits="userSpaceOnUse">
+        <LinearGradient id="paint0_linear_125_2526" x1="196.137" y1="330.396" x2="252.331" y2="301.759" gradientUnits="userSpaceOnUse">
           <Stop stopColor="#FAC575" stopOpacity="0.74" />
           <Stop offset="1" stopColor="#F9D8A5" stopOpacity="0" />
-        </linearGradient>
-        <linearGradient id="paint1_linear_125_2526" x1="118.011" y1="215.504" x2="118.773" y2="279.458" gradientUnits="userSpaceOnUse">
+        </LinearGradient>
+        <LinearGradient id="paint1_linear_125_2526" x1="118.011" y1="215.504" x2="118.773" y2="279.458" gradientUnits="userSpaceOnUse">
           <Stop stopColor="#D6850E" />
           <Stop offset="0.348958" stopColor="#E4A74D" />
           <Stop offset="1" stopColor="#FFE7C2" />
-        </linearGradient>
+        </LinearGradient>
         <RadialGradient id="paint2_radial_125_2526" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(51.0114 168.299) rotate(90) scale(53.2954 51.0114)">
           <Stop stopColor="#FF9AA0" stopOpacity="0.54" />
           <Stop offset="0.338542" stopColor="#F19D9C" stopOpacity="0.402188" />

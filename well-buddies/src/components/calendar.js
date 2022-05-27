@@ -14,8 +14,6 @@ function Calendar() {
   const [userInfo, setuserInfo] = useState([]);
   const [accessToken, setAccessToken] = useState('');
   const [calendarEvents, setEvents] = useState([]);
-  // const CALENDER_CLIENT_ID = '301956188397-pbr5kqsk2mina10bq4i67uvb92v8p6l3.apps.googleusercontent.com';
-  // const FIREBASE_CLIENT_ID = '529502837326-a50ihbbtkesh1qag5r1ce3doccd9jffl.apps.googleusercontent.com';
   const CLIENT_ID_IOS = '301956188397-rtuq8kgubluo5ismq4g9pq4cn9bag7ul.apps.googleusercontent.com';
 
   useEffect(() => {
@@ -66,8 +64,6 @@ function Calendar() {
     }
   };
 
-  console.log('userinfo', userInfo.user);
-
   const addScope = async () => {
     const scope = await GoogleSignin.addScopes({ scopes: ['https://www.googleapis.com/auth/calendar', 'https://www.googleapis.com/auth/calendar.events'] });
     console.log('add scpope', scope);
@@ -108,12 +104,6 @@ function Calendar() {
         </Text>
       ) : <Text>not signed in</Text>}
       {currentEvents}
-      <GoogleSigninButton
-        style={{ width: 192, height: 48 }}
-        size={GoogleSigninButton.Size.Wide}
-        color={GoogleSigninButton.Color.Dark}
-        onPress={signIn}
-      />
     </View>
   );
 }

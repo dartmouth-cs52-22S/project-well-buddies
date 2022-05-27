@@ -1,21 +1,30 @@
-import React, {useState} from 'react';
-import {SafeAreaView, View, Text, TouchableOpacity, TextInput} from 'react-native';
+import React, { useState } from 'react';
+import {
+  GoogleSigninButton,
+} from '@react-native-google-signin/google-signin';
+import {
+  SafeAreaView, View, Text, TouchableOpacity, TextInput,
+} from 'react-native';
+import { signIn } from '../../services/google-login';
+import { styles } from './styles';
+import BackButton from '../../assets/back-button';
 
-const SignIn = (props)=> {
+function SignIn(props) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   return (
     <SafeAreaView>
       <TouchableOpacity onPress={props.closeModal}>
-        <Text>Back</Text>
+        <BackButton />
       </TouchableOpacity>
-      <View>
-        <Text>Email</Text>
-        <TextInput onChangeText={(text) => { setEmail(text)}}/>
-        <Text>Password</Text>
-        <TextInput onChangeText={(text) => { setPassword(text)}}/>    
-      </View>
+
+      <GoogleSigninButton
+        style={{ width: 192, height: 48 }}
+        size={GoogleSigninButton.Size.Wide}
+        color={GoogleSigninButton.Color.Dark}
+        onPress={signIn}
+      />
     </SafeAreaView>
   );
 }

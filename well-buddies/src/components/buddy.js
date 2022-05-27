@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
     marginLeft: 300,
   },
   body: {
-    alignItems: 'left',
+    alignItems: 'flex-start',
   },
   age: {
     marginTop: 25,
@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
   },
 
   body: {
-    alignItems: 'left',
+    alignItems: 'flex-start',
     // marginTop:350,
     // marginLeft:95,
   },
