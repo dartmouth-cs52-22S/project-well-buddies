@@ -14,7 +14,7 @@ import {
 import { connect } from 'react-redux';
 import Moment from 'moment';
 import { fetchEvents } from '../../state/actions/calendar';
-import CustomText from '../custom/custom_text';
+// import CustomText from '../custom/custom_text';
 import CalendarTitle from './calendar_title';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
