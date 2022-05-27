@@ -20,14 +20,18 @@ import CalendarTitle from './calendar_title';
 const Calendar = (props) => {
   const [loggedIn, setloggedIn] = useState(false);
   const [accessToken, setAccessToken] = useState('');
-  const [date, setDate] = useState('');
+  const [date, setDate] = useState(Moment());
   const CLIENT_ID_IOS = '301956188397-rtuq8kgubluo5ismq4g9pq4cn9bag7ul.apps.googleusercontent.com';
 
   console.log('start moment', Moment().endOf('day').toISOString());
+
+  const startOfDay = Moment(date).startOf('day').toISOString();
+  const endOfDay = Moment(date).endOf('day').toISOString();
+
   const args = {
     access_token: accessToken,
-    timeMin: Moment().startOf('day').toISOString(),
-    timeMax: Moment().endOf('day').toISOString(),
+    timeMin: startOfDay,
+    timeMax: endOfDay,
     showDeleted: false,
     singleEvents: true,
     maxResults: 10,
@@ -41,7 +45,7 @@ const Calendar = (props) => {
     if (accessToken) {
       props.fetchEvents(args);
     }
-  }, [loggedIn, accessToken]);
+  }, [loggedIn, accessToken, date]);
 
   const signIn = async () => {
     try {
@@ -137,7 +141,7 @@ const Calendar = (props) => {
   return (
     <View style={styles.container}>
       <ImageBackground style={styles.backgroundImg} source={require('../../assets/background_gradient.jpg')}>
-        <CalendarTitle />
+        <CalendarTitle date={date} setDate={(time) => { setDate(time); }} />
         <FlatList
           data={props.events}
           renderItem={({ item }) => { return renderEventCell(item); }}
