@@ -10,6 +10,8 @@ import Home from '../components/home';
 import Buddy from '../components/buddy';
 import Calendar from '../components/calendar/calendar';
 import Profile from '../components/profile';
+import Checkin from '../components/checkin';
+
 
 const Tab = createBottomTabNavigator();
 
@@ -50,6 +52,8 @@ function MainTabBar() {
         <Tab.Screen name="Buddy" component={Buddy} />
         <Tab.Screen name="Calendar" component={Calendar} />
         <Tab.Screen name="Profile" component={Profile} />
+        <Tab.Screen name="Checkin" component={Checkin} />
+
       </Tab.Navigator>
     </NavigationContainer>
   );
