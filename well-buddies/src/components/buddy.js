@@ -1,4 +1,4 @@
-import React, { Component, componentDidMount } from 'react';
+import React, { Component, componentDidMount,useState } from 'react';
 import { Icon } from 'react-native-elements'
 import {
   StyleSheet,
@@ -12,13 +12,12 @@ import {
 } from 'react-native';
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 
-
 export default class Buddy extends Component {
   constructor(props) {
       super(props);
       this.state = {
         isEditing: false,
-        // name: "",
+        name: "",
       };
     }
   editMode = () => {
@@ -27,6 +26,13 @@ export default class Buddy extends Component {
   }));
   };
 
+  // onInputChangeName = (event) => {
+  //   this.state.name=event.target.value
+  // };
+  handleInputTextChange = (newName) => {
+    this.setState({ name: newName })
+  }
+  
   render() {
     if (this.state.isEditing === false) {
         return (
@@ -63,7 +69,7 @@ export default class Buddy extends Component {
                 <Text style={styles.editName}>Name</Text>  
                 <TextInput
         style={styles.input}
-        // onChangeText={onChangeText}
+        onChangeText={this.handleInputTextChange} 
         value={this.state.name}
         placeholder="Name"
       />     
