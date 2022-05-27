@@ -2,38 +2,50 @@ import React, { useEffect, useState } from 'react';
 import {
   View, Text, TouchableOpacity, Modal, SafeAreaView, Dimensions,
 } from 'react-native';
-import SignIn from './signin';
+import { connect } from 'react-redux';
 import Onboarding from './onboarding';
 import { styles } from './styles';
+import CatHead from '../../assets/cat-head';
+import { signIn } from '../../services/google-login';
+import GetStarted from '../../assets/get-started';
+import { signinUser } from '../../state/actions/user';
 
-function Landing() {
-  const [signInModal, setSignInModal] = useState(false);
+function Landing(props) {
   const [onboarding, setOnboarding] = useState(false);
+
+  // eslint-disable-next-line no-shadow
+  const { signinUser } = props;
+
+  const signInFunction = async () => {
+    const userInfo = await signIn();
+    signinUser(userInfo.idToken);
+  };
 
   return (
     <SafeAreaView style={{
-      backgroundColor: '#ffffff',
+      backgroundColor: '#F6F6EE',
       flexDirection: 'column',
       height: Dimensions.get('window').height,
-      justifyContent: 'space-around',
+      width: Dimensions.get('window').width,
+      justifyContent: 'center',
+      alignItems: 'center',
     }}
     >
       <View style={styles.landingPage}>
-        <Text>Welcome to Well Buddies!</Text>
-        <TouchableOpacity onPress={() => { setSignInModal(true); }}>
-          <Text>Sign In</Text>
+        <CatHead />
+        <View style={{ display: 'flex', alignItems: 'center' }}>
+          <Text style={styles.welcome}>Welcome to</Text>
+          <Text style={styles.title}>WellBuddies</Text>
+        </View>
+        <TouchableOpacity onPress={() => { setOnboarding(true); }} style={{ paddingTop: '20%' }}>
+          <GetStarted />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => { setOnboarding(true); }}>
-          <Text>Sign Up</Text>
+        <TouchableOpacity onPress={signInFunction} style={{ display: 'flex', flexDirection: 'row', paddingBottom: '20%' }}>
+          <Text style={styles.signInText}>or</Text>
+          <Text style={{ ...styles.signInText, textDecorationLine: 'underline' }}> SIGN IN </Text>
         </TouchableOpacity>
+
       </View>
-      {signInModal
-        ? (
-          <Modal animationType="slide" transparent={false}>
-            <SignIn closeModal={() => setSignInModal(false)} />
-          </Modal>
-        )
-        : <View />}
       {onboarding
         ? (
           <Modal animationType="slide" transparent={false}>
@@ -45,4 +57,4 @@ function Landing() {
   );
 }
 
-export default Landing;
+export default connect(null, { signinUser })(Landing);

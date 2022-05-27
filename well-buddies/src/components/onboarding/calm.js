@@ -1,13 +1,45 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
-  View, Text
+  View, Text, ScrollView, TouchableOpacity,
 } from 'react-native';
-import styles from './styles';
+import { styles } from './styles';
 
-const Calm = (props) => {
+function Calm(props) {
+  const { add, remove, activities } = props;
+  const [acts, setActs] = useState([]);
+
+  const addOrRemove = (activity) => {
+    if (acts.includes(activity)) {
+      const newArray = acts.filter((act) => { return act !== activity; });
+      setActs(newArray);
+      remove(activity);
+    } else {
+      setActs([...acts, activity]);
+      add(activity);
+    }
+  };
+
   return (
-    <View><Text>Calm</Text></View>
-  )
+    <View style={styles.nameContainer}>
+      <View style={styles.name}>
+        <Text style={styles.nameText}>What are some activities that help you to destress?</Text>
+      </View>
+      <ScrollView contentContainerStyle={styles.activities}>
+        { activities.map((activity, idx) => {
+          return (
+            // eslint-disable-next-line react/no-array-index-key
+            <TouchableOpacity key={idx} onPress={() => { addOrRemove(activity); }}>
+              <View style={(acts.includes(activity)) ? styles.activityChosen : styles.activity}>
+                <Text style={(acts.includes(activity)) ? styles.activityChosenText : styles.activityText}>
+                  {activity}
+                </Text>
+              </View>
+            </TouchableOpacity>
+          );
+        })}
+      </ScrollView>
+    </View>
+  );
 }
 
 export default Calm;

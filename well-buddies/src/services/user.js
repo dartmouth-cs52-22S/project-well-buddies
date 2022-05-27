@@ -1,34 +1,62 @@
 import axios from 'axios';
+import { ROOT_URL, LOCAL_URL } from '../constants';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const URL = 'https://well-buddies-api-ac5z.onrender.com/api/user';
+const URL = ROOT_URL;
 
-// sign up 
-export const signUp = async (email, password, userData) => {
+// sign up
+export const signUp = async (userData, user, token) => {
   const payload = {
     ...userData,
-    email,
-    password,
+    googleUser: JSON.stringify(user),
+    token,
   };
   try {
-    const { data } = await axios.post(`${URL}/signup`, payload);
-    return data;
+    console.log('payload', payload);
+    const response = await axios.post(`${URL}/signup`, payload);
+    const newToken = response.data.jwt.token;
+    return newToken;
   } catch (error) {
     console.log(error);
     throw new Error(error);
   }
 };
 
-export const signIn = async(email, password) => {
+export const signIn = async (token) => {
   const payload = {
-    email,
-    password,
+    token,
   };
-  try{
-    const { data } = await axios.post(`${ROOT_URL}/signin${API_KEY}`, payload);
-    return data;
-
+  try {
+    const response = await axios.post(`${URL}/signin`, payload);
+    const newToken = response.data.jwt.token;
+    return newToken;  
   } catch (error) {
-    console.log(error); 
+    console.log(error);
     throw new Error(error);
   }
-}
+};
+
+export const getBuddy = async (token) => {
+  try {
+    const response = await axios.get(`${URL}/buddy/${token}`);
+    console.log(response.data);
+    return response;
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
+export const setBuddy = async (token, newBuddy, newBuddyName) => {
+  const payload = {
+    token,
+    pet: newBuddy, 
+    petName: newBuddyName
+  };
+  try {
+    const { data } = await axios.patch(`${URL}/buddy`, payload);
+    return data;
+  } catch (error) {
+    console.log(error);
+    throw new Error(error);
+  }
+};

@@ -1,19 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { SafeAreaView, StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
 import { Button } from 'react-native-elements';
+import { connect } from 'react-redux';
 import Ionicons from 'react-native-vector-icons/FontAwesome';
-import { signoutUser } from '../state/actions/user';
-// import { useNavigate } from 'react-router-dom';
-// import { useDispatch } from 'react-redux';
+import { signoutUser, fetchBuddy } from '../state/actions/user';
+import { signOut } from '../services/google-login';
+import Cat from '../assets/cat';
+import Dog from '../assets/dog';
+import Panda from '../assets/panda';
 
-function Profile() {
+function Profile(props) {
 
-  // const dispatch = useDispatch();
-  // const navigate = useNavigate();
+    const signout = async () => {
+      await signOut()
+      await props.signoutUser();
+    }
 
-  // const signOutAction = () => { 
-  //   dispatch(signoutUser(navigate));
-  // };
+    useEffect(()=>{ async () => {await props.fetchBuddy();}}, []);
 
     return (
     <SafeAreaView>
@@ -80,9 +83,11 @@ function Profile() {
             <Text style={styles.title}>Buddy</Text>
                 <View style={styles.contentItemBuddy}>
                     <View style={styles.buddyContainer}>
-                        <Text style={styles.buddyImageText}>Buddy Name</Text>
+                        <Text style={styles.buddyImageText}>{props.petName}</Text>
                         <View style={styles.buddyImageContainer}>
-                        <Image source={require('../assets/cat_head.png')} style={styles.buddyImage}></Image>
+                          {props.pet === "Dog" ? <Dog/> : <View/>}
+                          {props.pet === "Cat" ? <Cat/> : <View/>}
+                          {props.pet === "Panda" ? <Panda/> : <View/>}                        
                         </View>
                     </View>
 
@@ -100,6 +105,7 @@ function Profile() {
 
         <View style={styles.buttonContainer}>
             <Button
+                onPress={signout}
                 style={styles.signoutButton}
                 title='Sign Out'
                 titleStyle={{
@@ -283,14 +289,13 @@ contentItemBuddy: {
 },
 
 buddyContainer: {
-  width:'50%',
   alignItems:'center',
   width:'40%',
 },
 
 buddyImageText: {
   color:'#0008',  
-  paddingVertical:10,
+  paddingTop:10,
 },
 
 buddyImage: {
@@ -303,6 +308,11 @@ buddyInfoContainer: {
   alignItems:'center',
   justifyContent:'center',
   height:'100%',
+},
+
+buddyImageContainer: {
+  aspectRadio: 1,
+  width: '60%',
 },
   
 contentItemBox: {
@@ -325,4 +335,11 @@ contentItemBox: {
 
 });
 
-export default Profile;
+const mapStateToProps = (state) => (
+  {
+    pet: state.buddy.pet,
+    petName: state.buddy.petName,
+  }
+);
+
+export default connect(mapStateToProps, { signoutUser, fetchBuddy })(Profile);
