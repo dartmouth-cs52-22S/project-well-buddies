@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+<<<<<<< HEAD
 import {
   StyleSheet, View, Text, Image, ImageBackground,
 } from 'react-native';
@@ -15,17 +16,48 @@ class Home extends Component {
             <Text style={styles.calendarContainerText}>
               Today at a glance
             </Text>
+=======
+import { SafeAreaView, StyleSheet, View, Text, Image, ImageBackground } from 'react-native';
+
+class Home extends Component {
+    render() {
+      return (
+        <SafeAreaView>
+        <View style={styles.container}>
+            <ImageBackground source={require('../assets/background.jpg')} resizeMode="cover" style={styles.image}>
+            <Text style={styles.welcome}>
+              Welcome!
+            </Text >
+            <View style={styles.calendarContainer}>
+              <Text style={styles.calendarContainerText}>
+                  Today at a glance
+              </Text >
+
+              <View style={styles.calendarContainerInfo}>
+                <Text style={styles.calendarContainerTextTemp}>
+                  info from calendar component goes here
+                </Text >   
+              </View >
+>>>>>>> 6ae01761 (added edit profile page and updated user profile page)
 
             <View style={styles.calendarContainerInfo}>
               <Text style={styles.calendarContainerTextTemp}>
                 info from calendar component goes here
               </Text>
             </View>
+<<<<<<< HEAD
 
           </View>
         </ImageBackground>
       </View>
     );
+=======
+        </ImageBackground>  
+        </View>
+        </SafeAreaView>
+      );
+    }
+>>>>>>> 6ae01761 (added edit profile page and updated user profile page)
   }
 }
 
