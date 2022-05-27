@@ -1,35 +1,51 @@
+/* eslint-disable camelcase */
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/function-component-definition */
 import React, { useEffect, useState } from 'react';
 import {
-  StyleSheet, View, Text,
+  StyleSheet, View, Text, FlatList, TouchableOpacity, ActivityIndicator, ImageBackground, Button,
 } from 'react-native';
+import { Card } from 'react-native-elements';
 import {
   GoogleSignin,
   GoogleSigninButton,
   statusCodes,
 } from '@react-native-google-signin/google-signin';
 import { connect } from 'react-redux';
-// import { getPrimaryCalendar, getCalendarEvents } from '../../services/google-cal-api';
+import Moment from 'moment';
 import { fetchEvents } from '../../state/actions/calendar';
+import CustomText from '../custom/custom_text';
+import CalendarTitle from './calendar_title';
 
 const Calendar = (props) => {
   const [loggedIn, setloggedIn] = useState(false);
-  const [userInfo, setuserInfo] = useState([]);
   const [accessToken, setAccessToken] = useState('');
-  // const [calendarEvents, setEvents] = useState([]);
+  const [date, setDate] = useState(Moment());
   const CLIENT_ID_IOS = '301956188397-rtuq8kgubluo5ismq4g9pq4cn9bag7ul.apps.googleusercontent.com';
+
+  console.log('start moment', Moment().endOf('day').toISOString());
+
+  const startOfDay = Moment(date).startOf('day').toISOString();
+  const endOfDay = Moment(date).endOf('day').toISOString();
+
+  const args = {
+    access_token: accessToken,
+    timeMin: startOfDay,
+    timeMax: endOfDay,
+    showDeleted: false,
+    singleEvents: true,
+    maxResults: 10,
+    orderBy: 'startTime',
+  };
 
   useEffect(() => {
     GoogleSignin.configure({
       iosClientId: CLIENT_ID_IOS,
-      scopes: ['https://www.googleapis.com/auth/calendar'],
     });
-    // getCalendars();
     if (accessToken) {
-      props.fetchEvents(accessToken);
+      props.fetchEvents(args);
     }
-  }, [loggedIn, accessToken]);
+  }, [loggedIn, accessToken, date]);
 
   const signIn = async () => {
     try {
@@ -71,58 +87,72 @@ const Calendar = (props) => {
     }
   };
 
-  console.log('userinfo', userInfo.user);
-
   const addScope = async () => {
-    const scope = await GoogleSignin.addScopes({ scopes: ['https://www.googleapis.com/auth/calendar', 'https://www.googleapis.com/auth/calendar.events'] });
-    console.log('add scpope', scope);
+    await GoogleSignin.addScopes({ scopes: ['https://www.googleapis.com/auth/calendar', 'https://www.googleapis.com/auth/calendar.events'] });
   };
 
-  // const getCalendars = async () => {
-  //   if (accessToken) {
-  //     try {
-  //       const primaryCal = await getPrimaryCalendar(accessToken);
-  //       console.log('primary calendar', primaryCal);
-  //       const events = await getCalendarEvents(accessToken);
-  //       // const calEvents = events.items.map((event) => <Text>{event.summary}</Text>);
-  //       setEvents(events);
-  //       console.log('events', events);
-  //     } catch (error) {
-  //       console.log('get cal error', error);
-  //     }
-  //   }
-  // };
+  function parseDate(dateTime) {
+    Moment.locale('en');
+    return Moment(dateTime).format('h:mm A');
+  }
 
-  let currentEvents = null;
+  function showEventDetail(event) {
+    props.navigation.navigate('Detail', { event });
+  }
 
-  // if (calendarEvents.items) {
-  //   currentEvents = calendarEvents.items.map((event) => { return <Text>{event.summary}</Text>; });
-  // }
+  function renderEventCell(event) {
+    return (
+      <TouchableOpacity onPress={() => { showEventDetail(event); }}>
+        <Card borderRadius={5}
+          style={styles.card}
+          onPress={() => { showEventDetail(event); }}
+          underlayColor="#d1dce0"
+          height={80}
+        >
+          <View>
+            <CustomText>
+              <Text style={styles.title}>
+                {event.summary}
+              </Text>
+            </CustomText>
+          </View>
+          <View>
+            <CustomText>
+              {parseDate(event.start.dateTime)}
+              {' '}
+              -
+              {' '}
+              {parseDate(event.end.dateTime)}
+            </CustomText>
+          </View>
+        </Card>
+      </TouchableOpacity>
+    );
+  }
 
-  if (props.events) {
-    currentEvents = props.events.map((event) => { return <Text>{event.summary}</Text>; });
+  function renderLoadingView() {
+    return (
+      <View style={styles.loading}>
+        <ActivityIndicator size="large" color="#0000ff" />
+      </View>
+    );
   }
 
   return (
     <View style={styles.container}>
-      <Text>
-        Calendar
-      </Text>
-      {loggedIn ? (
-        <Text>
-          {' '}
-          {userInfo?.user?.name }
-          {' '}
-          signed in
-        </Text>
-      ) : <Text>not signed in</Text>}
-      {currentEvents}
-      <GoogleSigninButton
-        style={{ width: 192, height: 48 }}
-        size={GoogleSigninButton.Size.Wide}
-        color={GoogleSigninButton.Color.Dark}
-        onPress={signIn}
-      />
+      <ImageBackground style={styles.backgroundImg} source={require('../../assets/background_gradient.jpg')}>
+        <CalendarTitle date={date} setDate={(time) => { setDate(time); }} />
+        <FlatList
+          data={props.events}
+          renderItem={({ item }) => { return renderEventCell(item); }}
+        />
+        <GoogleSigninButton
+          style={{ width: 192, height: 48 }}
+          size={GoogleSigninButton.Size.Wide}
+          color={GoogleSigninButton.Color.Dark}
+          onPress={signIn}
+        />
+      </ImageBackground>
     </View>
   );
 };
@@ -130,12 +160,26 @@ const Calendar = (props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'space-around',
+    height: '100%',
+  },
+  dateButton: {
+    flexDirection: 'row',
     alignItems: 'center',
   },
-  image: {
-    width: 400,
-    height: 300,
+  card: {
+    textAlign: 'left',
+  },
+  date: {
+    color: '#FFFFFF',
+    fontSize: 25,
+  },
+  title: {
+    fontWeight: '600',
+    fontSize: 20,
+  },
+  backgroundImg: {
+    resizeMode: 'cover',
+    height: '100%',
   },
 });
 
