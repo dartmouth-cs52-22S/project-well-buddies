@@ -8,10 +8,8 @@ import Ionicons from 'react-native-vector-icons/FontAwesome';
 // import SearchTab from './search_tab';
 import Home from '../components/home';
 import Buddy from '../components/buddy';
-import Calendar from '../components/calendar/calendar';
 import Profile from '../components/profile';
-import Checkin from '../components/checkin';
-
+import CalendarTab from './calendar_tab';
 
 const Tab = createBottomTabNavigator();
 
@@ -50,9 +48,8 @@ function MainTabBar() {
         <Tab.Screen name="About" component={About} /> */}
         <Tab.Screen name="Home" component={Home} />
         <Tab.Screen name="Buddy" component={Buddy} />
-        <Tab.Screen name="Calendar" component={Calendar} />
+        <Tab.Screen name="Calendar" component={CalendarTab} />
         <Tab.Screen name="Profile" component={Profile} />
-        <Tab.Screen name="Checkin" component={Checkin} />
 
       </Tab.Navigator>
     </NavigationContainer>

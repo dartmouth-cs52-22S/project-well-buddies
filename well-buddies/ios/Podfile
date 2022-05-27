@@ -5,7 +5,7 @@ require File.join(File.dirname(`node --print "require.resolve('@react-native-com
 require 'json'
 podfile_properties = JSON.parse(File.read('./Podfile.properties.json')) rescue {}
 
-platform :ios, podfile_properties['ios.deploymentTarget'] || '12.0'
+platform :ios, podfile_properties['ios.deploymentTarget'] || '11.0'
 install! 'cocoapods',
   :deterministic_uuids => false
 
@@ -33,17 +33,8 @@ target 'wellbuddies' do
   #   use_flipper!()
   # end
 
-  # Add the Firebase pod for Google Analytics
-  # pod 'FirebaseAnalytics'
-
-  # For Analytics without IDFA collection capability, use this pod instead
-  # pod ‘Firebase/AnalyticsWithoutAdIdSupport’
-
-  # Add the pods for any other Firebase products you want to use in your app
-  # For example, to use Firebase Authentication and Cloud Firestore
-  # pod 'FirebaseAuth'
-  # pod 'FirebaseFirestore'
   pod 'GoogleSignIn'
+
 
   post_install do |installer|
     react_native_post_install(installer)
