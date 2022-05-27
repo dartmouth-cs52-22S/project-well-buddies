@@ -29,7 +29,7 @@ export default class Buddy extends Component {
   // onInputChangeName = (event) => {
   //   this.state.name=event.target.value
   // };
-  handleInputTextChange = (newName) => {
+  onInputChangeName = (newName) => {
     this.setState({ name: newName })
   }
   
@@ -69,7 +69,7 @@ export default class Buddy extends Component {
                 <Text style={styles.editName}>Name</Text>  
                 <TextInput
         style={styles.input}
-        onChangeText={this.handleInputTextChange} 
+        onChangeText={this.onInputChangeName} 
         value={this.state.name}
         placeholder="Name"
       />     
