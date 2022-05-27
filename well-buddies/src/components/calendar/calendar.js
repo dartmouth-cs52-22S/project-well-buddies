@@ -3,7 +3,7 @@
 /* eslint-disable react/function-component-definition */
 import React, { useEffect, useState } from 'react';
 import {
-  StyleSheet, View, Text, FlatList, TouchableOpacity, ActivityIndicator, ImageBackground,
+  StyleSheet, View, Text, FlatList, TouchableOpacity, ActivityIndicator, ImageBackground, Button,
 } from 'react-native';
 import { Card } from 'react-native-elements';
 import {
@@ -13,43 +13,32 @@ import {
 } from '@react-native-google-signin/google-signin';
 import { connect } from 'react-redux';
 import Moment from 'moment';
-import {
-  useFonts,
-  DMSans_400Regular,
-  DMSans_400Regular_Italic,
-  DMSans_500Medium,
-  DMSans_500Medium_Italic,
-  DMSans_700Bold,
-  DMSans_700Bold_Italic,
-} from '@expo-google-fonts/dm-sans'; import { fetchEvents } from '../../state/actions/calendar';
+import { fetchEvents } from '../../state/actions/calendar';
+import CustomText from '../custom/custom_text';
+import CalendarTitle from './calendar_title';
 
 const Calendar = (props) => {
   const [loggedIn, setloggedIn] = useState(false);
-  const [userInfo, setuserInfo] = useState([]);
   const [accessToken, setAccessToken] = useState('');
+  const [date, setDate] = useState('');
   const CLIENT_ID_IOS = '301956188397-rtuq8kgubluo5ismq4g9pq4cn9bag7ul.apps.googleusercontent.com';
-  const [fontsLoaded] = useFonts({
-    DMSans_400Regular,
-    DMSans_400Regular_Italic,
-    DMSans_500Medium,
-    DMSans_500Medium_Italic,
-    DMSans_700Bold,
-    DMSans_700Bold_Italic,
-  });
+
+  console.log('start moment', Moment().endOf('day').toISOString());
+  const args = {
+    access_token: accessToken,
+    timeMin: Moment().startOf('day').toISOString(),
+    timeMax: Moment().endOf('day').toISOString(),
+    showDeleted: false,
+    singleEvents: true,
+    maxResults: 10,
+    orderBy: 'startTime',
+  };
 
   useEffect(() => {
     GoogleSignin.configure({
       iosClientId: CLIENT_ID_IOS,
     });
     if (accessToken) {
-      const args = {
-        access_token: accessToken,
-        timeMin: (new Date()).toISOString(),
-        showDeleted: false,
-        singleEvents: true,
-        maxResults: 10,
-        orderBy: 'startTime',
-      };
       props.fetchEvents(args);
     }
   }, [loggedIn, accessToken]);
@@ -117,21 +106,20 @@ const Calendar = (props) => {
           height={80}
         >
           <View>
-            <Text
-              style={styles.title}
-            >
-              {event.summary}
-
-            </Text>
+            <CustomText>
+              <Text style={styles.title}>
+                {event.summary}
+              </Text>
+            </CustomText>
           </View>
           <View>
-            <Text style={styles.text}>
+            <CustomText>
               {parseDate(event.start.dateTime)}
               {' '}
               -
               {' '}
               {parseDate(event.end.dateTime)}
-            </Text>
+            </CustomText>
           </View>
         </Card>
       </TouchableOpacity>
@@ -146,13 +134,10 @@ const Calendar = (props) => {
     );
   }
 
-  if (!fontsLoaded) {
-    renderLoadingView();
-  }
-
   return (
     <View style={styles.container}>
-      <ImageBackground style={styles.backgroundImg} source={require('../../assets/background-landscape.svg')}>
+      <ImageBackground style={styles.backgroundImg} source={require('../../assets/background_gradient.jpg')}>
+        <CalendarTitle />
         <FlatList
           data={props.events}
           renderItem={({ item }) => { return renderEventCell(item); }}
@@ -171,20 +156,26 @@ const Calendar = (props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    height: '100%',
+  },
+  dateButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   card: {
     textAlign: 'left',
   },
+  date: {
+    color: '#FFFFFF',
+    fontSize: 25,
+  },
   title: {
     fontWeight: '600',
-    fontSize: 14,
-    fontFamily: 'DMSans_400Regular',
-  },
-  text: {
-    fontFamily: 'DMSans_400Regular',
+    fontSize: 20,
   },
   backgroundImg: {
     resizeMode: 'cover',
+    height: '100%',
   },
 });
 

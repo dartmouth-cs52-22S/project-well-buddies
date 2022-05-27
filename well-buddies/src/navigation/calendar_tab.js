@@ -9,7 +9,7 @@ const Stack = createStackNavigator();
 // "name" prop is the name of the route
 function CalendarTab() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen
         name="Calendar"
         component={Calendar}
