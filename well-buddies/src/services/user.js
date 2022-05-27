@@ -2,7 +2,7 @@ import axios from 'axios';
 import { ROOT_URL, LOCAL_URL } from '../constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const URL = LOCAL_URL;
+const URL = ROOT_URL;
 
 // sign up
 export const signUp = async (userData, user, token) => {
