@@ -42,13 +42,15 @@
         "react"
     ],
     "parserOptions": {
+        "ecmaVersion": 6,
+        "sourceType": "module",
         "ecmaFeatures": {
-            "jsx": true,
-            "sourceType": "module"
-        },
+            "jsx": true
+        }
+      },
         "requireConfigFile": false
     }
-}
+
 
 
 // yarn add --dev eslint eslint-config-airbnb eslint-plugin-import eslint-plugin-react eslint-plugin-jsx-a11y babel-eslint
