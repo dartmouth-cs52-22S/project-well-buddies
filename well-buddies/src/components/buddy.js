@@ -1,5 +1,7 @@
 import React, { Component, componentDidMount,useState } from 'react';
+import { connect } from 'react-redux';
 import { Icon } from 'react-native-elements'
+import { fetchBuddy, setNewBuddy } from '../state/actions/buddy';
 import {
   StyleSheet,
   Text,
@@ -11,8 +13,12 @@ import {
   SafeAreaView
 } from 'react-native';
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import Cat from '../assets/cat';
+import Dog from '../assets/dog';
+import Panda from '../assets/panda';
+import CatHead from '../assets/cat-head';
 
-export default class Buddy extends Component {
+class Buddy extends Component {
   constructor(props) {
       super(props);
       this.state = {
@@ -26,9 +32,8 @@ export default class Buddy extends Component {
   }));
   };
 
-  // onInputChangeName = (event) => {
-  //   this.state.name=event.target.value
-  // };
+  componentDidMount = async () => { await this.props.fetchBuddy();};
+
   onInputChangeName = (newName) => {
     this.setState({ name: newName })
   }
@@ -47,9 +52,14 @@ export default class Buddy extends Component {
                 </TouchableOpacity>
                 </View>
             <View style={styles.header}>
-                <Text style={styles.name}>Your Buddy</Text>       
+                <Text style={styles.name}>Your Buddy: {this.props.petName}</Text>       
                 </View>
-            <Image style={{width: 250, height: 250}} source={require('../assets/buddy.png')}/>
+            <View style={styles.pet}>
+              {this.props.pet === "Dog" ? <Dog/> : <View/>}
+              {this.props.pet === "Cat" ? <Cat/> : <View/>}
+              {this.props.pet === "Panda" ? <Panda/> : <View/>}
+            </View>
+            
             <View style={styles.body}>
                 <Text style={styles.age}>Age: 10 days</Text>
                 <Text style={styles.birthday}>Birthday: May 10, 2022</Text>
@@ -64,7 +74,11 @@ export default class Buddy extends Component {
                 <View style={styles.headerEdit}>
                 <Text style={styles.headerEdit}>Edit Buddy Profile</Text>       
                 </View>
-          <Image style={{width: 200, height: 200, marginBottom: 20}} source={require('../assets/buddy.png')}/>
+            <View style={styles.pet}>
+              {this.props.pet === "Dog" ? <Dog/> : <View/>}
+              {this.props.pet === "Cat" ? <Cat/> : <View/>}
+              {this.props.pet === "Panda" ? <Panda/> : <View/>}
+            </View>
           <View style={styles.bodyEdit}>
                 <Text style={styles.editName}>Name</Text>  
                 <TextInput
@@ -81,9 +95,16 @@ export default class Buddy extends Component {
                 <Text style={styles.editChange}>Change Buddy</Text>  
                 </View>
           <View style={styles.buddyOption}>
-          <Image style={{width: 70, height: 70, marginRight: 30}} source={require('../assets/buddyicon1.png')}/>
-          <Image style={{width: 70, height: 70, marginRight: 30}} source={require('../assets/buddyicon2.png')}/>
-          <Image style={{width: 70, height: 70}} source={require('../assets/buddyicon3.png')}/>
+            {/* replace all with head I'm just lazy */}
+            <View style={{aspectRatio: 1, width: '30%'}}>
+              <Cat/>
+            </View>
+            <View style={{aspectRatio: 1, width: '30%'}}>
+              <Dog/>
+            </View>
+            <View style={{aspectRatio: 1, width: '30%'}}>
+              <Panda/>
+            </View>
           </View>
           <Pressable style={styles.button} onPress={() => { this.editMode(); }}>
       <Text style={styles.buttonTitle}>Save</Text>
@@ -106,7 +127,7 @@ const styles = StyleSheet.create({
     alignItems:"center",
   },
   bodyEdit:{
-    alignItems:"left",
+    alignItems: 'flex-start',
   },
   editName:{
     fontSize:16,
@@ -185,5 +206,18 @@ const styles = StyleSheet.create({
     fontSize:30,
     marginBottom:10,
   },
+  pet: {
+    width: '50%',
+    aspectRatio: 1,
+  }
   
 });
+
+const mapStateToProps = (state) => (
+  {
+    pet: state.buddy.pet,
+    petName: state.buddy.petName,
+  }
+);
+
+export default connect( mapStateToProps, {fetchBuddy, setNewBuddy})(Buddy);

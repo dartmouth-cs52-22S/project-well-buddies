@@ -16,7 +16,7 @@ export const signIn = async () => {
     const userObject = await GoogleSignin.signIn();
     const token = await GoogleSignin.getTokens();
     addScope();
-    AsyncStorage.setItem('googleAccessCode', token.accessToken);
+    await AsyncStorage.setItem('googleAccessCode', token.accessToken);
     return userObject;
   } catch (error) {
     if (error.code === statusCodes.SIGN_IN_CANCELLED) {
@@ -42,7 +42,7 @@ export const signIn = async () => {
 
 export const signOut = async () => {
   try {
-    AsyncStorage.removeItem('googleAccessCode');
+    await AsyncStorage.removeItem('googleAccessCode');
     await GoogleSignin.revokeAccess();
     await GoogleSignin.signOut();
   } catch (error) {

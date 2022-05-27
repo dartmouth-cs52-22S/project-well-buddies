@@ -27,8 +27,9 @@ export const signIn = async (token) => {
     token,
   };
   try {
-    const { data } = await axios.post(`${URL}/signin`, payload);
-    return data;
+    const response = await axios.post(`${URL}/signin`, payload);
+    const newToken = response.data.jwt.token;
+    return newToken;  
   } catch (error) {
     console.log(error);
     throw new Error(error);
@@ -36,11 +37,23 @@ export const signIn = async (token) => {
 };
 
 export const getBuddy = async (token) => {
+  try {
+    const response = await axios.get(`${URL}/buddy/${token}`);
+    console.log(response.data);
+    return response;
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
+export const setBuddy = async (token, newBuddy, newBuddyName) => {
   const payload = {
-    idToken: token,
+    token,
+    pet: newBuddy, 
+    petName: newBuddyName
   };
   try {
-    const { data } = await axios.get(`${URL}/buddy`, payload);
+    const { data } = await axios.patch(`${URL}/buddy`, payload);
     return data;
   } catch (error) {
     console.log(error);

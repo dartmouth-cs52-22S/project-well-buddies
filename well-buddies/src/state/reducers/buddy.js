@@ -1,17 +1,18 @@
 /* eslint-disable no-param-reassign */
-import { produce } from 'immer';
-import { ActionTypes } from '../actions/calendar';
+import { ActionTypes } from '../actions/buddy';
+import {produce} from 'immer';
 
 const initialState = {
-  all: [],
-  current: {},
+  pet: '',
+  petName: '',
 };
 
 const BuddyReducer = produce((draftState, action = {}) => {
   switch (action.type) {
     case ActionTypes.FETCH_BUDDY:
-      console.log('fetch buddy', action.payload);
-      draftState.all = action.payload;
+      console.log('fetch buddy hm', action.payload);
+      draftState.pet = action.payload.pet;
+      draftState.petName = action.payload.petName;
       break;
     default:
       break;
