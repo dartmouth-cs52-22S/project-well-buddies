@@ -50,6 +50,7 @@ function MainTabBar() {
         <Tab.Screen name="Buddy" component={Buddy} />
         <Tab.Screen name="Calendar" component={CalendarTab} />
         <Tab.Screen name="Profile" component={Profile} />
+
       </Tab.Navigator>
     </NavigationContainer>
   );
