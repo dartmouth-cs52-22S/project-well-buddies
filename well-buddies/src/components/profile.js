@@ -1,11 +1,23 @@
-import React, { Component } from 'react';
-import { StyleSheet, View, Text, Image, ImageBackground, TouchableOpacity } from 'react-native';
+import React from 'react';
+import { SafeAreaView, StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
 import { Button } from 'react-native-elements';
 import Ionicons from 'react-native-vector-icons/FontAwesome';
+import { signoutUser } from '../state/actions/user';
+// import { useNavigate } from 'react-router-dom';
+// import { useDispatch } from 'react-redux';
 
-class Profile extends Component {
-  render() {
+function Profile() {
+
+  // const dispatch = useDispatch();
+  // const navigate = useNavigate();
+
+  // const signOutAction = () => { 
+  //   dispatch(signoutUser(navigate));
+  // };
+
     return (
+    <SafeAreaView>
+    
     <View style={styles.pageContainer}>       
         <View style={styles.header}>
               
@@ -19,8 +31,9 @@ class Profile extends Component {
                 <Image source={require('../assets/user_profile.jpeg')} style={styles.profileImage}></Image>
               </View>
 
-            <Ionicons name={'edit'} size={26} color='#FFFF' style={styles.editIcon} />
-            {/* <Ionicons name={'edit'} size={26} color='#FFFF' style={styles.editIcon} onPress={() => this.props.navigation.navigate('/')} /> */}
+            <TouchableOpacity>
+            <Ionicons name={'edit'} size={26} color='#45587C' style={styles.editIcon} />
+            </TouchableOpacity>
              
             </View>
 
@@ -58,11 +71,8 @@ class Profile extends Component {
                                 <Ionicons name={'calendar-check-o'} size={70} color='#A1CFE9' style={styles.calendarIcon} />
                             </View>
                             <Text style={styles.historyMoodText}>View History</Text>
-                        </View>
-                        
-                    </View>
-                    
-
+                        </View>      
+                    </View>          
                 </View>
             </View>
             
@@ -81,30 +91,33 @@ class Profile extends Component {
                             <View style={styles.historyMoodIcon}>
                                 <Text>Buddy info</Text>
                             </View>
-                        </View>
-                        
+                        </View>          
                     </View>
-                    
-
-                </View>
-            </View>
-
-            <View style={styles.contentItem}>
-                <Text style={styles.title}>Goals and Preferences</Text>
-                <View style={styles.contentItemBox}>
-                    <View style={styles.goalTextBox}>
-                        <Text>Goal: Exercise More</Text>
-                        <Text>Distress Preferences: Reading, Sleeping</Text>
-                    </View>
-                    
                 </View>
             </View>
         </View> 
+
+
+        <View style={styles.buttonContainer}>
+            <Button
+                style={styles.signoutButton}
+                title='Sign Out'
+                titleStyle={{
+                  color: "white",
+                  fontSize: 15,
+              }}
+              buttonStyle={{
+                backgroundColor: "#A1CFE9",
+            }}
+                // onPress={signOutAction}
+              /> 
+        </View>
     </View>  
+    </SafeAreaView>
       
     );
   }
-}
+
 
 const styles = StyleSheet.create({
 
@@ -120,6 +133,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#3D5DE',
     flexDirection:'column',
     alignItems:'center',
+    backgroundColor:'#B3D5DE',
   },
 
   userInfoBox: {
@@ -131,7 +145,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#B3D5DE",
   },
 
-  userNameBox: {backgroundColor: "#B3D5DE",
+  userNameBox: {
+    backgroundColor: "#B3D5DE",
     width: '30%',
     height: 100,
     alignItems:'center',
@@ -176,7 +191,7 @@ const styles = StyleSheet.create({
      
   userName:{
     color:'#45587C',
-    fontSize: 20,
+    fontSize: 18,
   },
 
   profileImage: {
@@ -186,7 +201,7 @@ const styles = StyleSheet.create({
   },
 
   contentContainer: {
-    height: '75%',
+    height: '60%',
     backgroundColor:'#F6F6EE',
     justifyContent:'center',
   },
@@ -196,7 +211,7 @@ const styles = StyleSheet.create({
   },
 
   contentItem: {
-    height:'33.333%',
+    height:'50%',
     backgroundColor: '#F6F6EE',
     marginHorizontal:16,
     justifyContent:'flex-end',
@@ -298,14 +313,16 @@ contentItemBox: {
   alignItems:'center',      
   },
 
-goalTextBox: {
-  width:'90%',
-  height:'80%',
-  backgroundColor:'#F4F5F4',
-  alignItems:'center',
-  justifyContent:'center', 
-  borderRadius:'13',
-},
+  buttonContainer: {
+    height:'17%',
+    justifyContent:'center',
+  },
+
+  signoutButton: {
+    width:'30%',
+    alignSelf:'center',
+  },
+
 });
 
 export default Profile;

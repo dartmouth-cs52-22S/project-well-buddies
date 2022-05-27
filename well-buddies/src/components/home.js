@@ -1,33 +1,29 @@
 import React, { Component } from 'react';
-import {
-  StyleSheet, View, Text, Image, ImageBackground,
-} from 'react-native';
+import { SafeAreaView, StyleSheet, View, Text, Image, ImageBackground } from 'react-native';
 
-class Home extends Component {
-  render() {
+function Home() {
     return (
+      <SafeAreaView>
       <View style={styles.container}>
-        <ImageBackground source={require('../assets/background.jpg')} resizeMode="cover" style={styles.image}>
+          <ImageBackground source={require('../assets/background.jpg')} resizeMode="cover" style={styles.image}>
           <Text style={styles.welcome}>
             Welcome!
-          </Text>
+          </Text >
           <View style={styles.calendarContainer}>
             <Text style={styles.calendarContainerText}>
-              Today at a glance
-            </Text>
-
-            <View style={styles.calendarContainerInfo}>
-              <Text style={styles.calendarContainerTextTemp}>
-                info from calendar component goes here
-              </Text>
-            </View>
-
+                Today at a glance
+            </Text >
           </View>
-        </ImageBackground>
+          <View style={styles.calendarContainerInfo}>
+            <Text style={styles.calendarContainerTextTemp}>
+              info from calendar component goes here
+            </Text>
+          </View>
+      </ImageBackground>  
       </View>
+      </SafeAreaView>
     );
   }
-}
 
 const styles = StyleSheet.create({
   image: {
