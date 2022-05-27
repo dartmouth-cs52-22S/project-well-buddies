@@ -1,8 +1,9 @@
+/* eslint-disable camelcase */
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/function-component-definition */
 import React, { useEffect, useState } from 'react';
 import {
-  StyleSheet, View, Text, TouchableHighlight, FlatList, TouchableOpacity,
+  StyleSheet, View, Text, FlatList, TouchableOpacity, ActivityIndicator, ImageBackground,
 } from 'react-native';
 import { Card } from 'react-native-elements';
 import {
@@ -12,21 +13,44 @@ import {
 } from '@react-native-google-signin/google-signin';
 import { connect } from 'react-redux';
 import Moment from 'moment';
-import { fetchEvents } from '../../state/actions/calendar';
+import {
+  useFonts,
+  DMSans_400Regular,
+  DMSans_400Regular_Italic,
+  DMSans_500Medium,
+  DMSans_500Medium_Italic,
+  DMSans_700Bold,
+  DMSans_700Bold_Italic,
+} from '@expo-google-fonts/dm-sans'; import { fetchEvents } from '../../state/actions/calendar';
 
 const Calendar = (props) => {
   const [loggedIn, setloggedIn] = useState(false);
   const [userInfo, setuserInfo] = useState([]);
   const [accessToken, setAccessToken] = useState('');
   const CLIENT_ID_IOS = '301956188397-rtuq8kgubluo5ismq4g9pq4cn9bag7ul.apps.googleusercontent.com';
+  const [fontsLoaded] = useFonts({
+    DMSans_400Regular,
+    DMSans_400Regular_Italic,
+    DMSans_500Medium,
+    DMSans_500Medium_Italic,
+    DMSans_700Bold,
+    DMSans_700Bold_Italic,
+  });
 
   useEffect(() => {
     GoogleSignin.configure({
       iosClientId: CLIENT_ID_IOS,
-      scopes: ['https://www.googleapis.com/auth/calendar'],
     });
     if (accessToken) {
-      props.fetchEvents(accessToken);
+      const args = {
+        access_token: accessToken,
+        timeMin: (new Date()).toISOString(),
+        showDeleted: false,
+        singleEvents: true,
+        maxResults: 10,
+        orderBy: 'startTime',
+      };
+      props.fetchEvents(args);
     }
   }, [loggedIn, accessToken]);
 
@@ -71,14 +95,14 @@ const Calendar = (props) => {
   };
 
   const addScope = async () => {
-    const scope = await GoogleSignin.addScopes({ scopes: ['https://www.googleapis.com/auth/calendar', 'https://www.googleapis.com/auth/calendar.events'] });
-    console.log('add scpope', scope);
+    await GoogleSignin.addScopes({ scopes: ['https://www.googleapis.com/auth/calendar', 'https://www.googleapis.com/auth/calendar.events'] });
   };
 
   function parseDate(dateTime) {
     Moment.locale('en');
     return Moment(dateTime).format('h:mm A');
   }
+
   function showEventDetail(event) {
     props.navigation.navigate('Detail', { event });
   }
@@ -101,7 +125,7 @@ const Calendar = (props) => {
             </Text>
           </View>
           <View>
-            <Text>
+            <Text style={styles.text}>
               {parseDate(event.start.dateTime)}
               {' '}
               -
@@ -114,18 +138,32 @@ const Calendar = (props) => {
     );
   }
 
+  function renderLoadingView() {
+    return (
+      <View style={styles.loading}>
+        <ActivityIndicator size="large" color="#0000ff" />
+      </View>
+    );
+  }
+
+  if (!fontsLoaded) {
+    renderLoadingView();
+  }
+
   return (
     <View style={styles.container}>
-      <FlatList
-        data={props.events}
-        renderItem={({ item }) => { return renderEventCell(item); }}
-      />
-      <GoogleSigninButton
-        style={{ width: 192, height: 48 }}
-        size={GoogleSigninButton.Size.Wide}
-        color={GoogleSigninButton.Color.Dark}
-        onPress={signIn}
-      />
+      <ImageBackground style={styles.backgroundImg} source={require('../../assets/background-landscape.svg')}>
+        <FlatList
+          data={props.events}
+          renderItem={({ item }) => { return renderEventCell(item); }}
+        />
+        <GoogleSigninButton
+          style={{ width: 192, height: 48 }}
+          size={GoogleSigninButton.Size.Wide}
+          color={GoogleSigninButton.Color.Dark}
+          onPress={signIn}
+        />
+      </ImageBackground>
     </View>
   );
 };
@@ -139,7 +177,14 @@ const styles = StyleSheet.create({
   },
   title: {
     fontWeight: '600',
-    fontSize: 16,
+    fontSize: 14,
+    fontFamily: 'DMSans_400Regular',
+  },
+  text: {
+    fontFamily: 'DMSans_400Regular',
+  },
+  backgroundImg: {
+    resizeMode: 'cover',
   },
 });
 

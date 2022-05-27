@@ -26,11 +26,10 @@ export function getPrimaryCalendar(accessToken) {
   });
 }
 
-export function getCalendarEvents(accessToken) {
-  const params = {
-    access_token: accessToken,
-  };
-
+export function getCalendarEvents(params) {
+  // const params = {
+  //   access_token: accessToken,
+  // };
   return new Promise((resolve, reject) => {
     axios.get(`${API_URL}primary/events`, { params })
       .then((response) => {

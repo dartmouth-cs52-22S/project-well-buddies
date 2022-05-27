@@ -6,11 +6,10 @@ export const ActionTypes = {
   ERROR_SET: 'ERROR_SET',
 };
 
-export function fetchEvents(accessToken) {
+export function fetchEvents(params) {
   return (dispatch) => {
-    getCalendarEvents(accessToken)
+    getCalendarEvents(params)
       .then((response) => {
-        console.log('accesstoken', accessToken);
         dispatch({ type: ActionTypes.FETCH_EVENTS, payload: response.data.items });
       })
       .catch((error) => {
