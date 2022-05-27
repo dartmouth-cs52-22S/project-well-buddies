@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { SafeAreaView, StyleSheet, View, Text, Image, ImageBackground } from 'react-native';
 
-class Home extends Component {
-  render() {
+function Home() {
     return (
       <SafeAreaView>
       <View style={styles.container}>
@@ -25,7 +24,6 @@ class Home extends Component {
       </SafeAreaView>
     );
   }
-}
 
 const styles = StyleSheet.create({
   image: {
