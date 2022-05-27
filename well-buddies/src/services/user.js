@@ -1,34 +1,35 @@
 import axios from 'axios';
+import { ROOT_URL, LOCAL_URL } from '../constants'
 
-const URL = 'https://well-buddies-api-ac5z.onrender.com/api/user';
+const URL = LOCAL_URL;
 
-// sign up 
-export const signUp = async (email, password, userData) => {
+// sign up
+export const signUp = async (userData, user, token) => {
   const payload = {
     ...userData,
-    email,
-    password,
+    googleUser: JSON.stringify(user),
+    token,
   };
   try {
-    const { data } = await axios.post(`${URL}/signup`, payload);
-    return data;
+    console.log('payload', payload);
+    const response = await axios.post(`${URL}/signup`, payload);
+    const token = response.data.jwt.token;
+    return token;
   } catch (error) {
     console.log(error);
     throw new Error(error);
   }
 };
 
-export const signIn = async(email, password) => {
+export const signIn = async (token) => {
   const payload = {
-    email,
-    password,
+    token,
   };
-  try{
-    const { data } = await axios.post(`${ROOT_URL}/signin${API_KEY}`, payload);
+  try {
+    const { data } = await axios.post(`${URL}/signin`, payload);
     return data;
-
   } catch (error) {
-    console.log(error); 
+    console.log(error);
     throw new Error(error);
   }
-}
+};

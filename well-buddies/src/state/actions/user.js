@@ -1,7 +1,5 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { signUp, signIn } from '../../services/user';
-
-const ROOT_URL = 'https://platform-rest-api-withauth.onrender.com/api';
-const API_KEY = '';
 
 export const ActionTypes = {
   AUTH_USER: 'AUTH_USER',
@@ -18,19 +16,18 @@ export function authError(error) {
   };
 }
 
-export function signinUser({ email, password }, navigate) {
+export function signinUser({ token }) {
   // takes in an object with email and password (minimal user object)
   // returns a thunk method that takes dispatch as an argument (just like our create post method really)
   // does an axios.post on the /signin endpoint and passes in { email, password}
   // on success does:
   //  dispatch({ type: ActionTypes.AUTH_USER });
-  //  localStorage.setItem('token', response.data.token);
+  //  AsyncStorage.setItem('token', response.data.token);
   // on error should dispatch(authError(`Sign In Failed: ${error.response.data}`));
   return (dispatch) => {
-    signIn(email, password).then((response) => {
+    signIn(token).then((response) => {
       dispatch({ type: ActionTypes.AUTH_USER });
-      localStorage.setItem('token', response.data.token);
-      navigate('/');
+      AsyncStorage.setItem('wellbuddies-token', response.data.token);
     }).catch((error) => {
       console.log(`ERROR IN SIGNIN: ${error}`);
       dispatch(authError(`Sign In Failed: ${error.response.data}`));
@@ -38,19 +35,18 @@ export function signinUser({ email, password }, navigate) {
   };
 }
 
-export function signupUser({ userData, email, password }, navigate) {
+export function signupUser(userData, user, token) {
   // takes in an object with email and password (minimal user object)
   // returns a thunk method that takes dispatch as an argument (just like our create post method really)
   // does an axios.post on the /signup endpoint (only difference from above)
   // on success does:
   //  dispatch({ type: ActionTypes.AUTH_USER });
-  //  localStorage.setItem('token', response.data.token);
+  //  AsyncStorage.setItem('token', response.data.token);
   // on error should dispatch(authError(`Sign Up Failed: ${error.response.data}`));
   return (dispatch) => {
-    signUp(email, password, userData).then((response) => {
+    signUp(userData, user, token).then((jwt) => {
       dispatch({ type: ActionTypes.AUTH_USER });
-      localStorage.setItem('token', response.data.token);
-      navigate('/');
+      AsyncStorage.setItem('token', jwt);
     }).catch((error) => {
       console.log(`ERROR IN SIGNIN: ${error}`);
       dispatch(authError(`Sign Up Failed: ${error.response.data}`));
@@ -58,12 +54,11 @@ export function signupUser({ userData, email, password }, navigate) {
   };
 }
 
-// deletes token from localstorage
+// deletes token from AsyncStorage
 // and deauths
-export function signoutUser(navigate) {
+export function signoutUser() {
   return (dispatch) => {
-    localStorage.removeItem('token');
+    AsyncStorage.removeItem('token');
     dispatch({ type: ActionTypes.DEAUTH_USER });
-    navigate('/');
   };
 }

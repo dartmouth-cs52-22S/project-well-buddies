@@ -1,10 +1,11 @@
 import axios from 'axios';
+import { LOCAL_URL, ROOT_URL } from '../constants';
 
-const API_URL = 'https://well-buddies-api-ac5z.onrender.com/api';
+const URL = LOCAL_URL;
 
 const apiTest = () => {
   return new Promise((resolve, reject) => {
-    axios.get(API_URL)
+    axios.get(URL)
       .then((response) => {
         resolve(response.data);
       })

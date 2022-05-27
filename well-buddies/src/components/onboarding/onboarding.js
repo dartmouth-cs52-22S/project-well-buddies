@@ -25,7 +25,6 @@ function Onboarding(props) {
   });
 
   const goBack = () => {
-    console.log(tempUser);
     if (stage === 'Name') {
       closeModal();
     } else {
@@ -35,7 +34,6 @@ function Onboarding(props) {
   };
 
   const goNext = () => {
-    console.log(tempUser);
     if (stage === 'SignUp') {
       // do something here to submit
     } else {
@@ -83,7 +81,7 @@ function Onboarding(props) {
         {stage === 'BuddyName' ? (<BuddyName pet={tempUser.pet} setTempBuddyName={(newPet) => { setTempUser({ ...tempUser, petName: newPet }); }} />) : (<View />)}
         {stage === 'Calm' ? (<Calm activities={calm} add={addCalmActivity} remove={removeCalmActivity} />) : (<View />)}
         {stage === 'Stress' ? (<Stress activities={stress} add={addStressActivity} remove={removeStressActivity} />) : (<View />)}
-        {stage === 'SignUp' ? (<SignUp />) : (<View />)}
+        {stage === 'SignUp' ? (<SignUp userFields={tempUser} />) : (<View />)}
       </View>
       <View style={{ flexGrow: 100 }}><Text> </Text></View>
       <View style={styles.bottomBar}>

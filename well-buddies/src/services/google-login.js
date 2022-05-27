@@ -15,12 +15,9 @@ export const signIn = async () => {
     await GoogleSignin.hasPlayServices();
     const userObject = await GoogleSignin.signIn();
     const token = await GoogleSignin.getTokens();
-    console.log(userObject);
-    console.log(token);
-    /* setAccessToken(token.accessToken);
-    setloggedIn(true);
-    setuserInfo(userObject); */
     addScope();
+    AsyncStorage.setItem('googleAccessCode', token.accessToken);
+    return userObject;
   } catch (error) {
     if (error.code === statusCodes.SIGN_IN_CANCELLED) {
       // user cancelled the login flow
@@ -36,23 +33,23 @@ export const signIn = async () => {
       // play services not available or outdated
     } else {
       console.log(error);
+      alert('SIGN IN ERROR');
       // some other error happened
     }
+    return [null, null];
   }
 };
 
 export const signOut = async () => {
   try {
+    AsyncStorage.removeItem('googleAccessCode');
     await GoogleSignin.revokeAccess();
     await GoogleSignin.signOut();
-    /* setloggedIn(false);
-    setuserInfo([]); */
   } catch (error) {
     console.error(error);
   }
 };
 
 export const addScope = async () => {
-  const scope = await GoogleSignin.addScopes({ scopes: ['https://www.googleapis.com/auth/calendar', 'https://www.googleapis.com/auth/calendar.events'] });
-  console.log('add scpope', scope);
+  GoogleSignin.addScopes({ scopes: ['https://www.googleapis.com/auth/calendar', 'https://www.googleapis.com/auth/calendar.events'] });
 };

@@ -13,7 +13,7 @@ function Name(props) {
     <View style={styles.nameContainer}>
       <View style={styles.name}>
         <Text style={styles.nameText}>What&apos;s your name?</Text>
-        <TextInput style={styles.nameTextInput} placeholder="Your name" value={name} onChangeText={(newName) => { setName(newName); setTempName(newName); console.log(newName); }} />
+        <TextInput style={styles.nameTextInput} placeholder="Your name" value={name} onChangeText={(newName) => { setName(newName); setTempName(newName); }} />
       </View>
     </View>
   );
