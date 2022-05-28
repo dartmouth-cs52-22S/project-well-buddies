@@ -16,7 +16,7 @@ export function authError(error) {
   };
 }
 
-export  function signinUser( token ) {
+export  function signinUser(idToken) {
   // takes in an object with email and password (minimal user object)
   // returns a thunk method that takes dispatch as an argument (just like our create post method really)
   // does an axios.post on the /signin endpoint and passes in { email, password}
@@ -25,9 +25,9 @@ export  function signinUser( token ) {
   //  AsyncStorage.setItem('token', response.data.token);
   // on error should dispatch(authError(`Sign In Failed: ${error.response.data}`));
   return (dispatch) => {
-    signIn(token).then(async (jwt) => {
+    signIn(idToken).then(async (jwt) => {
       dispatch({ type: ActionTypes.AUTH_USER });
-      await AsyncStorage.setItem('token', jwt)
+      await AsyncStorage.setItem('jwt', jwt)
     }).catch((error) => {
       console.log(`ERROR IN SIGNIN: ${error}`);
       dispatch(authError(`Sign In Failed: ${error.response.data}`));
@@ -35,7 +35,7 @@ export  function signinUser( token ) {
   };
 }
 
-export function signupUser(userData, user, token) {
+export function signupUser(userData, idToken) {
   // takes in an object with email and password (minimal user object)
   // returns a thunk method that takes dispatch as an argument (just like our create post method really)
   // does an axios.post on the /signup endpoint (only difference from above)
@@ -44,9 +44,9 @@ export function signupUser(userData, user, token) {
   //  AsyncStorage.setItem('token', response.data.token);
   // on error should dispatch(authError(`Sign Up Failed: ${error.response.data}`));
   return (dispatch) => {
-    signUp(userData, user, token).then( async (jwt) => {
+    signUp(userData, idToken).then( async (jwt) => {
       dispatch({ type: ActionTypes.AUTH_USER });
-      await AsyncStorage.setItem('token', jwt);
+      await AsyncStorage.setItem('jwt', jwt);
     }).catch((error) => {
       console.log(`ERROR IN SIGNIN: ${error}`);
       dispatch(authError(`Sign Up Failed: ${error.response.data}`));
@@ -58,7 +58,7 @@ export function signupUser(userData, user, token) {
 // and deauths
 export function signoutUser() {
   return async (dispatch) => {
-    await AsyncStorage.removeItem('token');
+    await AsyncStorage.removeItem('jwt');
     dispatch({ type: ActionTypes.DEAUTH_USER });
   };
 }

@@ -3,7 +3,8 @@ import { SafeAreaView, StyleSheet, View, Text, Image, TouchableOpacity } from 'r
 import { Button } from 'react-native-elements';
 import { connect } from 'react-redux';
 import Ionicons from 'react-native-vector-icons/FontAwesome';
-import { signoutUser, fetchBuddy } from '../state/actions/user';
+import { signoutUser } from '../state/actions/user';
+import { fetchBuddy } from '../state/actions/buddy';
 import { signOut } from '../services/google-login';
 import Cat from '../assets/cat';
 import Dog from '../assets/dog';
