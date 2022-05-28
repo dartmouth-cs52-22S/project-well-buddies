@@ -6,9 +6,9 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 // import About from '../components/about';
 import Ionicons from 'react-native-vector-icons/FontAwesome';
 // import SearchTab from './search_tab';
-import Home from '../components/home';
+import Home from '../components/home/home';
 import Buddy from '../components/buddy';
-import Profile from '../components/profile';
+import Profile from '../components/profile/profile';
 import CalendarTab from './calendar_tab';
 
 const Tab = createBottomTabNavigator();
