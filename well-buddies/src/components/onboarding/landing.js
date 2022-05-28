@@ -9,16 +9,21 @@ import CatHead from '../../assets/cat-head';
 import { signIn } from '../../services/google-login';
 import GetStarted from '../../assets/get-started';
 import { signinUser } from '../../state/actions/user';
+import { fetchBuddy } from '../../state/actions/buddy';
 
 function Landing(props) {
   const [onboarding, setOnboarding] = useState(false);
 
-  // eslint-disable-next-line no-shadow
-  const { signinUser } = props;
-
   const signInFunction = async () => {
     const userInfo = await signIn();
-    signinUser(userInfo.idToken);
+    if (userInfo === null){
+      alert('Something went wrong during sign in.')
+    } else {
+      if (userInfo !== "cancelled") {
+        await props.signinUser(userInfo.idToken);
+        await props.fetchBuddy();
+      }
+    }
   };
 
   return (
@@ -57,4 +62,4 @@ function Landing(props) {
   );
 }
 
-export default connect(null, { signinUser })(Landing);
+export default connect(null, { signinUser, fetchBuddy })(Landing);

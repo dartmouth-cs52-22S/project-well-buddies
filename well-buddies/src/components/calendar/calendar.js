@@ -14,7 +14,7 @@ import {
 import { connect } from 'react-redux';
 import Moment from 'moment';
 import { fetchEvents } from '../../state/actions/calendar';
-// import CustomText from '../custom/custom_text';
+import CustomText from '../custom/custom_text';
 import CalendarTitle from './calendar_title';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -67,14 +67,14 @@ const Calendar = (props) => {
           height={80}
         >
           <View>
-            {/* <CustomText> */}
+            <CustomText>
               <Text style={styles.title}>
                 {event.summary}
               </Text>
-            {/* </CustomText> */}
+            </CustomText>
           </View>
           <View>
-            {/* <CustomText> */}
+            <CustomText>
             <Text>
               {parseDate(event.start.dateTime)}
               {' '}
@@ -82,7 +82,7 @@ const Calendar = (props) => {
               {' '}
               {parseDate(event.end.dateTime)}
             </Text>
-            {/* </CustomText> */}
+            </CustomText>
           </View>
         </Card>
       </TouchableOpacity>

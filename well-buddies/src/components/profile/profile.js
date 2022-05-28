@@ -3,11 +3,12 @@ import { SafeAreaView, StyleSheet, View, Text, Image, TouchableOpacity, Modal } 
 import { Button } from 'react-native-elements';
 import { connect } from 'react-redux';
 import Ionicons from 'react-native-vector-icons/FontAwesome';
-import { signoutUser, fetchBuddy } from '../../state/actions/user';
-import { signOut } from '../../services/google-login';
-import Cat from '../../assets/cat';
-import Dog from '../../assets/dog';
-import Panda from '../../assets/panda';
+import { signoutUser } from '../state/actions/user';
+import { fetchBuddy } from '../state/actions/buddy';
+import { signOut } from '../services/google-login';
+import Cat from '../assets/cat';
+import Dog from '../assets/dog';
+import Panda from '../assets/panda';
 import EditProfile from './edit_profile';
 
 function Profile(props) {
