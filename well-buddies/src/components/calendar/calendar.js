@@ -86,6 +86,7 @@ const Calendar = (props) => {
       </TouchableOpacity>
     );
   }
+  signout
 
   function renderLoadingView() {
     return (
