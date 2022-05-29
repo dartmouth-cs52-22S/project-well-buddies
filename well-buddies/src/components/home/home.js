@@ -1,13 +1,12 @@
 import React, { Component, useEffect } from 'react';
 import {
-  SafeAreaView, StyleSheet, View, Text, Image, ImageBackground,
-  Modal,
+  SafeAreaView, StyleSheet, View, Text, Image, ImageBackground, Modal,
 } from 'react-native';
 import { connect } from 'react-redux';
 import CalendarSummary from './calendar_summary';
-import Cat from '../../assets/cat';
-import Dog from '../../assets/dog';
-import Panda from '../../assets/panda';
+import Cat from '../../assets/img/cat/cat';
+import Dog from '../../assets/img/dog/dog';
+import Panda from '../../assets/img/panda/panda';
 import Checkin from '../checkin';
 import { fetchEmotion } from '../../state/actions/emotion';
 import { fetchBuddy } from '../../state/actions/buddy';
@@ -31,15 +30,17 @@ function Home(props) {
             </Modal>
           )
           : (
-            <View/>
+            <View />
           )}
-        <ImageBackground source={require('../../assets/home_background.png')} resizeMode="cover" style={styles.backgroundImage}>
-          <Text style={styles.welcome}>
-            Welcome!
-          </Text>
+        <ImageBackground source={require('../../assets/img/background_gradient.jpg')} resizeMode="cover" style={styles.backgroundImage}>
+          <View style={styles.welcomeContainer}>
+            <Text style={styles.welcome}>
+              Welcome!
+            </Text>
+          </View>
           <View style={styles.calendarContainer}>
             <Text style={styles.calendarContainerText}>
-              Today at a glance
+              Today's Activities
             </Text>
           </View>
           <View style={styles.calendarContainerInfo}>
@@ -65,10 +66,14 @@ const styles = StyleSheet.create({
   backgroundImage: {
     height: '100%',
   },
-
+  welcomeContainer: {
+    marginTop: 60,
+    marginLeft: 16,
+    marginBottom: 8,
+  },
   welcome: {
-    margin: 16,
-    fontSize: 25,
+    fontSize: 32,
+    fontFamily: 'DMSans_700Bold',
     color: 'white',
   },
 
@@ -77,6 +82,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginBottom: 15,
     marginLeft: 16,
+    fontFamily: 'DMSans_400Regular',
   },
 
   calendarContainerInfo: {
@@ -92,6 +98,7 @@ const styles = StyleSheet.create({
     width: 181,
     height: 250,
     marginLeft: 46,
+    marginBottom: 40,
   },
 });
 

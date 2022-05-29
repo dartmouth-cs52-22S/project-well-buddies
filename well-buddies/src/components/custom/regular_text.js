@@ -11,7 +11,7 @@ import {
   DMSans_700Bold_Italic,
 } from '@expo-google-fonts/dm-sans';
 
-function CustomText(props) {
+function RegularText(props) {
   useFonts({
     DMSans_400Regular,
     DMSans_400Regular_Italic,
@@ -20,9 +20,9 @@ function CustomText(props) {
     DMSans_700Bold,
     DMSans_700Bold_Italic,
   });
-  useFonts({
-    DMSans: require('../../assets/fonts/DMSans-Regular.ttf'),
-  });
+  // useFonts({
+  //   DMSans: require('../../assets/fonts/DMSans-Regular.ttf'),
+  // });
   return (
     <Text style={{ fontFamily: 'DMSans_400Regular' }}>
       {props.children}
@@ -30,4 +30,4 @@ function CustomText(props) {
   );
 }
 
-export default CustomText;
+export default RegularText;

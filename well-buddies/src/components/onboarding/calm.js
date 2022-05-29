@@ -3,6 +3,7 @@ import {
   View, Text, ScrollView, TouchableOpacity,
 } from 'react-native';
 import { styles } from './styles';
+import MediumText from '../custom/medium_text';
 
 function Calm(props) {
   const { add, remove, activities } = props;
@@ -22,7 +23,9 @@ function Calm(props) {
   return (
     <View style={styles.nameContainer}>
       <View style={styles.name}>
-        <Text style={styles.nameText}>What are some activities that help you to destress?</Text>
+        <MediumText>
+          <Text style={styles.nameText}>What are some activities that help you to destress?</Text>
+        </MediumText>
       </View>
       <ScrollView contentContainerStyle={styles.activities}>
         { activities.map((activity, idx) => {

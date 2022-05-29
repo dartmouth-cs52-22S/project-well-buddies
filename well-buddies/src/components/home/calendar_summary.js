@@ -2,14 +2,18 @@
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/function-component-definition */
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, Text, FlatList } from 'react-native';
+import {
+  StyleSheet, View, Text, FlatList,
+} from 'react-native';
 import { Card } from 'react-native-elements';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { connect } from 'react-redux';
 import Moment from 'moment';
-import { fetchEvents } from '../../state/actions/calendar';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { fetchEvents } from '../../state/actions/calendar';
+import RegularText from '../custom/regular_text';
 
 const Calendar = (props) => {
   const [accessToken, setAccessToken] = useState('');
@@ -34,7 +38,7 @@ const Calendar = (props) => {
     GoogleSignin.configure({
       iosClientId: CLIENT_ID_IOS,
     });
-    AsyncStorage.getItem('googleAccessCode').then((token) => {setAccessToken(token);})
+    AsyncStorage.getItem('googleAccessCode').then((token) => { setAccessToken(token); });
     if (accessToken) {
       props.fetchEvents(args);
     }
@@ -52,17 +56,20 @@ const Calendar = (props) => {
   function renderEventCell(event) {
     return (
     //   <TouchableOpacity onPress={() => { showEventDetail(event); }}>
-        <Card borderRadius={5}
-          onPress={() => { showEventDetail(event); }}
-          underlayColor="#d1dce0"
-          height={80}
-        >
-          <View>
-              <Text style={styles.title}>
-                {event.summary}
-              </Text>
-          </View>
-          <View>
+      <Card borderRadius={5}
+        onPress={() => { showEventDetail(event); }}
+        underlayColor="#d1dce0"
+        height={80}
+      >
+        <View>
+          <RegularText>
+            <Text style={styles.title}>
+              {event.summary}
+            </Text>
+          </RegularText>
+        </View>
+        <View>
+          <RegularText>
             <Text>
               {parseDate(event.start.dateTime)}
               {' '}
@@ -70,8 +77,9 @@ const Calendar = (props) => {
               {' '}
               {parseDate(event.end.dateTime)}
             </Text>
-          </View>
-        </Card>
+          </RegularText>
+        </View>
+      </Card>
     //   </TouchableOpacity>
     );
   }
@@ -82,17 +90,24 @@ const Calendar = (props) => {
 
   return (
     <View>
+      {Object.entries(props.events).length ? (
         <FlatList
-            data={props.events}
-            renderItem={({ item }) => { return renderEventCell(item); }}
+          data={props.events}
+          renderItem={({ item }) => { return renderEventCell(item); }}
         />
+      )
+        : <Text style={styles.emptyState}>No events for today</Text>}
 
-        <View >
-            <Text style={styles.viewMore} onPress={ () => { showEventCalendar(props.event) }}>
-                VIEW MORE {'>'}
-            </Text>
-        </View>
-        
+      <View>
+        <TouchableOpacity>
+          <Text style={styles.viewMore} onPress={() => { showEventCalendar(props.event); }}>
+            VIEW MORE
+            {' '}
+            {'>'}
+          </Text>
+        </TouchableOpacity>
+      </View>
+
     </View>
   );
 };
@@ -110,11 +125,17 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     fontSize: 20,
   },
-
-  viewMore:{
-    paddingRight:17,
-    alignSelf:'flex-end',
-    color:'#FFFF',
+  emptyState: {
+    color: 'white',
+    fontFamily: 'DMSans_400Regular',
+    marginLeft: 16,
+  },
+  viewMore: {
+    paddingRight: 16,
+    alignSelf: 'flex-end',
+    color: '#FFFF',
+    fontFamily: 'DMSans_500Medium',
+    letterSpacing: 2,
   },
 });
 

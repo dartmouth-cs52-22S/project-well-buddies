@@ -23,7 +23,7 @@ function EditProfile(props) {
                 </TouchableOpacity>
                 <View style={{alignItems:"center"}}>
                     <Text style={{marginTop: -18, fontSize:16, marginBottom:17, color:'#45587C', fontWeight:'600'}}>Edit Profile</Text>
-                    <Image source={require('../../assets/user_profile.jpeg')} style={styles.profileImage}></Image>
+                    <Image source={require('../../assets/img/user_profile.jpeg')} style={styles.profileImage}></Image>
                 </View>
                 
             </View>

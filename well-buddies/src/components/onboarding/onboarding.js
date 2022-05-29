@@ -9,8 +9,8 @@ import BuddyName from './buddyName';
 import Calm from './calm';
 import Stress from './stress';
 import SignUp from './signup';
-import BackButton from '../../assets/back-button';
-import ForwardButton from '../../assets/forward-button';
+import BackButton from '../../assets/img/back-button';
+import ForwardButton from '../../assets/img/forward-button';
 
 function Onboarding(props) {
   const screens = ['Name', 'Pet', 'BuddyName', 'Calm', 'Stress', 'SignUp'];
