@@ -23,8 +23,6 @@ const Calendar = (props) => {
   const [date, setDate] = useState(Moment());
   const CLIENT_ID_IOS = '301956188397-rtuq8kgubluo5ismq4g9pq4cn9bag7ul.apps.googleusercontent.com';
 
-  console.log('start moment', Moment().endOf('day').toISOString());
-
   const startOfDay = Moment(date).startOf('day').toISOString();
   const endOfDay = Moment(date).endOf('day').toISOString();
 
@@ -88,6 +86,7 @@ const Calendar = (props) => {
       </TouchableOpacity>
     );
   }
+  signout
 
   function renderLoadingView() {
     return (
