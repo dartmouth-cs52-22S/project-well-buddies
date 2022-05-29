@@ -5,16 +5,15 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const URL = LOCAL_URL;
 
 // sign up
-export const signUp = async (userData, user, token) => {
+export const signUp = async (userData, token) => {
   const payload = {
     ...userData,
-    googleUser: JSON.stringify(user),
     token,
   };
   try {
     console.log('payload', payload);
     const response = await axios.post(`${URL}/signup`, payload);
-    const newToken = response.data.jwt.token;
+    const newToken = response.data;
     return newToken;
   } catch (error) {
     console.log(error);
@@ -22,13 +21,13 @@ export const signUp = async (userData, user, token) => {
   }
 };
 
-export const signIn = async (token) => {
+export const signIn = async (tokenId) => {
   const payload = {
-    token,
+    token: tokenId,
   };
   try {
     const response = await axios.post(`${URL}/signin`, payload);
-    const newToken = response.data.jwt.token;
+    const newToken = response.data;
     return newToken;  
   } catch (error) {
     console.log(error);

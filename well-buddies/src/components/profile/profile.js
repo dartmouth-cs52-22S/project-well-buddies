@@ -1,13 +1,15 @@
-import React, { useEffect } from 'react';
-import { SafeAreaView, StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { SafeAreaView, StyleSheet, View, Text, Image, TouchableOpacity, Modal } from 'react-native';
 import { Button } from 'react-native-elements';
 import { connect } from 'react-redux';
 import Ionicons from 'react-native-vector-icons/FontAwesome';
-import { signoutUser, fetchBuddy } from '../state/actions/user';
+import { signoutUser } from '../state/actions/user';
+import { fetchBuddy } from '../state/actions/buddy';
 import { signOut } from '../services/google-login';
 import Cat from '../assets/cat';
 import Dog from '../assets/dog';
 import Panda from '../assets/panda';
+import EditProfile from './edit_profile';
 
 function Profile(props) {
 
@@ -18,9 +20,11 @@ function Profile(props) {
 
     useEffect(()=>{ async () => {await props.fetchBuddy();}}, []);
 
+    const [editProfile, setEditProfile] = useState(false);
+
     return (
     <SafeAreaView>
-    
+      
     <View style={styles.pageContainer}>       
         <View style={styles.header}>
               
@@ -31,13 +35,13 @@ function Profile(props) {
               </View>
 
               <View style={styles.userImageBox}>
-                <Image source={require('../assets/user_profile.jpeg')} style={styles.profileImage}></Image>
+                <Image source={require('../../assets/user_profile.jpeg')} style={styles.profileImage}></Image>
               </View>
 
             <TouchableOpacity>
-            <Ionicons name={'edit'} size={26} color='#45587C' style={styles.editIcon} />
+            <Ionicons name={'edit'} size={26} color='#45587C' onPress={() => { setEditProfile(true); }} style={styles.editIcon} />
             </TouchableOpacity>
-             
+            
             </View>
 
             <View style={styles.eventInfoBox}>
@@ -118,7 +122,14 @@ function Profile(props) {
                 // onPress={signOutAction}
               /> 
         </View>
-    </View>  
+    </View>
+      {editProfile
+        ? (
+          <Modal animationType="slide" transparent={false}>
+            <EditProfile closeModal={() => setEditProfile(false)} />
+          </Modal>
+        )
+        : <View />} 
     </SafeAreaView>
       
     );

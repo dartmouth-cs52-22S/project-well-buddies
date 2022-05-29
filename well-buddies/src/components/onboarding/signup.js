@@ -1,11 +1,12 @@
 import React from 'react';
 import {
-  View, TouchableOpacity,
+  View, TouchableOpacity, Alert,
 } from 'react-native';
 import { connect } from 'react-redux';
 import GetStarted from '../../assets/get-started';
 import { signIn } from '../../services/google-login';
 import { signupUser } from '../../state/actions/user';
+import { fetchBuddy } from '../../state/actions/buddy';
 
 function SignUp(props) {
   // eslint-disable-next-line no-shadow
@@ -13,7 +14,13 @@ function SignUp(props) {
 
   const signUpUser = async () => {
     const userInfo = await signIn();
-    props.signupUser(userFields, userInfo, userInfo.idToken);
+    if (userInfo === null){
+      alert('Something went wrong during sign in.')
+    } else {
+      if (userInfo !== "cancelled") {
+        await props.signupUser(userFields, userInfo.idToken);
+      }
+    }
   };
 
   return (
@@ -29,4 +36,4 @@ function SignUp(props) {
   );
 }
 
-export default connect(null, { signupUser })(SignUp);
+export default connect(null, { signupUser, fetchBuddy })(SignUp);
