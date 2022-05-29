@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
     height: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor:'beige'
+    backgroundColor:'#F6F6EE'
   },
   name:{
     fontSize: 35,
