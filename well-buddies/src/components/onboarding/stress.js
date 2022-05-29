@@ -3,6 +3,7 @@ import {
   View, Text, ScrollView, TouchableOpacity,
 } from 'react-native';
 import { styles } from './styles';
+import MediumText from '../custom/medium_text';
 
 function Stress(props) {
   const { add, remove, activities } = props;
@@ -22,7 +23,11 @@ function Stress(props) {
   return (
     <View style={styles.nameContainer}>
       <View style={styles.name}>
-        <Text style={styles.nameText}>What are some activities that stress you out?</Text>
+        <View stlye={styles.question}>
+          <MediumText>
+            <Text style={styles.nameText}>What are some activities that stress you out?</Text>
+          </MediumText>
+        </View>
       </View>
       <ScrollView contentContainerStyle={styles.activities}>
         { activities.map((activity, idx) => {

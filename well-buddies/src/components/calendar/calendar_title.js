@@ -6,7 +6,7 @@ import {
 import moment from 'moment';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import DateTimePicker from 'react-native-modal-datetime-picker';
-import CustomText from '../custom/custom_text';
+import RegularText from '../custom/regular_text';
 
 function CalendarTitle(props) {
   const [modalVisible, setModalVisible] = useState(false);
@@ -34,11 +34,11 @@ function CalendarTitle(props) {
         }}
       >
         <View style={styles.dateButton}>
-          <CustomText>
+          <RegularText>
             <Text style={styles.date}>
               {moment(props.date).format('ddd, MMM D')}
             </Text>
-          </CustomText>
+          </RegularText>
           <AntDesign name="down" color="#FFFFFF" size={20} />
         </View>
       </TouchableOpacity>

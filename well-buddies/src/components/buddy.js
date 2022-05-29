@@ -13,9 +13,10 @@ import {
 } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { fetchBuddy, setNewBuddy } from '../state/actions/buddy';
-import Cat from '../assets/cat';
-import Dog from '../assets/dog';
-import Panda from '../assets/panda';
+import Cat from '../assets/img/cat/cat';
+import Dog from '../assets/img/dog/dog';
+import Panda from '../assets/img/panda/panda';
+import RegularText from './custom/regular_text';
 
 class Buddy extends Component {
   constructor(props) {
@@ -54,11 +55,11 @@ class Buddy extends Component {
               </TouchableOpacity>
             </View>
             <View style={styles.header}>
-              <Text style={styles.name}>
-                Your Buddy:
-                {this.props.petName}
-
-              </Text>
+              <RegularText>
+                <Text style={styles.name}>
+                  {this.props.petName}
+                </Text>
+              </RegularText>
             </View>
             <View style={styles.pet}>
               {this.props.pet === 'Dog' ? <Dog /> : <View />}
@@ -67,13 +68,19 @@ class Buddy extends Component {
             </View>
 
             <View style={styles.body}>
-              <Text style={styles.age}>Age: 10 days</Text>
-              <Text style={styles.birthday}>Birthday: May 10, 2022</Text>
-              <Text style={styles.fav}>
-                Favorite Wellness Activities:
-                {'\n'}
-                taking walks, cleaning room
-              </Text>
+              <RegularText>
+                <Text style={styles.age}>Age: 10 days</Text>
+              </RegularText>
+              <RegularText>
+                <Text style={styles.birthday}>Birthday: May 10, 2022</Text>
+              </RegularText>
+              <RegularText>
+                <Text style={styles.fav}>
+                  Favorite Wellness Activities:
+                  {'\n'}
+                  taking walks, cleaning room
+                </Text>
+              </RegularText>
             </View>
           </View>
         </SafeAreaView>
@@ -174,7 +181,7 @@ const styles = StyleSheet.create({
     height: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor:'#F6F6EE'
+    backgroundColor: '#F6F6EE',
   },
   name: {
     fontSize: 35,

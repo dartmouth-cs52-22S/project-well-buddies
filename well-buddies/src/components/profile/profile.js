@@ -6,9 +6,9 @@ import Ionicons from 'react-native-vector-icons/FontAwesome';
 import { signoutUser } from '../../state/actions/user';
 import { fetchBuddy } from '../../state/actions/buddy';
 import { signOut } from '../../services/google-login';
-import Cat from '../../assets/cat';
-import Dog from '../../assets/dog';
-import Panda from '../../assets/panda';
+import Cat from '../../assets/img/cat/cat';
+import Dog from '../../assets/img/dog/dog';
+import Panda from '../../assets/img/panda/panda';
 import EditProfile from './edit_profile';
 
 function Profile(props) {
@@ -35,7 +35,7 @@ function Profile(props) {
               </View>
 
               <View style={styles.userImageBox}>
-                <Image source={require('../../assets/user_profile.jpeg')} style={styles.profileImage}></Image>
+                <Image source={require('../../assets/img/user_profile.jpeg')} style={styles.profileImage}></Image>
               </View>
 
             <TouchableOpacity>

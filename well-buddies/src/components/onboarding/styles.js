@@ -40,7 +40,23 @@ export const styles = StyleSheet.create({
   },
   signInText: {
     color: '#667BA4',
-    fontSize: 12,
+    fontSize: 14,
+    letterSpacing: 1,
+  },
+  question: {
+    paddingBottom: 18,
+  },
+  signUpContainer: {
+    height: Dimensions.get('window').height - 177,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  signUpCat: {
+    height: '40%',
+    aspectRatio: 1,
+    padding: 40,
   },
   nameContainer: {
     height: Dimensions.get('window').height - 177,
@@ -60,6 +76,9 @@ export const styles = StyleSheet.create({
     height: 60,
     borderRadius: 8,
     padding: 16,
+    fontSize: 18,
+    fontFamily: 'DMSans_400Regular',
+    color: '#AABBCB',
   },
   buddy: {
     display: 'flex',
@@ -83,20 +102,21 @@ export const styles = StyleSheet.create({
   activity: {
     width: Dimensions.get('window').width - 32,
     height: 46,
-    marginVertical: 8,
+    marginVertical: 5,
     backgroundColor: '#ffffff',
-    borderRadius: 8,
+    borderRadius: 10,
   },
   activityText: {
     paddingVertical: 12,
     paddingHorizontal: 16,
     color: '#767E95',
     fontSize: 16,
+    fontFamily: 'DMSans_400Regular',
   },
   activityChosen: {
     width: Dimensions.get('window').width - 32,
     height: 46,
-    marginVertical: 8,
+    marginVertical: 5,
     backgroundColor: '#F2F7F9',
     borderColor: '#AABBCB',
     borderWidth: 1,
@@ -107,5 +127,6 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 15,
     color: '#767E95',
     fontSize: 16,
+    fontFamily: 'DMSans_400Regular',
   },
 });

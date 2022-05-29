@@ -3,17 +3,17 @@ import {
   TouchableOpacity, SafeAreaView, StyleSheet, View, Dimensions, Text, Image, ImageBackground,
 } from 'react-native';
 import { connect } from 'react-redux';
-import Cat from '../assets/cat';
-import Dog from '../assets/dog';
-import Panda from '../assets/panda';
+import Cat from '../assets/img/cat/cat';
+import Dog from '../assets/img/dog/dog';
+import Panda from '../assets/img/panda/panda';
 import { fetchBuddy } from '../state/actions/buddy';
 import { createEmotion, fetchEmotion } from '../state/actions/emotion';
-import CustomText from './custom/custom_text';
-import Anguish from '../assets/anguish';
-import Confused from '../assets/confused';
-import Neutral from '../assets/neutral';
-import SlightSmile from '../assets/slight-smile';
-import Smile from '../assets/smile';
+import RegularText from './custom/regular_text';
+import Anguish from '../assets/img/emotions/anguish';
+import Confused from '../assets/img/emotions/confused';
+import Neutral from '../assets/img/emotions/neutral';
+import SlightSmile from '../assets/img/emotions/slight-smile';
+import Smile from '../assets/img/emotions/smile';
 
 class Checkin extends Component {
   // eslint-disable-next-line react/no-arrow-function-lifecycle
@@ -28,13 +28,13 @@ class Checkin extends Component {
             {this.props.pet === 'Cat' ? <Cat /> : <View />}
             {this.props.pet === 'Panda' ? <Panda /> : <View />}
           </View>
-          <CustomText>
+          <RegularText>
             <Text style={styles.checkin}>
               How are you
               {'\n'}
               doing today?
             </Text>
-          </CustomText>
+          </RegularText>
           <View style={styles.buttons}>
             <TouchableOpacity onPress={async () => { await this.props.createEmotion('Anguish'); await this.props.fetchEmotion(); }}>
               <Anguish />
