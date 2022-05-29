@@ -17,31 +17,27 @@ export const signIn = async () => {
     const token = await GoogleSignin.getTokens();
     addScope();
     await AsyncStorage.setItem('googleAccessCode', token.accessToken);
+    await AsyncStorage.setItem('googleIdToken', userObject.idToken);
     return userObject;
   } catch (error) {
     if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-      // user cancelled the login flow
-      console.log(error);
-      alert('Cancel');
-    } else if (error.code === statusCodes.IN_PROGRESS) {
-      alert('Signin in progress');
-      console.log(error);
+      return "cancelled";
+    /* } else if (error.code === statusCodes.IN_PROGRESS) {
       // operation (f.e. sign in) is in progress already
     } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-      alert('PLAY_SERVICES_NOT_AVAILABLE');
       console.log(error);
       // play services not available or outdated
     } else {
       console.log(error);
-      alert('SIGN IN ERROR');
-      // some other error happened
+      // some other error happened */
     }
-    return [null, null];
+    return null;
   }
 };
 
 export const signOut = async () => {
   try {
+    await AsyncStorage.removeItem('googleIdToken');
     await AsyncStorage.removeItem('googleAccessCode');
     await GoogleSignin.revokeAccess();
     await GoogleSignin.signOut();

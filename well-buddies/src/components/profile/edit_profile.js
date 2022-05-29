@@ -1,40 +1,29 @@
 import React, { useState } from 'react';
-import { SafeAreaView, StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
+import { SafeAreaView, StyleSheet, View, Text, Image, TouchableOpacity, Modal } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import { Button } from 'react-native-elements';
 import Ionicons from 'react-native-vector-icons/FontAwesome';
+import Profile from './profile';
 
 
-function EditProfile() {
+function EditProfile(props) {
 
     const [userName, setUserName] = useState('');
-    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
 
-
-    // INPUT VALIDATION
-    // function updateHandler() {
-    //     if (userName === '') {
-    //       alert('Please enter a user name');
-    //     } else if (password !== confirmPassword) {
-    //       alert('Please make sure passwords match');
-    //     } else {
-    //       dispatch action
-    //     }
-    //   }
+    const [backToProfile, setBackToProfile] = useState(false);
     
-
     return (
         <SafeAreaView>
         <View style={styles.pageContainer}>
             <View style={styles.header}>
                 <TouchableOpacity>
-                    <Ionicons name={'angle-left'} size={30} color='#45587C' style={{marginLeft:17, marginTop:10}}/>
+                    <Ionicons name={'angle-left'} size={30} color='#45587C' onPress={() => { props.closeModal(); }} style={{marginLeft:17, marginTop:10}}/>
                 </TouchableOpacity>
                 <View style={{alignItems:"center"}}>
                     <Text style={{marginTop: -18, fontSize:16, marginBottom:17, color:'#45587C', fontWeight:'600'}}>Edit Profile</Text>
-                    <Image source={require('../assets/user_profile.jpeg')} style={styles.profileImage}></Image>
+                    <Image source={require('../../assets/user_profile.jpeg')} style={styles.profileImage}></Image>
                 </View>
                 
             </View>
@@ -92,11 +81,17 @@ function EditProfile() {
                     width:'30%',
                     alignSelf:'center',
                 }}
-                // onClick={() => updateHandler()}
                 /> 
             </View>
             </View>
-            
+
+        {backToProfile
+        ? (
+          <Modal animationType="slide" transparent={false}>
+            <Profile closeModal={() => setBackToProfile(false)} />
+          </Modal>
+        )
+        : <View />}         
         </SafeAreaView>
       );
     }
@@ -119,7 +114,6 @@ function EditProfile() {
             height: '23%',
             backgroundColor: '#B3D5DE',
             flexDirection:'column',
-
           },
 
         infoContainer: {
@@ -133,7 +127,6 @@ function EditProfile() {
             height: '24%',
             width:'100%',
             justifyContent:'flex-end',
-         
         },
 
         inputLabel: {
