@@ -20,6 +20,7 @@ function Onboarding(props) {
   const { closeModal } = props;
   const [stage, setStage] = useState(screens[0]);
   const [stageNum, setStageNum] = useState(0);
+  const [stageComplete, setStageComplete] = useState(false);
   const [tempUser, setTempUser] = useState({
     pet: '', name: '', petName: '', calm: [], stress: [],
   });
@@ -88,8 +89,8 @@ function Onboarding(props) {
         <TouchableOpacity onPress={goBack}>
           <BackButton />
         </TouchableOpacity>
-        <TouchableOpacity onPress={goNext}>
-          <ForwardButton />
+        <TouchableOpacity onPress={goNext} disable={true}>
+          {stage !== 'SignUp' ? <ForwardButton /> : <View/>}
         </TouchableOpacity>
       </View>
     </SafeAreaView>

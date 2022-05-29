@@ -1,18 +1,15 @@
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable camelcase */
 import React from 'react';
-import { Text } from 'react-native-elements';
-import {
+import { Text } from 'react-native';
+/* import {
   useFonts,
   DMSans_500Medium,
-} from 'expo-font';
+} from 'expo-font'; */
 
 function MediumText(props) {
-  useFonts({
-    DMSans_500Medium,
-  });
   return (
-    <Text style={{ fontFamily: 'DMSans_500Medium' }}>
+    <Text style={{ fontFamily: 'DMSans_Medium' }}>
       {props.children}
     </Text>
   );
