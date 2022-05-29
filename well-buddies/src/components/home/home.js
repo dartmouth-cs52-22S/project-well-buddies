@@ -1,45 +1,65 @@
 import React, { Component, useEffect } from 'react';
-import { SafeAreaView, StyleSheet, View, Text, Image, ImageBackground } from 'react-native';
+import {
+  SafeAreaView, StyleSheet, View, Text, Image, ImageBackground,
+  Modal,
+} from 'react-native';
 import { connect } from 'react-redux';
-import { fetchBuddy } from '../../state/actions/user';
 import CalendarSummary from './calendar_summary';
 import Cat from '../../assets/cat';
 import Dog from '../../assets/dog';
 import Panda from '../../assets/panda';
+import Checkin from '../checkin';
+import { fetchEmotion } from '../../state/actions/emotion';
+import { fetchBuddy } from '../../state/actions/buddy';
 
 function Home(props) {
+  useEffect(() => {
+    async function fetchData() {
+      await props.fetchBuddy();
+      await props.fetchEmotion();
+    }
+    fetchData();
+  }, []);
 
-  useEffect(()=>{ async () => {await props.fetchBuddy();}}, []);
-
-    return (
-      <SafeAreaView>
+  return (
+    <SafeAreaView>
       <View style={styles.container}>
-          <ImageBackground source={require('../../assets/home_background.png')} resizeMode="cover" style={styles.backgroundImage}>
+        {props.emotion === ''
+          ? (
+            <Modal animationType="slide" transparent={false} visable>
+              <Checkin />
+            </Modal>
+          )
+          : (
+            <View/>
+          )}
+        <ImageBackground source={require('../../assets/home_background.png')} resizeMode="cover" style={styles.backgroundImage}>
           <Text style={styles.welcome}>
             Welcome!
-          </Text >
+          </Text>
           <View style={styles.calendarContainer}>
             <Text style={styles.calendarContainerText}>
-                Today at a glance
-            </Text >
+              Today at a glance
+            </Text>
           </View>
           <View style={styles.calendarContainerInfo}>
-            <CalendarSummary style={styles.calendar}/>
+            <CalendarSummary style={styles.calendar} />
           </View>
 
           <View style={styles.buddyContainer}>
             <View style={styles.buddyImage}>
-              {props.pet === "Dog" ? <Dog/> : <View/>}
-              {props.pet === "Cat" ? <Cat/> : <View/>}
-              {props.pet === "Panda" ? <Panda/> : <View/>}                        
-            </View>   
+              {props.pet === 'Dog' ? <Dog /> : <View />}
+              {props.pet === 'Cat' ? <Cat /> : <View />}
+              {props.pet === 'Panda' ? <Panda /> : <View />}
+            </View>
           </View>
 
-      </ImageBackground>  
+        </ImageBackground>
       </View>
-      </SafeAreaView>
-    );
-  }
+
+    </SafeAreaView>
+  );
+}
 
 const styles = StyleSheet.create({
   backgroundImage: {
@@ -64,22 +84,23 @@ const styles = StyleSheet.create({
   },
 
   buddyContainer: {
-    justifyContent:'flex-end',
-    height:'53%',
+    justifyContent: 'flex-end',
+    height: '53%',
   },
 
   buddyImage: {
-    width:181,
-    height:250,
-    marginLeft:46,
-  }
+    width: 181,
+    height: 250,
+    marginLeft: 46,
+  },
 });
 
 const mapStateToProps = (state) => (
   {
     pet: state.buddy.pet,
     petName: state.buddy.petName,
+    emotion: state.emotion.today,
   }
 );
 
-export default connect(mapStateToProps, { fetchBuddy })(Home);
+export default connect(mapStateToProps, { fetchBuddy, fetchEmotion })(Home);

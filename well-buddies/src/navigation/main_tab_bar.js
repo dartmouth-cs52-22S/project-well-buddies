@@ -1,19 +1,26 @@
 /* eslint-disable react/no-unstable-nested-components */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 // import About from '../components/about';
 import Ionicons from 'react-native-vector-icons/FontAwesome';
+import { fetchEmotion } from '../state/actions/emotion';
+import { connect } from 'react-redux';
 // import SearchTab from './search_tab';
 import Home from '../components/home/home';
 import Buddy from '../components/buddy';
 import Profile from '../components/profile/profile';
 import CalendarTab from './calendar_tab';
+import { Modal } from 'react-native';
+import Checkin from '../components/checkin';
 
 const Tab = createBottomTabNavigator();
 
 function MainTabBar() {
+
+  useEffect(()=>{ async () => {await props.fetchEmotion();}}, []);
+
   return (
     <NavigationContainer>
       <Tab.Navigator
@@ -21,14 +28,6 @@ function MainTabBar() {
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused }) => {
             let iconName;
-            // // Customize the icon we display based on the tab route
-            // if (route.name === 'About') {
-            //   iconName = 'info-circle';
-            // }
-            // // Adding the search icon
-            // else if (route.name === 'Search') {
-            //   iconName = 'search';
-            // }
             if (route.name === 'Home') {
               iconName = 'home';
             } else if (route.name === 'Buddy') {
@@ -50,10 +49,10 @@ function MainTabBar() {
         <Tab.Screen name="Buddy" component={Buddy} />
         <Tab.Screen name="Calendar" component={CalendarTab} />
         <Tab.Screen name="Profile" component={Profile} />
-
       </Tab.Navigator>
     </NavigationContainer>
   );
 }
 
-export default MainTabBar;
+
+export default  MainTabBar ;

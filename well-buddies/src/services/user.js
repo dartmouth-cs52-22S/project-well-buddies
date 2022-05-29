@@ -1,8 +1,6 @@
-import axios from 'axios';
-import { ROOT_URL, LOCAL_URL } from '../constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
-const URL = LOCAL_URL;
+import axios from 'axios';
+import { URL } from '../constants';
 
 // sign up
 export const signUp = async (userData, token) => {
@@ -28,34 +26,34 @@ export const signIn = async (tokenId) => {
   try {
     const response = await axios.post(`${URL}/signin`, payload);
     const newToken = response.data;
-    return newToken;  
+    return newToken;
   } catch (error) {
     console.log(error);
     throw new Error(error);
   }
 };
 
-export const getBuddy = async (token) => {
+export const getUser = async () => {
   try {
-    const response = await axios.get(`${URL}/buddy/${token}`);
-    console.log(response.data);
-    return response;
-  } catch (error) {
-    throw new Error(error);
-  }
-};
-
-export const setBuddy = async (token, newBuddy, newBuddyName) => {
-  const payload = {
-    token,
-    pet: newBuddy, 
-    petName: newBuddyName
-  };
-  try {
-    const { data } = await axios.patch(`${URL}/buddy`, payload);
-    return data;
+    const jwt = await AsyncStorage.getItem('jwt');
+    const response = await axios.get(`${URL}/user/${jwt}`);
+    const user = response.data;
+    return user;  
   } catch (error) {
     console.log(error);
     throw new Error(error);
   }
-};
+}
+
+export const setUser = async ( updatedName ) => {
+  try {
+    const jwt = await AsyncStorage.getItem('jwt');
+    const payload = { name:updatedName };
+    const response = await axios.patch(`${URL}/user/${jwt}`, payload);
+    const user = response.data;
+    return user;
+  } catch (error) {
+    console.log(error);
+    throw new Error(error);
+  }
+}

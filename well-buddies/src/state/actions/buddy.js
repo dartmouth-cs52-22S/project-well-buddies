@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { getBuddy, setBuddy } from '../../services/user';
+import { getBuddy, setBuddy } from '../../services/buddy';
 
 export const ActionTypes = {
   FETCH_BUDDY: 'FETCH_BUDDY',
