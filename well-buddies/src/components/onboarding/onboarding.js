@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View, Text, TouchableOpacity, SafeAreaView, Dimensions,
 } from 'react-native';
@@ -25,6 +25,25 @@ function Onboarding(props) {
     pet: '', name: '', petName: '', calm: [], stress: [],
   });
 
+  useEffect(() => {
+    if (stage === 'Name' && tempUser.name !== '') {
+      setStageComplete(true);
+    } else {
+      setStageComplete(false);
+    }
+    if (stage === 'Pet' && tempUser.pet !== '') {
+      setStageComplete(true);
+    } else {
+      setStageComplete(false);
+    }
+    if (stage === 'BuddyName' && tempUser.petName !== '') {
+      setStageComplete(true);
+    } else {
+      setStageComplete(false);
+    }
+    console.log(`stage complete: ${stageComplete}`);
+  }, [tempUser.name, tempUser.pet, tempUser.petName]);
+
   const goBack = () => {
     if (stage === 'Name') {
       closeModal();
@@ -35,12 +54,8 @@ function Onboarding(props) {
   };
 
   const goNext = () => {
-    if (stage === 'SignUp') {
-      // do something here to submit
-    } else {
-      setStage(screens[stageNum + 1]);
-      setStageNum(stageNum + 1);
-    }
+    setStage(screens[stageNum + 1]);
+    setStageNum(stageNum + 1);
   };
 
   const addCalmActivity = (activity) => {
@@ -77,11 +92,11 @@ function Onboarding(props) {
       }}
     >
       <View>
-        {stage === 'Name' ? (<Name setTempName={(newName) => { setTempUser({ ...tempUser, name: newName }); }} />) : (<View />)}
-        {stage === 'Pet' ? (<Pet pets={pets} setTempPet={(newPet) => { setTempUser({ ...tempUser, pet: newPet }); }} />) : (<View />)}
-        {stage === 'BuddyName' ? (<BuddyName pet={tempUser.pet} setTempBuddyName={(newPet) => { setTempUser({ ...tempUser, petName: newPet }); }} />) : (<View />)}
-        {stage === 'Calm' ? (<Calm activities={calm} add={addCalmActivity} remove={removeCalmActivity} />) : (<View />)}
-        {stage === 'Stress' ? (<Stress activities={stress} add={addStressActivity} remove={removeStressActivity} />) : (<View />)}
+        {stage === 'Name' ? (<Name tempName={tempUser.name} setTempName={(newName) => { setTempUser({ ...tempUser, name: newName }); }} />) : (<View />)}
+        {stage === 'Pet' ? (<Pet tempPet={tempUser.pet} pets={pets} setTempPet={(newPet) => { setTempUser({ ...tempUser, pet: newPet }); }} />) : (<View />)}
+        {stage === 'BuddyName' ? (<BuddyName tempPetName={tempUser.petName} pet={tempUser.pet} setTempBuddyName={(newPet) => { setTempUser({ ...tempUser, petName: newPet }); }} />) : (<View />)}
+        {stage === 'Calm' ? (<Calm tempCalm={tempUser.calm} activities={calm} add={addCalmActivity} remove={removeCalmActivity} />) : (<View />)}
+        {stage === 'Stress' ? (<Stress tempStress={tempUser.stress} activities={stress} add={addStressActivity} remove={removeStressActivity} />) : (<View />)}
         {stage === 'SignUp' ? (<SignUp userFields={tempUser} />) : (<View />)}
       </View>
       <View style={{ flexGrow: 100 }}><Text> </Text></View>
@@ -89,8 +104,9 @@ function Onboarding(props) {
         <TouchableOpacity onPress={goBack}>
           <BackButton />
         </TouchableOpacity>
-        <TouchableOpacity onPress={goNext} disable={true}>
-          {stage !== 'SignUp' ? <ForwardButton /> : <View/>}
+        <Text>{`${stageComplete}`}</Text>
+        <TouchableOpacity onPress={goNext} disabled={!stageComplete}>
+          {stage !== 'SignUp' ? <ForwardButton /> : <View />}
         </TouchableOpacity>
       </View>
     </SafeAreaView>

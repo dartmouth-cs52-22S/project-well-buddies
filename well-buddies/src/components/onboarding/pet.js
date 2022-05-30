@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View, Text, TouchableOpacity,
 } from 'react-native';
@@ -12,7 +12,7 @@ import PandaChosen from '../../assets/img/panda/panda-chosen';
 import MediumText from '../custom/medium_text';
 
 function Pet(props) {
-  const { pets, setTempPet } = props;
+  const { pets, setTempPet, tempPet } = props;
 
   const [pet, setPet] = useState('');
 
@@ -25,6 +25,8 @@ function Pet(props) {
       setPet(pets[num]);
     }
   };
+
+  useEffect(() => { setPet(tempPet); }, [tempPet]);
 
   return (
     <View style={styles.nameContainer}>

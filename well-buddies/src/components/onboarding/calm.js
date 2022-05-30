@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View, Text, ScrollView, TouchableOpacity,
 } from 'react-native';
@@ -6,7 +6,9 @@ import { styles } from './styles';
 import MediumText from '../custom/medium_text';
 
 function Calm(props) {
-  const { add, remove, activities } = props;
+  const {
+    add, remove, activities, tempCalm,
+  } = props;
   const [acts, setActs] = useState([]);
 
   const addOrRemove = (activity) => {
@@ -19,6 +21,8 @@ function Calm(props) {
       add(activity);
     }
   };
+
+  useEffect(() => { setActs(tempCalm); }, [tempCalm]);
 
   return (
     <View style={styles.nameContainer}>

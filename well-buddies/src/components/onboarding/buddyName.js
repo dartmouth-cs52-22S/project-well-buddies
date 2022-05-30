@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View, Text,
 } from 'react-native';
@@ -10,8 +10,10 @@ import Panda from '../../assets/img/panda/panda';
 import MediumText from '../custom/medium_text';
 
 function BuddyName(props) {
-  const { setTempBuddyName, pet } = props;
+  const { setTempBuddyName, pet, tempPetName } = props;
   const [buddyName, setBuddyName] = useState('');
+
+  useEffect(() => { setBuddyName(tempPetName); }, [tempPetName]);
 
   return (
     <View style={styles.nameContainer}>
