@@ -19,9 +19,8 @@ function MainTabBar() {
   return (
     <NavigationContainer>
       <Tab.Navigator
-        initialRouteName="Search"
+        initialRouteName="Home"
         screenOptions={
-
           ({ route }) => ({
             tabBarIcon: ({ focused }) => {
               let iconName;
@@ -43,10 +42,10 @@ function MainTabBar() {
       >
         {/* <Tab.Screen name="Search" component={SearchTab} />
         <Tab.Screen name="About" component={About} /> */}
-        <Tab.Screen name="Home" component={Home} />
-        <Tab.Screen name="Buddy" component={Buddy} />
-        <Tab.Screen name="Calendar" component={CalendarTab} />
-        <Tab.Screen name="Profile" component={Profile} />
+        <Tab.Screen name="Home" options={{ headerShown: false }} component={Home} />
+        <Tab.Screen name="Buddy" options={{ headerShown: false }} component={Buddy} />
+        <Tab.Screen name="Calendar" options={{ headerShown: false }} component={CalendarTab} />
+        <Tab.Screen name="Profile" options={{ headerShown: false }} component={Profile} />
       </Tab.Navigator>
     </NavigationContainer>
   );

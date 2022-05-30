@@ -17,6 +17,7 @@ import Cat from '../assets/img/cat/cat';
 import Dog from '../assets/img/dog/dog';
 import Panda from '../assets/img/panda/panda';
 import RegularText from './custom/regular_text';
+import EditIcon from '../assets/img/edit';
 
 class Buddy extends Component {
   constructor(props) {
@@ -43,15 +44,11 @@ class Buddy extends Component {
   render() {
     if (this.state.isEditing === false) {
       return (
-        <SafeAreaView>
+        <SafeAreaView style={{ backgroundColor: '#F6F6EE' }}>
           <View style={styles.container}>
             <View style={styles.editIcon}>
               <TouchableOpacity style={styles.iconContainer} onPress={() => { this.editMode(); }}>
-                <FontAwesome
-                  name="edit"
-                  size={30}
-                  color="#000000"
-                />
+                <EditIcon />
               </TouchableOpacity>
             </View>
             <View style={styles.header}>
