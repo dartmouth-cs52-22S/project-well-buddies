@@ -19,74 +19,13 @@ import RegularText from '../custom/regular_text';
 import CalendarTitle from './calendar_title';
 
 const Calendar = (props) => {
-  const [accessToken, setAccessToken] = useState('');
-  const [date, setDate] = useState(Moment());
-  const CLIENT_ID_IOS = '301956188397-rtuq8kgubluo5ismq4g9pq4cn9bag7ul.apps.googleusercontent.com';
-
-  const startOfDay = Moment(date).startOf('day').toISOString();
-  const endOfDay = Moment(date).endOf('day').toISOString();
-
-  const args = {
-    access_token: accessToken,
-    timeMin: startOfDay,
-    timeMax: endOfDay,
-    showDeleted: false,
-    singleEvents: true,
-    maxResults: 10,
-    orderBy: 'startTime',
-  };
-
-  useEffect(() => {
-    GoogleSignin.configure({
-      iosClientId: CLIENT_ID_IOS,
-    });
-    AsyncStorage.getItem('googleAccessCode').then((token) => { setAccessToken(token); });
-    if (accessToken) {
-      props.fetchEvents(args);
-    }
-  }, [accessToken, date]);
+  const [checked, setChecked] = useState(false);
 
   function parseDate(dateTime) {
     Moment.locale('en');
     return Moment(dateTime).format('h:mm A');
   }
-
-  function showEventDetail(event) {
-    props.navigation.navigate('Detail', { event });
-  }
-
-  function renderEventCell(event) {
-    return (
-      <TouchableOpacity onPress={() => { showEventDetail(event); }}>
-        <Card borderRadius={5}
-          style={styles.card}
-          onPress={() => { showEventDetail(event); }}
-          underlayColor="#d1dce0"
-          height={80}
-        >
-          <View>
-            <RegularText>
-              <Text style={styles.title}>
-                {event.summary}
-              </Text>
-            </RegularText>
-          </View>
-          <View>
-            <RegularText>
-              <Text>
-                {parseDate(event.start.dateTime)}
-                {' '}
-                -
-                {' '}
-                {parseDate(event.end.dateTime)}
-              </Text>
-            </RegularText>
-          </View>
-        </Card>
-      </TouchableOpacity>
-    );
-  }
-
+  
   function renderLoadingView() {
     return (
       <View style={styles.loading}>
@@ -96,15 +35,31 @@ const Calendar = (props) => {
   }
 
   return (
-    <View style={styles.container}>
-      <ImageBackground style={styles.backgroundImg} source={require('../../assets/img/background_gradient.jpg')}>
-        <CalendarTitle date={date} setDate={(time) => { setDate(time); }} />
-        <FlatList
-          data={props.events}
-          renderItem={({ item }) => { return renderEventCell(item); }}
-        />
-      </ImageBackground>
-    </View>
+<Card borderRadius={5}
+          style={styles.card}
+          underlayColor="#d1dce0"
+          height={80}
+    >
+      
+          <View>
+            <RegularText>
+              <Text style={styles.title}>
+                {props.event.summary}
+              </Text>
+            </RegularText>
+          </View>
+          <View>
+            <RegularText>
+              <Text>
+                {parseDate(props.event.start.dateTime)}
+                {' '}
+                -
+                {' '}
+                {parseDate(props.event.end.dateTime)}
+              </Text>
+            </RegularText>
+          </View>
+        </Card>
   );
 };
 
