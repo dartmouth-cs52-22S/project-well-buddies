@@ -12,17 +12,16 @@ import Moment from 'moment';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { fetchEvents } from '../../state/actions/calendar';
+import { fetchTodaysEvents } from '../../state/actions/calendar';
 import RegularText from '../custom/regular_text';
 
 const Calendar = (props) => {
   const [accessToken, setAccessToken] = useState('');
-  const [date, setDate] = useState(Moment());
   const CLIENT_ID_IOS = '301956188397-rtuq8kgubluo5ismq4g9pq4cn9bag7ul.apps.googleusercontent.com';
   const navigation = useNavigation();
 
-  const startOfDay = Moment(date).startOf('day').toISOString();
-  const endOfDay = Moment(date).endOf('day').toISOString();
+  const startOfDay = Moment().startOf('day').toISOString();
+  const endOfDay = Moment().endOf('day').toISOString();
 
   const args = {
     access_token: accessToken,
@@ -39,10 +38,12 @@ const Calendar = (props) => {
       iosClientId: CLIENT_ID_IOS,
     });
     AsyncStorage.getItem('googleAccessCode').then((token) => { setAccessToken(token); });
+    console.log('use effect');
     if (accessToken) {
-      props.fetchEvents(args);
+      console.log('summary use effect');
+      props.fetchTodaysEvents(args);
     }
-  }, []);
+  }, [accessToken]);
 
   function parseDate(dateTime) {
     Moment.locale('en');
@@ -57,27 +58,31 @@ const Calendar = (props) => {
     return (
     //   <TouchableOpacity onPress={() => { showEventDetail(event); }}>
       <Card borderRadius={5}
+        style={styles.card}
         onPress={() => { showEventDetail(event); }}
         underlayColor="#d1dce0"
-        height={80}
+        borderColor="#D0E5F0"
+        padding={18}
       >
         <View>
-          <RegularText>
-            <Text style={styles.title}>
-              {event.summary}
-            </Text>
-          </RegularText>
-        </View>
-        <View>
-          <RegularText>
-            <Text>
-              {parseDate(event.start.dateTime)}
-              {' '}
-              -
-              {' '}
-              {parseDate(event.end.dateTime)}
-            </Text>
-          </RegularText>
+          <View style={styles.eventContainer}>
+            <RegularText>
+              <Text style={styles.title}>
+                {event.summary}
+              </Text>
+            </RegularText>
+          </View>
+          <View style={styles.eventContainer}>
+            <RegularText>
+              <Text style={styles.time}>
+                {parseDate(event.start.dateTime)}
+                {' '}
+                -
+                {' '}
+                {parseDate(event.end.dateTime)}
+              </Text>
+            </RegularText>
+          </View>
         </View>
       </Card>
     //   </TouchableOpacity>
@@ -89,7 +94,7 @@ const Calendar = (props) => {
   }
 
   return (
-    <View>
+    <View style={styles.summaryContainer}>
       {Object.entries(props.events).length ? (
         <FlatList
           data={props.events}
@@ -117,13 +122,26 @@ const styles = StyleSheet.create({
     flex: 1,
     height: '100%',
   },
+  eventContainer: {
+    marginVertical: 1,
+  },
+  summaryContainer: {
+    padding: 4,
+  },
+  card: {
+    textAlign: 'left',
+  },
   date: {
     color: '#FFFFFF',
     fontSize: 25,
   },
   title: {
     fontWeight: '600',
-    fontSize: 20,
+    fontSize: 18,
+    color: '#363D4F',
+  },
+  time: {
+    color: '#363D4F',
   },
   emptyState: {
     color: 'white',
@@ -134,11 +152,12 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-end',
     color: '#FFFF',
     letterSpacing: 2,
+    marginTop: 12,
   },
 });
 
 const mapStateToProps = (state) => ({
-  events: state.events.all,
+  events: state.events.today,
 });
 
-export default connect(mapStateToProps, { fetchEvents })(Calendar);
+export default connect(mapStateToProps, { fetchTodaysEvents })(Calendar);

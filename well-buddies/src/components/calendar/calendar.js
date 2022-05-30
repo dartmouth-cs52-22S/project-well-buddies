@@ -62,25 +62,28 @@ const Calendar = (props) => {
           style={styles.card}
           onPress={() => { showEventDetail(event); }}
           underlayColor="#d1dce0"
-          height={80}
+          borderColor="#D0E5F0"
+          padding={18}
         >
           <View>
-            <RegularText>
-              <Text style={styles.title}>
-                {event.summary}
-              </Text>
-            </RegularText>
-          </View>
-          <View>
-            <RegularText>
-              <Text>
-                {parseDate(event.start.dateTime)}
-                {' '}
-                -
-                {' '}
-                {parseDate(event.end.dateTime)}
-              </Text>
-            </RegularText>
+            <View style={styles.eventContainer}>
+              <RegularText>
+                <Text style={styles.title}>
+                  {event.summary}
+                </Text>
+              </RegularText>
+            </View>
+            <View style={styles.eventContainer}>
+              <RegularText>
+                <Text style={styles.time}>
+                  {parseDate(event.start.dateTime)}
+                  {' '}
+                  -
+                  {' '}
+                  {parseDate(event.end.dateTime)}
+                </Text>
+              </RegularText>
+            </View>
           </View>
         </Card>
       </TouchableOpacity>
@@ -117,6 +120,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
+  eventContainer: {
+    marginVertical: 1,
+  },
   card: {
     textAlign: 'left',
   },
@@ -126,7 +132,11 @@ const styles = StyleSheet.create({
   },
   title: {
     fontWeight: '600',
-    fontSize: 20,
+    fontSize: 18,
+    color: '#363D4F',
+  },
+  time: {
+    color: '#363D4F',
   },
   backgroundImg: {
     resizeMode: 'cover',

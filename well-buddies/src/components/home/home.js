@@ -85,6 +85,7 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 18,
     marginBottom: 15,
+    fontFamily: 'DMSans_Regular',
     marginLeft: 16,
   },
 
