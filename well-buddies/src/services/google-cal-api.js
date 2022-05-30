@@ -26,6 +26,23 @@ export function getPrimaryCalendar(accessToken) {
   });
 }
 
+export function addEvent(calendarID) {
+  console.log(`function is being called!`)
+  
+  const end = {dateTime: new Date().toISOString()} 
+  const start = {dateTime: new Date().toISOString()} 
+  const summary = "test summary"
+
+  axios.post(`${API_URL}${calendarID}/events`, {end, start, summary})
+
+  .then((response) => {
+    console.log(`calendar api worked!: ${response}`);
+  })
+  .catch((error) => {
+    console.log(`calendar api error: ${error}`);
+  });
+}
+
 export function getCalendarEvents(params) {
   // const params = {
   //   access_token: accessToken,
