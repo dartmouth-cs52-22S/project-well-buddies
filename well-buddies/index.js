@@ -18,8 +18,6 @@ function Index(props) {
   useEffect(() => {
     async function prepare() {
       try {
-        // Keep the splash screen visible while we fetch resources
-        await SplashScreen.preventAutoHideAsync();
         // Pre-load fonts, make any API calls you need to do here
         await Font.loadAsync({
           DMSans_Regular: require('./src/assets/fonts/DMSans-Regular.ttf'),
