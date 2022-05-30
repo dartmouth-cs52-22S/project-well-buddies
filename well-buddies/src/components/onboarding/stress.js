@@ -24,9 +24,9 @@ function Stress(props) {
     <View style={styles.nameContainer}>
       <View style={styles.name}>
         <View stlye={styles.question}>
-          <MediumText>
-            <Text style={styles.nameText}>What are some activities that stress you out?</Text>
-          </MediumText>
+          {/* <MediumText> */}
+          <Text style={styles.nameText}>What are some activities that stress you out?</Text>
+          {/* </MediumText> */}
         </View>
       </View>
       <ScrollView contentContainerStyle={styles.activities}>

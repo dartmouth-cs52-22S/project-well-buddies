@@ -10,9 +10,9 @@ import { signIn } from '../../services/google-login';
 import GetStarted from '../../assets/img/get-started';
 import { signinUser } from '../../state/actions/user';
 import { fetchBuddy } from '../../state/actions/buddy';
-import RegularText from '../custom/regular_text';
-import BoldText from '../custom/bold_text';
-import MediumText from '../custom/medium_text';
+// import RegularText from '../custom/regular_text';
+// import BoldText from '../custom/bold_text';
+// import MediumText from '../custom/medium_text';
 
 function Landing(props) {
   const [onboarding, setOnboarding] = useState(false);
@@ -40,23 +40,23 @@ function Landing(props) {
       <View style={styles.landingPage}>
         <CatHead />
         <View style={{ display: 'flex', alignItems: 'center' }}>
-          <RegularText>
-            <Text style={styles.welcome}>Welcome to</Text>
-          </RegularText>
-          <BoldText>
-            <Text style={styles.title}>WellBuddies</Text>
-          </BoldText>
+          {/* <RegularText> */}
+          <Text style={styles.welcome}>Welcome to</Text>
+          {/* </RegularText> */}
+          {/* <BoldText> */}
+          <Text style={styles.title}>WellBuddies</Text>
+          {/* </BoldText> */}
         </View>
         <TouchableOpacity onPress={() => { setOnboarding(true); }} style={{ paddingTop: '20%' }}>
           <GetStarted />
         </TouchableOpacity>
         <TouchableOpacity onPress={signInFunction} style={{ display: 'flex', flexDirection: 'row', paddingBottom: '20%' }}>
-          <RegularText>
-            <Text style={styles.signInText}>or</Text>
-          </RegularText>
-          <MediumText>
-            <Text style={{ ...styles.signInText, textDecorationLine: 'underline' }}> SIGN IN </Text>
-          </MediumText>
+          {/* <RegularText> */}
+          <Text style={styles.signInText}>or</Text>
+          {/* </RegularText> */}
+          {/* <MediumText> */}
+          <Text style={{ ...styles.signInText, textDecorationLine: 'underline' }}> SIGN IN </Text>
+          {/* </MediumText> */}
         </TouchableOpacity>
 
       </View>

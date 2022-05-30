@@ -9,7 +9,7 @@ import PandaOption from '../../assets/img/panda/panda-option';
 import CatChosen from '../../assets/img/cat/cat-chosen';
 import DogChosen from '../../assets/img/dog/dog-chosen';
 import PandaChosen from '../../assets/img/panda/panda-chosen';
-import MediumText from '../custom/medium_text';
+// import MediumText from '../custom/medium_text';
 
 function Pet(props) {
   const { pets, setTempPet } = props;
@@ -29,9 +29,9 @@ function Pet(props) {
   return (
     <View style={styles.nameContainer}>
       <View style={styles.name}>
-        <MediumText>
-          <Text style={styles.nameText}>Choose a Buddy</Text>
-        </MediumText>
+        {/* <MediumText> */}
+        <Text style={styles.nameText}>Choose a Buddy</Text>
+        {/* </MediumText> */}
       </View>
       <View style={styles.buddy}>
         <TouchableOpacity style={{ margin: 20 }} onPress={() => { changePet(0); }}>

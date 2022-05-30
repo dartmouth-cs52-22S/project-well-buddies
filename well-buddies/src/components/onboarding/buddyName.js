@@ -7,7 +7,7 @@ import { styles } from './styles';
 import Dog from '../../assets/img/dog/dog';
 import Cat from '../../assets/img/cat/cat';
 import Panda from '../../assets/img/panda/panda';
-import MediumText from '../custom/medium_text';
+// import MediumText from '../custom/medium_text';
 
 function BuddyName(props) {
   const { setTempBuddyName, pet } = props;
@@ -17,9 +17,9 @@ function BuddyName(props) {
     <View style={styles.nameContainer}>
       <View style={styles.name}>
         <View style={styles.question}>
-          <MediumText>
-            <Text style={styles.nameText}>Name your buddy!</Text>
-          </MediumText>
+          {/* <MediumText> */}
+          <Text style={styles.nameText}>Name your buddy!</Text>
+          {/* </MediumText> */}
         </View>
         <TextInput style={styles.nameTextInput} placeholder="Your name" value={buddyName} onChangeText={(newName) => { setBuddyName(newName); setTempBuddyName(newName); }} />
       </View>

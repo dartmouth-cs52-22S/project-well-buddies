@@ -4,7 +4,7 @@ import {
 } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import { styles } from './styles';
-import MediumText from '../custom/medium_text';
+// import MediumText from '../custom/medium_text';
 
 function Name(props) {
   const { setTempName } = props;
@@ -14,9 +14,9 @@ function Name(props) {
     <View style={styles.nameContainer}>
       <View style={styles.name}>
         <View style={styles.question}>
-          <MediumText>
-            <Text style={styles.nameText}>What&apos;s your name?</Text>
-          </MediumText>
+          {/* <MediumText> */}
+          <Text style={styles.nameText}>What&apos;s your name?</Text>
+          {/* </MediumText> */}
         </View>
         <TextInput style={styles.nameTextInput} placeholder="Your name" value={name} onChangeText={(newName) => { setName(newName); setTempName(newName); }} />
       </View>
