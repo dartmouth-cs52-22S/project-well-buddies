@@ -28,20 +28,13 @@ function Onboarding(props) {
   useEffect(() => {
     if (stage === 'Name' && tempUser.name !== '') {
       setStageComplete(true);
-    } else {
-      setStageComplete(false);
-    }
-    if (stage === 'Pet' && tempUser.pet !== '') {
+    } else if (stage === 'Pet' && tempUser.pet !== '') {
+      setStageComplete(true);
+    } else if (stage === 'BuddyName' && tempUser.petName !== '') {
       setStageComplete(true);
     } else {
       setStageComplete(false);
     }
-    if (stage === 'BuddyName' && tempUser.petName !== '') {
-      setStageComplete(true);
-    } else {
-      setStageComplete(false);
-    }
-    console.log(`stage complete: ${stageComplete}`);
   }, [tempUser.name, tempUser.pet, tempUser.petName]);
 
   const goBack = () => {
@@ -54,6 +47,9 @@ function Onboarding(props) {
   };
 
   const goNext = () => {
+    if (stage === 'Name' || stage === 'Pet') {
+      setStageComplete(false);
+    }
     setStage(screens[stageNum + 1]);
     setStageNum(stageNum + 1);
   };
@@ -104,7 +100,6 @@ function Onboarding(props) {
         <TouchableOpacity onPress={goBack}>
           <BackButton />
         </TouchableOpacity>
-        <Text>{`${stageComplete}`}</Text>
         <TouchableOpacity onPress={goNext} disabled={!stageComplete}>
           {stage !== 'SignUp' ? <ForwardButton /> : <View />}
         </TouchableOpacity>
