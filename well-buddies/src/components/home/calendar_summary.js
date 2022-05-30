@@ -3,7 +3,7 @@
 /* eslint-disable react/function-component-definition */
 import React, { useEffect, useState } from 'react';
 import {
-  StyleSheet, View, Text, FlatList,
+  StyleSheet, View, Text, FlatList, TouchableOpacity,
 } from 'react-native';
 import { Card } from 'react-native-elements';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
@@ -11,9 +11,9 @@ import { connect } from 'react-redux';
 import Moment from 'moment';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import { fetchTodaysEvents } from '../../state/actions/calendar';
 import RegularText from '../custom/regular_text';
+import CalendarEventCell from '../calendar/calendar_event_cell';
 
 const Calendar = (props) => {
   const [accessToken, setAccessToken] = useState('');
@@ -98,7 +98,13 @@ const Calendar = (props) => {
       {Object.entries(props.events).length ? (
         <FlatList
           data={props.events}
-          renderItem={({ item }) => { return renderEventCell(item); }}
+          renderItem={({ item }) => {
+            return (
+              <TouchableOpacity onPress={() => { showEventDetail(item); }}>
+                <CalendarEventCell event={item} />
+              </TouchableOpacity>
+            );
+          }}
         />
       )
         : <Text style={styles.emptyState}>No events for today</Text>}

@@ -53,39 +53,6 @@ const Calendar = (props) => {
   function showEventDetail(event) {
     props.navigation.navigate('Detail', { event });
   }
-
-  function renderEventCell(event) {
-    return (
-      <TouchableOpacity onPress={() => { showEventDetail(event); }}>
-        <Card borderRadius={5}
-          style={styles.card}
-          onPress={() => { showEventDetail(event); }}
-          underlayColor="#d1dce0"
-          height={80}
-        >
-          <View>
-            <RegularText>
-              <Text style={styles.title}>
-                {event.summary}
-              </Text>
-            </RegularText>
-          </View>
-          <View>
-            <RegularText>
-              <Text>
-                {parseDate(event.start.dateTime)}
-                {' '}
-                -
-                {' '}
-                {parseDate(event.end.dateTime)}
-              </Text>
-            </RegularText>
-          </View>
-        </Card>
-      </TouchableOpacity>
-    );
-  }
-
   function renderLoadingView() {
     return (
       <View style={styles.loading}>
@@ -100,12 +67,11 @@ const Calendar = (props) => {
         <CalendarTitle date={date} setDate={(time) => { setDate(time); }} />
         <FlatList
           data={props.events}
-          // renderItem={({ item }) => { return renderEventCell(item); }}
           renderItem={({ item }) => {
             return (
-            // <TouchableOpacity onPress={() => { showEventDetail(item); }}>
-              <CalendarEventCell event={item} />
-            // </TouchableOpacity>
+              <TouchableOpacity onPress={() => { showEventDetail(item); }}>
+                <CalendarEventCell event={item} />
+              </TouchableOpacity>
             );
           }}
 

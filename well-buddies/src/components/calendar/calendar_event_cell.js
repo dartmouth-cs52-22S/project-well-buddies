@@ -3,11 +3,10 @@
 /* eslint-disable react/function-component-definition */
 import React, { useState } from 'react';
 import {
-  StyleSheet, View, Text, ActivityIndicator, Button,
+  StyleSheet, View, Text, ActivityIndicator, Button, TouchableOpacity,
 } from 'react-native';
 import { Card } from 'react-native-elements';
 import Moment from 'moment';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import RegularText from '../custom/regular_text';
 import CheckboxChecked from '../../assets/img/checkbox/checkbox-checked';
 import Checkbox from '../../assets/img/checkbox/checkbox';
