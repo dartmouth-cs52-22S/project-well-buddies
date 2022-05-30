@@ -8,8 +8,6 @@ import {
 import { Card } from 'react-native-elements';
 import {
   GoogleSignin,
-  GoogleSigninButton,
-  statusCodes,
 } from '@react-native-google-signin/google-signin';
 import { connect } from 'react-redux';
 import Moment from 'moment';
@@ -17,6 +15,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { fetchEvents } from '../../state/actions/calendar';
 import RegularText from '../custom/regular_text';
 import CalendarTitle from './calendar_title';
+import CalendarEventCell from './calendar_event_cell';
 
 const Calendar = (props) => {
   const [accessToken, setAccessToken] = useState('');
@@ -101,7 +100,15 @@ const Calendar = (props) => {
         <CalendarTitle date={date} setDate={(time) => { setDate(time); }} />
         <FlatList
           data={props.events}
-          renderItem={({ item }) => { return renderEventCell(item); }}
+          // renderItem={({ item }) => { return renderEventCell(item); }}
+          renderItem={({ item }) => {
+            return (
+            // <TouchableOpacity onPress={() => { showEventDetail(item); }}>
+              <CalendarEventCell event={item} />
+            // </TouchableOpacity>
+            );
+          }}
+
         />
       </ImageBackground>
     </View>

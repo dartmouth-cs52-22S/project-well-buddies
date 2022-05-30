@@ -1,31 +1,27 @@
 /* eslint-disable camelcase */
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/function-component-definition */
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
-  StyleSheet, View, Text, FlatList, TouchableOpacity, ActivityIndicator, ImageBackground, Button,
+  StyleSheet, View, Text, ActivityIndicator, Button,
 } from 'react-native';
 import { Card } from 'react-native-elements';
-import {
-  GoogleSignin,
-  GoogleSigninButton,
-  statusCodes,
-} from '@react-native-google-signin/google-signin';
-import { connect } from 'react-redux';
 import Moment from 'moment';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { fetchEvents } from '../../state/actions/calendar';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import RegularText from '../custom/regular_text';
-import CalendarTitle from './calendar_title';
+import CheckboxChecked from '../../assets/img/checkbox/checkbox-checked';
+import Checkbox from '../../assets/img/checkbox/checkbox';
+import MediumText from '../custom/medium_text';
 
-const Calendar = (props) => {
+const CalendarEventCell = (props) => {
   const [checked, setChecked] = useState(false);
 
   function parseDate(dateTime) {
     Moment.locale('en');
     return Moment(dateTime).format('h:mm A');
   }
-  
+  console.log('checked', checked);
+
   function renderLoadingView() {
     return (
       <View style={styles.loading}>
@@ -35,22 +31,24 @@ const Calendar = (props) => {
   }
 
   return (
-<Card borderRadius={5}
-          style={styles.card}
-          underlayColor="#d1dce0"
-          height={80}
+    <Card borderRadius={5}
+      backgroundColor="#d1dce0"
+      containerStyle={!checked ? styles.card : styles.checkedCard}
+      underlayColor="#d1dce0"
+      height={80}
     >
-      
+      <View style={styles.innerCard}>
+        <View>
           <View>
-            <RegularText>
-              <Text style={styles.title}>
+            <MediumText>
+              <Text style={!checked ? styles.title : styles.checkedTitle}>
                 {props.event.summary}
               </Text>
-            </RegularText>
+            </MediumText>
           </View>
           <View>
             <RegularText>
-              <Text>
+              <Text style={!checked ? styles.date : styles.checkedDate}>
                 {parseDate(props.event.start.dateTime)}
                 {' '}
                 -
@@ -59,7 +57,15 @@ const Calendar = (props) => {
               </Text>
             </RegularText>
           </View>
-        </Card>
+        </View>
+        <View>
+          <TouchableOpacity onPress={() => { setChecked(!checked); }}>
+            {!checked ? <Checkbox /> : <CheckboxChecked />}
+          </TouchableOpacity>
+        </View>
+      </View>
+
+    </Card>
   );
 };
 
@@ -75,13 +81,29 @@ const styles = StyleSheet.create({
   card: {
     textAlign: 'left',
   },
+  checkedCard: {
+    backgroundColor: 'rgba(255, 255, 255, 0.26)',
+  },
+  innerCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
   date: {
+    color: '#363D4F',
+  },
+  checkedDate: {
     color: '#FFFFFF',
-    fontSize: 25,
   },
   title: {
+    color: '#363D4F',
     fontWeight: '600',
     fontSize: 20,
+  },
+  checkedTitle: {
+    fontWeight: '600',
+    fontSize: 20,
+    color: 'white',
   },
   backgroundImg: {
     resizeMode: 'cover',
@@ -89,8 +111,4 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapStateToProps = (state) => ({
-  events: state.events.all,
-});
-
-export default connect(mapStateToProps, { fetchEvents })(Calendar);
+export default CalendarEventCell;
