@@ -1,17 +1,19 @@
 /* eslint-disable react/no-unstable-nested-components */
-import React, { useEffect, useState } from 'react';
-import { Text, View, Modal } from 'react-native';
+import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-// import About from '../components/about';
-import Ionicons from 'react-native-vector-icons/FontAwesome';
-import { connect } from 'react-redux';
-import { fetchEmotion } from '../state/actions/emotion';
-// import SearchTab from './search_tab';
 import Home from '../components/home/home';
 import Buddy from '../components/buddy';
 import Profile from '../components/profile/profile';
 import CalendarTab from './calendar_tab';
+import BuddyIcon from '../assets/img/tabIcons/buddy';
+import BuddyIconFilled from '../assets/img/tabIcons/buddy-chosen';
+import HomeIcon from '../assets/img/tabIcons/home';
+import HomeIconFilled from '../assets/img/tabIcons/home-chosen';
+import ProfileIcon from '../assets/img/tabIcons/profile';
+import ProfileIconFilled from '../assets/img/tabIcons/profile-chosen';
+import CalendarIcon from '../assets/img/tabIcons/calendar';
+import CalendarIconFilled from '../assets/img/tabIcons/calendar-chosen';
 
 const Tab = createBottomTabNavigator();
 
@@ -21,31 +23,49 @@ function MainTabBar() {
       <Tab.Navigator
         initialRouteName="Home"
         screenOptions={
-          ({ route }) => ({
-            tabBarIcon: ({ focused }) => {
-              let iconName;
-              if (route.name === 'Home') {
-                iconName = 'home';
-              } else if (route.name === 'Buddy') {
-                iconName = 'paw';
-              } else if (route.name === 'Calendar') {
-                iconName = 'calendar';
-              } else if (route.name === 'Profile') {
-                iconName = 'user';
-              }
-
-              // Return the respective icon
-              return <Ionicons name={iconName} size={26} color={focused ? '#58AADA' : 'grey'} />;
-            },
-          })
+          {
+            tabBarInactiveBackgroundColor: '#FFFFFF',
+            tabBarActiveBackgroundColor: 'FFFFFF',
+            tabBarActiveTintColor: '#667BA4',
+            tabBarInactiveTintColor: '#363D4F',
+            headerShown: false,
+          }
         }
       >
         {/* <Tab.Screen name="Search" component={SearchTab} />
         <Tab.Screen name="About" component={About} /> */}
-        <Tab.Screen name="Home" options={{ headerShown: false }} component={Home} />
-        <Tab.Screen name="Buddy" options={{ headerShown: false }} component={Buddy} />
-        <Tab.Screen name="Calendar" options={{ headerShown: false }} component={CalendarTab} />
-        <Tab.Screen name="Profile" options={{ headerShown: false }} component={Profile} />
+        <Tab.Screen name="Home"
+          options={{
+            tabBarIcon: ({ focused }) => (
+              focused ? <HomeIconFilled /> : <HomeIcon />
+            ),
+          }}
+          component={Home}
+        />
+        <Tab.Screen name="Buddy"
+          options={{
+            tabBarIcon: ({ focused }) => (
+              focused ? <BuddyIconFilled /> : <BuddyIcon />
+            ),
+          }}
+          component={Buddy}
+        />
+        <Tab.Screen name="Calendar"
+          options={{
+            tabBarIcon: ({ focused }) => (
+              focused ? <CalendarIconFilled /> : <CalendarIcon />
+            ),
+          }}
+          component={CalendarTab}
+        />
+        <Tab.Screen name="Profile"
+          options={{
+            tabBarIcon: ({ focused }) => (
+              focused ? <ProfileIconFilled /> : <ProfileIcon />
+            ),
+          }}
+          component={Profile}
+        />
       </Tab.Navigator>
     </NavigationContainer>
   );
