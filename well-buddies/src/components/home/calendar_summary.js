@@ -127,14 +127,12 @@ const styles = StyleSheet.create({
   },
   emptyState: {
     color: 'white',
-    fontFamily: 'DMSans_400Regular',
     marginLeft: 16,
   },
   viewMore: {
     paddingRight: 16,
     alignSelf: 'flex-end',
     color: '#FFFF',
-    fontFamily: 'DMSans_500Medium',
     letterSpacing: 2,
   },
 });

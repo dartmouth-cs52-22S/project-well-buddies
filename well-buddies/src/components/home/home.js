@@ -18,10 +18,12 @@ function Home(props) {
       await props.fetchEmotion();
     }
     fetchData();
+    console.log('on home');
   }, []);
 
+
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{backgroundColor: 'black'}}>
       <View style={styles.container}>
         {/* {props.emotion === ''
           ? (
@@ -84,7 +86,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginBottom: 15,
     marginLeft: 16,
-    fontFamily: 'DMSans_Regular',
   },
 
   calendarContainerInfo: {
@@ -97,8 +98,7 @@ const styles = StyleSheet.create({
   },
 
   buddyImage: {
-    width: 181,
-    height: 250,
+    aspectRatio: 1,
     marginLeft: 46,
     marginBottom: 40,
   },

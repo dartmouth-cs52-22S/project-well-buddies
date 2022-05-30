@@ -53,9 +53,9 @@ function Index(props) {
 
   return (
     <Provider store={store}>
-      <View onLayout={onLayoutRootView}>
+      {/* <View onLayout={onLayoutRootView}> */}
         <App />
-      </View>
+      {/* </View> */}
     </Provider>
   );
 }

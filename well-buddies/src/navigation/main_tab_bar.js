@@ -16,8 +16,6 @@ import CalendarTab from './calendar_tab';
 const Tab = createBottomTabNavigator();
 
 function MainTabBar() {
-  useEffect(() => { async function fetch() { await props.fetchEmotion(); } fetch(); }, []);
-
   return (
     <NavigationContainer>
       <Tab.Navigator
