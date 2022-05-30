@@ -9,6 +9,7 @@ import CatHead from '../../assets/cat-head';
 import { signIn } from '../../services/google-login';
 import GetStarted from '../../assets/get-started';
 import { signinUser } from '../../state/actions/user';
+import {addEvent} from '../../services/google-cal-api';
 
 function Landing(props) {
   const [onboarding, setOnboarding] = useState(false);
@@ -44,6 +45,8 @@ function Landing(props) {
           <Text style={styles.signInText}>or</Text>
           <Text style={{ ...styles.signInText, textDecorationLine: 'underline' }}> SIGN IN </Text>
         </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => {addEvent('q4hprhq5gnjkrpqsljr3b0541o@group.calendar.google.com');}}><Text> Test Button</Text></TouchableOpacity>
 
       </View>
       {onboarding
