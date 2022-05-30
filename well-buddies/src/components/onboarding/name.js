@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View, Text,
 } from 'react-native';
@@ -7,8 +7,10 @@ import { styles } from './styles';
 import MediumText from '../custom/medium_text';
 
 function Name(props) {
-  const { setTempName } = props;
+  const { setTempName, tempName } = props;
   const [name, setName] = useState('');
+
+  useEffect(() => { setName(tempName); }, [tempName]);
 
   return (
     <View style={styles.nameContainer}>

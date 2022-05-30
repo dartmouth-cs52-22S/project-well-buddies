@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View, Text, ScrollView, TouchableOpacity,
 } from 'react-native';
@@ -6,7 +6,9 @@ import { styles } from './styles';
 import MediumText from '../custom/medium_text';
 
 function Stress(props) {
-  const { add, remove, activities } = props;
+  const {
+    add, remove, activities, tempStress,
+  } = props;
   const [acts, setActs] = useState([]);
 
   const addOrRemove = (activity) => {
@@ -19,6 +21,8 @@ function Stress(props) {
       add(activity);
     }
   };
+
+  useEffect(() => { setActs(tempStress); }, [tempStress]);
 
   return (
     <View style={styles.nameContainer}>

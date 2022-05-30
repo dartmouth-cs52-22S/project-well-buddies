@@ -12,12 +12,11 @@ import Home from '../components/home/home';
 import Buddy from '../components/buddy';
 import Profile from '../components/profile/profile';
 import CalendarTab from './calendar_tab';
-import Checkin from '../components/checkin';
 
 const Tab = createBottomTabNavigator();
 
 function MainTabBar() {
-  useEffect(() => { async () => { await props.fetchEmotion(); }; }, []);
+  useEffect(() => { async function fetch() { await props.fetchEmotion(); } fetch(); }, []);
 
   return (
     <NavigationContainer>

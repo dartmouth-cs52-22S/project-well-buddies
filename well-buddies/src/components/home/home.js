@@ -23,7 +23,7 @@ function Home(props) {
   return (
     <SafeAreaView>
       <View style={styles.container}>
-        {props.emotion === ''
+        {/* {props.emotion === ''
           ? (
             <Modal animationType="slide" transparent={false} visable>
               <Checkin />
@@ -31,7 +31,7 @@ function Home(props) {
           )
           : (
             <View />
-          )}
+          )} */}
         <ImageBackground source={require('../../assets/img/background_gradient.jpg')} resizeMode="cover" style={styles.backgroundImage}>
           <View style={styles.welcomeContainer}>
             <Text style={styles.welcome}>
@@ -54,16 +54,18 @@ function Home(props) {
               {props.pet === 'Panda' ? <Panda /> : <View />}
             </View>
           </View>
-
         </ImageBackground>
       </View>
-
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   backgroundImage: {
+    height: '100%',
+  },
+  container: {
+    width: '100%',
     height: '100%',
   },
   welcomeContainer: {
@@ -73,7 +75,7 @@ const styles = StyleSheet.create({
   },
   welcome: {
     fontSize: 32,
-    fontFamily: 'DMSans_700Bold',
+    fontFamily: 'DMSans_Bold',
     color: 'white',
   },
 
@@ -82,7 +84,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginBottom: 15,
     marginLeft: 16,
-    fontFamily: 'DMSans_400Regular',
+    fontFamily: 'DMSans_Regular',
   },
 
   calendarContainerInfo: {
