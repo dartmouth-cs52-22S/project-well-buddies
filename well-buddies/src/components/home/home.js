@@ -18,22 +18,21 @@ function Home(props) {
       await props.fetchEmotion();
     }
     fetchData();
-    console.log('on home');
   }, []);
 
   return (
     <SafeAreaView style={{ backgroundColor: 'black' }}>
-      <ImageBackground source={require('../../assets/img/background_gradient.jpg')} resizeMode="cover" style={styles.backgroundImage}>
-        <View style={styles.container}>
-          {props.emotion === ''
-            ? (
-              <Modal animationType="slide" transparent={false} visable>
-                <Checkin />
-              </Modal>
-            )
-            : (
-              <View />
-            )}
+      <View style={styles.container}>
+        {/* {props.emotion === ''
+          ? (
+            <Modal animationType="slide" transparent={false} visable>
+              <Checkin />
+            </Modal>
+          )
+          : (
+            <View />
+          )} */}
+        <ImageBackground source={require('../../assets/img/background_gradient.jpg')} resizeMode="cover" style={styles.backgroundImage}>
           <View style={styles.welcomeContainer}>
             <Text style={styles.welcome}>
               Welcome!
@@ -86,6 +85,7 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 18,
     marginBottom: 15,
+    fontFamily: 'DMSans_Regular',
     marginLeft: 16,
   },
 

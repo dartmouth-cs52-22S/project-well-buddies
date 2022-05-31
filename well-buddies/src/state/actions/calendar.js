@@ -3,6 +3,8 @@ import { getCalendarEvents } from '../../services/google-cal-api';
 export const ActionTypes = {
   FETCH_EVENTS: 'FETCH_EVENTS',
   FETCH_EVENT: 'FETCH_EVENT',
+  FETCH_TODAYS_EVENTS: 'FETCH_TODAYS_EVENTS',
+  COMPLETED_EVENTS: 'COMPLETED_EVENTS',
   ERROR_SET: 'ERROR_SET',
 };
 
@@ -18,15 +20,20 @@ export function fetchEvents(params) {
   };
 }
 
-export function fetchEvent(accessToken, eventID) {
+export function fetchTodaysEvents(params) {
   return (dispatch) => {
-    getCalendarEvents(accessToken, eventID)
+    getCalendarEvents(params)
       .then((response) => {
-        console.log('accesstoken', accessToken);
-        dispatch({ type: ActionTypes.FETCH_EVENT, payload: response.data });
+        dispatch({ type: ActionTypes.FETCH_TODAYS_EVENTS, payload: response.data.items });
       })
       .catch((error) => {
         dispatch({ type: ActionTypes.ERROR_SET, error });
       });
+  };
+}
+
+export function completeEvent(event) {
+  return (dispatch) => {
+    dispatch({ type: ActionTypes.COMPLETED_EVENTS, payload: event });
   };
 }
