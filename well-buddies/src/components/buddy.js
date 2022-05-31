@@ -84,7 +84,7 @@ class Buddy extends Component {
               <View style={styles.petDetails}>
                 <BoldText><Text style={styles.details}>Birthday:</Text></BoldText>
                 <RegularText>
-                  <Text style={styles.details}> Birthday: May 10, 20</Text>
+                  <Text style={styles.details}> Birthday: May 10, 2022</Text>
                 </RegularText>
               </View>
               <View style={styles.petDetails}>
