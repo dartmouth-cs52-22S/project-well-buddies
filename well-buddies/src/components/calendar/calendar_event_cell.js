@@ -1,25 +1,27 @@
 /* eslint-disable camelcase */
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/function-component-definition */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
-  StyleSheet, View, Text, ActivityIndicator, Button, TouchableOpacity,
+  StyleSheet, View, Text, ActivityIndicator, TouchableOpacity,
 } from 'react-native';
 import { Card } from 'react-native-elements';
 import Moment from 'moment';
+import { connect } from 'react-redux';
 import RegularText from '../custom/regular_text';
 import CheckboxChecked from '../../assets/img/checkbox/checkbox-checked';
 import Checkbox from '../../assets/img/checkbox/checkbox';
 import MediumText from '../custom/medium_text';
+import { completeEvent } from '../../state/actions/calendar';
 
 const CalendarEventCell = (props) => {
+  console.log('props', props);
   const [checked, setChecked] = useState(false);
 
   function parseDate(dateTime) {
     Moment.locale('en');
     return Moment(dateTime).format('h:mm A');
   }
-  console.log('checked', checked);
 
   function renderLoadingView() {
     return (
@@ -58,7 +60,11 @@ const CalendarEventCell = (props) => {
           </View>
         </View>
         <View>
-          <TouchableOpacity onPress={() => { setChecked(!checked); }}>
+          <TouchableOpacity onPress={() => {
+            props.completeEvent(props.event);
+            setChecked(!checked);
+          }}
+          >
             {!checked ? <Checkbox /> : <CheckboxChecked />}
           </TouchableOpacity>
         </View>
@@ -110,4 +116,8 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CalendarEventCell;
+const mapStateToProps = (state) => ({
+  completedEvents: state.events.completed,
+});
+
+export default connect(mapStateToProps, { completeEvent })(CalendarEventCell);

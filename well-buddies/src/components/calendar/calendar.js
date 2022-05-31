@@ -13,9 +13,10 @@ import { connect } from 'react-redux';
 import Moment from 'moment';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { fetchEvents } from '../../state/actions/calendar';
-import RegularText from '../custom/regular_text';
 import CalendarTitle from './calendar_title';
 import CalendarEventCell from './calendar_event_cell';
+
+import { getFreeBusy } from '../../services/google-cal-api';
 
 const Calendar = (props) => {
   const [accessToken, setAccessToken] = useState('');
@@ -35,6 +36,23 @@ const Calendar = (props) => {
     orderBy: 'startTime',
   };
 
+  console.log(startOfDay, endOfDay);
+  const start = Moment().hour(10);
+  const end = Moment().hour(12);
+  console.log(Moment.duration(end.diff(start)).asMinutes());
+
+  const body = {
+    timeMin: Moment().hour(10).toISOString(),
+    timeMax: Moment().hour(22).toISOString(),
+    groupExpansionMax: 1,
+    calendarExpansionMax: 1,
+    items: [
+      {
+        id: 'primary',
+      },
+    ],
+  };
+
   useEffect(() => {
     GoogleSignin.configure({
       iosClientId: CLIENT_ID_IOS,
@@ -43,6 +61,7 @@ const Calendar = (props) => {
     if (accessToken) {
       props.fetchEvents(args);
     }
+    getFreeBusy(body, accessToken);
   }, [accessToken, date]);
 
   function parseDate(dateTime) {

@@ -4,6 +4,7 @@ export const ActionTypes = {
   FETCH_EVENTS: 'FETCH_EVENTS',
   FETCH_EVENT: 'FETCH_EVENT',
   FETCH_TODAYS_EVENTS: 'FETCH_TODAYS_EVENTS',
+  COMPLETED_EVENTS: 'COMPLETED_EVENTS',
   ERROR_SET: 'ERROR_SET',
 };
 
@@ -31,14 +32,8 @@ export function fetchTodaysEvents(params) {
   };
 }
 
-export function fetchEvent(accessToken, eventID) {
+export function completeEvent(event) {
   return (dispatch) => {
-    getCalendarEvents(accessToken, eventID)
-      .then((response) => {
-        dispatch({ type: ActionTypes.FETCH_EVENT, payload: response.data });
-      })
-      .catch((error) => {
-        dispatch({ type: ActionTypes.ERROR_SET, error });
-      });
+    dispatch({ type: ActionTypes.COMPLETED_EVENTS, payload: event });
   };
 }

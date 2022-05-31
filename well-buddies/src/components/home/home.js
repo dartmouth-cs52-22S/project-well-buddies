@@ -18,12 +18,10 @@ function Home(props) {
       await props.fetchEmotion();
     }
     fetchData();
-    console.log('on home');
   }, []);
 
-
   return (
-    <SafeAreaView style={{backgroundColor: 'black'}}>
+    <SafeAreaView style={{ backgroundColor: 'black' }}>
       <View style={styles.container}>
         {/* {props.emotion === ''
           ? (

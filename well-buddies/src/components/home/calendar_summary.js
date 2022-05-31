@@ -38,7 +38,6 @@ const Calendar = (props) => {
       iosClientId: CLIENT_ID_IOS,
     });
     AsyncStorage.getItem('googleAccessCode').then((token) => { setAccessToken(token); });
-    console.log('use effect');
     if (accessToken) {
       console.log('summary use effect');
       props.fetchTodaysEvents(args);
