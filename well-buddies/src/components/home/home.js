@@ -21,20 +21,19 @@ function Home(props) {
     console.log('on home');
   }, []);
 
-
   return (
-    <SafeAreaView style={{backgroundColor: 'black'}}>
+    <SafeAreaView style={{ backgroundColor: 'black' }}>
       <ImageBackground source={require('../../assets/img/background_gradient.jpg')} resizeMode="cover" style={styles.backgroundImage}>
-      <View style={styles.container}>
-        {/* {props.emotion === ''
-          ? (
-            <Modal animationType="slide" transparent={false} visable>
-              <Checkin />
-            </Modal>
-          )
-          : (
-            <View />
-          )} */}
+        <View style={styles.container}>
+          {props.emotion === ''
+            ? (
+              <Modal animationType="slide" transparent={false} visable>
+                <Checkin />
+              </Modal>
+            )
+            : (
+              <View />
+            )}
           <View style={styles.welcomeContainer}>
             <Text style={styles.welcome}>
               Welcome!
@@ -56,7 +55,7 @@ function Home(props) {
               {props.pet === 'Panda' ? <Panda /> : <View />}
             </View>
           </View>
-      </View>
+        </View>
       </ImageBackground>
     </SafeAreaView>
   );
