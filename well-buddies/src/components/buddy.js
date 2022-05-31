@@ -1,6 +1,5 @@
 import React, { Component, componentDidMount, useState } from 'react';
 import { connect } from 'react-redux';
-import { Icon } from 'react-native-elements';
 import {
   StyleSheet,
   Text,
@@ -10,6 +9,7 @@ import {
   Pressable,
   TouchableOpacity,
   SafeAreaView,
+  Dimensions
 } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { fetchBuddy, setNewBuddy } from '../state/actions/buddy';
@@ -44,6 +44,8 @@ class Buddy extends Component {
 
   // eslint-disable-next-line react/no-arrow-function-lifecycle
   componentDidMount = async () => { await this.props.fetchBuddy(); };
+
+  changePet = (pet) => { console.log(pet); };
 
   onInputChangeName = (newName) => {
     this.setState({ name: newName });
@@ -119,13 +121,13 @@ class Buddy extends Component {
             </View>
             <View style={styles.buddyOption}>
               {/* replace all with head I'm just lazy */}
-              <TouchableOpacity style={{ margin: 20 }} onPress={() => { this.setState({ pet: 'Dog' }); }}>
+              <TouchableOpacity style={{ margin: 10, width: '30%', aspectRatio: 1 }} onPress={() => { this.changePet('Dog'); }}>
                 {this.state.pet === 'Dog' ? <DogChosen /> : <DogOption />}
               </TouchableOpacity>
-              <TouchableOpacity style={{ margin: 20 }} onPress={() => { this.setState({ pet: 'Cat' }); }}>
+              <TouchableOpacity style={{ margin: 10, width: '30%', aspectRatio: 1 }} onPress={() => { this.changePet('Cat'); }}>
                 {this.state.pet === 'Cat' ? <CatChosen /> : <CatOption />}
               </TouchableOpacity>
-              <TouchableOpacity style={{ margin: 20 }} onPress={() => { this.setState({ pet: 'Panda' }); }}>
+              <TouchableOpacity style={{ margin: 10, width: '35%', aspectRatio: 1 }} onPress={() => { this.changePet('Panda'); }}>
                 {this.state.pet === 'Panda' ? <PandaChosen /> : <PandaOption />}
               </TouchableOpacity>
             </View>
@@ -156,6 +158,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+    width: Dimensions.get('window').width*0.8,
   },
   bodyEdit: {
     alignItems: 'flex-start',
@@ -178,8 +181,7 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     paddingHorizontal: 18,
     borderRadius: 2,
-    marginLeft: 90,
-
+    alignSelf: 'center',
   },
   input: {
     marginTop: 20,
@@ -225,9 +227,8 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   pet: {
-    height: '40%',
+    height: '30%',
     aspectRatio: 1,
-    margin: 30,
   },
 
 });
