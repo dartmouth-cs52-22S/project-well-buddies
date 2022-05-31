@@ -5,6 +5,8 @@ import { ActionTypes } from '../actions/calendar';
 const initialState = {
   all: [],
   current: {},
+  today: [],
+  completed: [],
 };
 
 const EventsReducer = produce((draftState, action = {}) => {
@@ -16,6 +18,16 @@ const EventsReducer = produce((draftState, action = {}) => {
     case ActionTypes.FETCH_EVENT:
       console.log('fetch event');
       draftState.current = action.payload;
+      break;
+    case ActionTypes.FETCH_TODAYS_EVENTS:
+      console.log('fetch todays events', action.payload);
+      draftState.today = action.payload;
+      break;
+    case ActionTypes.COMPLETED_EVENTS:
+      if (!Object.entries(draftState.completed).includes(action.payload)) {
+        draftState.completed.push(action.payload);
+      }
+      console.log(action.payload);
       break;
     default:
       break;
