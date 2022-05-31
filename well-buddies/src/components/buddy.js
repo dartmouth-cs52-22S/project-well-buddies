@@ -229,6 +229,7 @@ const styles = StyleSheet.create({
   pet: {
     height: '30%',
     aspectRatio: 1,
+    margin: 60,
   },
 
 });
