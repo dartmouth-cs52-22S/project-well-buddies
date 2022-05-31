@@ -38,12 +38,14 @@ const Calendar = (props) => {
 
   console.log(startOfDay, endOfDay);
   const start = Moment().hour(10);
-  const end = Moment().hour(12);
+  const end = Moment().hour(22);
   console.log(Moment.duration(end.diff(start)).asMinutes());
 
   const body = {
-    timeMin: Moment().hour(10).toISOString(),
-    timeMax: Moment().hour(22).toISOString(),
+    timeMin: Moment().hour(10).minute(0).second(0)
+      .toISOString(),
+    timeMax: Moment().hour(22).minute(0).second(0)
+      .toISOString(),
     groupExpansionMax: 1,
     calendarExpansionMax: 1,
     items: [

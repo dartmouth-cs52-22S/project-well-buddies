@@ -109,11 +109,12 @@ export function getFreeBusy(body, accessToken) {
         }
         console.log('free', freeTimes);
         Object.entries(freeTimes).forEach((time, idx) => {
-          const diff = Moment.duration(Moment(time.end).diff(Moment(time.start))).asMinutes();
-          freeTimes[time].diff = diff;
+          const diff = Moment.duration(Moment(freeTimes[idx].end).diff(Moment(freeTimes[idx].start))).asMinutes();
+          freeTimes[idx].diff = diff;
         });
         console.log(freeTimes);
-
+        const activityTime = freeTimes[Math.floor(Math.random() * freeTimes.length)];
+        console.log('activity time', activityTime);
         resolve(response);
       })
       .catch((error) => {
