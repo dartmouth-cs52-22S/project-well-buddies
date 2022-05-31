@@ -29,8 +29,10 @@ export function signinUser(idToken) {
       dispatch({ type: ActionTypes.AUTH_USER });
       await AsyncStorage.setItem('jwt', jwt);
     }).catch((error) => {
-      console.log(`ERROR IN SIGNIN: ${error}`);
-      dispatch(authError(`Sign In Failed: ${error.response.data}`));
+      console.log(`ERROR IN SIGNIN: ${error.message}`);
+      if (error.message === '409') {
+        alert('There is currently not a profile associated with your account. Please click Get Started to create a profile!');
+      }
     });
   };
 }
@@ -48,8 +50,10 @@ export function signupUser(userData, idToken) {
       dispatch({ type: ActionTypes.AUTH_USER });
       await AsyncStorage.setItem('jwt', jwt);
     }).catch((error) => {
-      console.log(`ERROR IN SIGNIN: ${error}`);
-      dispatch(authError(`Sign Up Failed: ${error.response.data}`));
+      console.log(`ERROR IN SIGNUP: ${error.message}`);
+      if (error.message === '409') {
+        alert('There is already a profile associated with your account. Please go back to the starting page and click sign in.');
+      }
     });
   };
 }
