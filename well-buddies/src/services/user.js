@@ -14,8 +14,7 @@ export const signUp = async (userData, token) => {
     const newToken = response.data;
     return newToken;
   } catch (error) {
-    console.log(error);
-    throw new Error(error);
+    throw new Error(error.response.status);
   }
 };
 
@@ -28,8 +27,7 @@ export const signIn = async (tokenId) => {
     const newToken = response.data;
     return newToken;
   } catch (error) {
-    console.log(error);
-    throw new Error(error);
+    throw new Error(error.response.status);
   }
 };
 

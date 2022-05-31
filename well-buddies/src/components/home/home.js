@@ -1,6 +1,6 @@
 import React, { Component, useEffect } from 'react';
 import {
-  SafeAreaView, StyleSheet, View, Text, Image, ImageBackground, Modal,
+  SafeAreaView, StyleSheet, Dimensions, View, Text, Image, ImageBackground, Modal,
 } from 'react-native';
 import { connect } from 'react-redux';
 import CalendarSummary from './calendar_summary';
@@ -54,17 +54,19 @@ function Home(props) {
               {props.pet === 'Panda' ? <Panda /> : <View />}
             </View>
           </View>
-        </ImageBackground>
-      </View>
+        </View>
+      </ImageBackground>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   backgroundImage: {
-    height: '100%',
+    height: Dimensions.get('screen').height,
+    top: -50,
   },
   container: {
+    marginTop: 50,
     width: '100%',
     height: '100%',
   },
@@ -93,6 +95,7 @@ const styles = StyleSheet.create({
 
   buddyContainer: {
     justifyContent: 'flex-end',
+    paddingBottom: 50,
     height: '53%',
   },
 

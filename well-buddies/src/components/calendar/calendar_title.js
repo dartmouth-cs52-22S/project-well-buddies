@@ -18,7 +18,7 @@ function CalendarTitle(props) {
   };
 
   return (
-    <View paddingLeft={16} paddingTop={20}>
+    <View paddingLeft={16} paddingTop={50}>
       <DateTimePicker
         isVisible={modalVisible}
         mode="date"
