@@ -98,7 +98,6 @@ export function getFreeBusy(body, accessToken) {
             if (start !== busyTimes[i].start) {
               freeTimes.push({ start, end: busyTimes[i].start, diff: 0 });
             }
-            // freeTimes.push({ start: busyTimes[i].end, end: busyTimes[i + 1].start, diff: 0 });
             // if end of day is different from end time of last busy chunk, push chunk to free time
           } if (i === Object.entries(busyTimes).length - 1 && (end !== busyTimes[i].end)) {
             freeTimes.push({ start: busyTimes[i].end, end, diff: 0 });
