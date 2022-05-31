@@ -54,10 +54,8 @@ function Home(props) {
               {props.pet === 'Panda' ? <Panda /> : <View />}
             </View>
           </View>
-        </ImageBackground>
-
+      </ImageBackground>
       </View>
-
     </SafeAreaView>
   );
 }

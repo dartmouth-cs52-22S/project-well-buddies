@@ -4,7 +4,6 @@ import {
 } from 'react-native';
 import { Card } from 'react-native-elements';
 // import CustomText from '../custom/custom_text';
-
 import Moment from 'moment';
 import Ionicons from 'react-native-vector-icons/FontAwesome';
 
