@@ -74,8 +74,10 @@ export function getCalendarEvent(accessToken, eventID) {
 }
 
 export function getFreeBusy(body, accessToken) {
-  const start = Moment().hour(10).toISOString();
-  const end = Moment().hour(12).toISOString();
+  const start = Moment().startOf('day').hour(10).toISOString();
+  console.log('start', start);
+  const end = Moment().startOf('day').hour(22).toISOString();
+  console.log('end', end);
   // const diff = Moment.duration(end.diff(start)).asMinutes();
 
   const config = {
@@ -94,18 +96,24 @@ export function getFreeBusy(body, accessToken) {
           if (i === 0) {
             // if start of day is different from start time of first busy chunk, push chunk to free time
             if (start !== busyTimes[i].start) {
-              freeTimes.push([start, busyTimes[i].start]);
+              freeTimes.push({ start, end: busyTimes[i].start, diff: 0 });
             }
-            freeTimes.push([busyTimes[i].end, busyTimes[i + 1].start]);
+            freeTimes.push({ start: busyTimes[i].end, end: busyTimes[i + 1].start, diff: 0 });
             // if end of day is different from end time of last busy chunk, push chunk to free time
           } if (i === Object.entries(busyTimes).length - 1 && (end !== busyTimes[i].end)) {
-            freeTimes.push([busyTimes[i].end, end]);
+            freeTimes.push({ start: busyTimes[i].end, end, diff: 0 });
           } else {
             // for all other chunks of time, push to free time the end time of a busy time and the start time of the following busy time
-            freeTimes.push([busyTimes[i].end, busyTimes[i + 1].start]);
+            freeTimes.push({ start: busyTimes[i].end, end: busyTimes[i + 1].start, diff: 0 });
           }
         }
-        console.log('freetimes', freeTimes);
+        console.log('free', freeTimes);
+        Object.entries(freeTimes).forEach((time, idx) => {
+          const diff = Moment.duration(Moment(time.end).diff(Moment(time.start))).asMinutes();
+          freeTimes[time].diff = diff;
+        });
+        console.log(freeTimes);
+
         resolve(response);
       })
       .catch((error) => {
