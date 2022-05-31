@@ -63,21 +63,21 @@ function Home(props) {
 const styles = StyleSheet.create({
   backgroundImage: {
     height: Dimensions.get('screen').height,
-    top: -50,
+    top: -88,
   },
   container: {
-    marginTop: 50,
+    marginTop: 70,
     width: '100%',
     height: '100%',
   },
   welcomeContainer: {
-    marginTop: 60,
+    marginTop: 40,
     marginLeft: 16,
     marginBottom: 8,
   },
   welcome: {
     fontSize: 32,
-    fontFamily: 'DMSans_Bold',
+    fontFamily: 'DMSans_Medium',
     color: 'white',
   },
 
