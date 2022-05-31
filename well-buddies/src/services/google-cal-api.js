@@ -41,21 +41,35 @@ export function getCalendarEvents(params) {
       });
   });
 }
-export function addEvent(calendarID) {
-  console.log('function is being called!');
+export function addEvent(event) {
+  console.log(event);
 
-  const end = { dateTime: new Date().toISOString() };
-  const start = { dateTime: new Date().toISOString() };
-  const summary = 'test summary';
+  // const end = { dateTime: new Date().toISOString() };
+  // const start = { dateTime: new Date().toISOString() };
+  // const summary = 'test summary';
 
-  axios.post(`${API_URL}${calendarID}/events`, { end, start, summary })
+  // axios.post(`${API_URL}${calendarID}/events`, { end, start, summary })
 
-    .then((response) => {
-      console.log(`calendar api worked!: ${response}`);
-    })
-    .catch((error) => {
-      console.log(`calendar api error: ${error}`);
-    });
+  //   .then((response) => {
+  //     console.log(`calendar api worked!: ${response}`);
+  //   })
+  //   .catch((error) => {
+  //     console.log(`calendar api error: ${error}`);
+  //   });
+  axios({
+    method: 'post',
+    url: 'https://v1.nocodeapi.com/rheanna665/calendar/iSVwTfMCKPqPLuBC/event',
+    params: {},
+    data: {
+      summary: 'Event summary', start: { dateTime: '2021-02-21T21:00:00+05:30', timeZone: 'IST' }, end: { dateTime: '2021-02-21T21:30:00+05:30', timeZone: 'IST' }, recurrence: ['RRULE:FREQ=DAILY;COUNT=2'],
+    },
+  }).then((response) => {
+    // handle success
+    console.log(response.data);
+  }).catch((error) => {
+    // handle error
+    console.log(error);
+  });
 }
 
 export function getCalendarEvent(accessToken, eventID) {

@@ -17,6 +17,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { fetchEvents } from '../../state/actions/calendar';
 import RegularText from '../custom/regular_text';
 import CalendarTitle from './calendar_title';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import { addEvent } from '../../services/google-cal-api';
+import CalendarAdd from '../../assets/img/calendar-add';
+
 
 const Calendar = (props) => {
   const [accessToken, setAccessToken] = useState('');
@@ -103,7 +107,28 @@ const Calendar = (props) => {
           data={props.events}
           renderItem={({ item }) => { return renderEventCell(item); }}
         />
+        <View style={styles.addIcon}>
+          <TouchableOpacity onPress={() => { addEvent(); }}>
+            {/* <AntDesign
+              name="pluscircleo"
+              size={30}
+              color="#000000"
+            /> */}
+            <CalendarAdd/>
+          </TouchableOpacity>
+        </View>
       </ImageBackground>
+      {/* <Button
+        onPress={this.buttonClickListener}
+        title="Click ME"
+        color="#00B0FF"   
+      /> */}
+      {/* <TouchableOpacity onPress={addEvent}>
+      <Icon name="pluscircleo" style={styles.icon}></Icon>
+      <Text style={styles.text}>Login with Facebook</Text>
+      </TouchableOpacity> */}
+
+
     </View>
   );
 };
@@ -131,6 +156,9 @@ const styles = StyleSheet.create({
   backgroundImg: {
     resizeMode: 'cover',
     height: '100%',
+  },
+  addIcon: {
+    marginLeft: 300,
   },
 });
 
