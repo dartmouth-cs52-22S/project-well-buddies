@@ -22,14 +22,6 @@ export const signIn = async () => {
   } catch (error) {
     if (error.code === statusCodes.SIGN_IN_CANCELLED) {
       return 'cancelled';
-    /* } else if (error.code === statusCodes.IN_PROGRESS) {
-      // operation (f.e. sign in) is in progress already
-    } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-      console.log(error);
-      // play services not available or outdated
-    } else {
-      console.log(error);
-      // some other error happened */
     }
     return null;
   }
@@ -42,7 +34,6 @@ export const signOut = async () => {
     await GoogleSignin.revokeAccess();
     await GoogleSignin.signOut();
   } catch (error) {
-    console.error(error);
   }
 };
 

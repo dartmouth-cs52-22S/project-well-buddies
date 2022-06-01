@@ -10,7 +10,6 @@ const initialState = {
 const BuddyReducer = produce((draftState, action = {}) => {
   switch (action.type) {
     case ActionTypes.FETCH_BUDDY:
-      console.log('fetch buddy hm', action.payload);
       draftState.pet = action.payload.pet;
       draftState.petName = action.payload.petName;
       break;

@@ -15,14 +15,12 @@ export function fetchBuddy() {
         })
         .catch((error) => {
           console.log(`error getting buddy: ${error}`);
-          /* dispatch({ type: ActionTypes.ERROR_SET, error }); */
         });
     }
   };
 }
 
 export function setNewBuddy(buddy, buddyName) {
-  console.log('set', buddy, buddyName);
   return async (dispatch) => {
     const jwt = await AsyncStorage.getItem('jwt');
     if (jwt !== null) {

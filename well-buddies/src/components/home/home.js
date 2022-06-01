@@ -1,10 +1,11 @@
 /* eslint-disable react/destructuring-assignment */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   SafeAreaView, StyleSheet, Dimensions, View, Text, ImageBackground, Modal, TouchableOpacity,
 } from 'react-native';
 import { connect } from 'react-redux';
 import TwemojiText from 'react-native-twemojis';
+import Moment from 'moment';
 import CalendarSummary from './calendar_summary';
 import Cat from '../../assets/img/cat/cat';
 import Dog from '../../assets/img/dog/dog';
@@ -15,12 +16,28 @@ import SleepyPanda from '../../assets/img/panda/panda-sleepy';
 import Checkin from '../checkin';
 import { fetchEmotion } from '../../state/actions/emotion';
 import { fetchBuddy } from '../../state/actions/buddy';
-import { fetchCompletedEvents } from '../../state/actions/calendar';
+import { fetchCompletedEvents, fetchEvents } from '../../state/actions/calendar';
 import { fetchActivities, fetchTodayWellness } from '../../state/actions/activity';
 import { fetchUser } from '../../state/actions/user';
 import Star from '../../assets/img/star';
 
 function Home(props) {
+  const [accessToken, setAccessToken] = useState('');
+  const [date, setDate] = useState(Moment());
+
+  const startOfDay = Moment(date).startOf('day').toISOString();
+  const endOfDay = Moment(date).endOf('day').toISOString();
+
+  const args = {
+    access_token: accessToken,
+    timeMin: startOfDay,
+    timeMax: endOfDay,
+    showDeleted: false,
+    singleEvents: true,
+    maxResults: 100,
+    orderBy: 'startTime',
+  };
+
   useEffect(() => {
     async function fetchData() {
       await props.fetchBuddy();
@@ -28,6 +45,10 @@ function Home(props) {
       await props.fetchCompletedEvents();
       await props.fetchTodayWellness();
       await props.fetchUser();
+      await AsyncStorage.getItem('googleAccessCode').then((token) => { setAccessToken(token); });
+      if (accessToken) {
+        props.fetchEvents(args);
+      }
     }
     fetchData();
     console.log('props', props);
@@ -201,5 +222,5 @@ const mapStateToProps = (state) => (
 );
 
 export default connect(mapStateToProps, {
-  fetchBuddy, fetchEmotion, fetchTodayWellness, fetchCompletedEvents, fetchActivities, fetchUser,
+  fetchBuddy, fetchEvents, fetchEmotion, fetchTodayWellness, fetchCompletedEvents, fetchUser, fetchActivities,
 })(Home);

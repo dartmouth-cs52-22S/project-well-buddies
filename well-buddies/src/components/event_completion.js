@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react';
 import {
-  SafeAreaView, StyleSheet, View, ImageBackground, Dimensions, Text, TouchableOpacity,
+  SafeAreaView, StyleSheet, View, ImageBackground, Dimensions, Text, TouchableOpacity,Modal,
 } from 'react-native';
+import { activitiesList } from "../constants";
 import { connect } from 'react-redux';
 import Apple from '../assets/img/fruits/apple';
 import { fetchBuddy } from '../state/actions/buddy';
+import { fetchActivities } from '../state/actions/activity';
 import DogCompletion from '../assets/img/dog/dog-completion';
 import CatCompletion from '../assets/img/cat/cat-completion';
 import PandaCompletion from '../assets/img/panda/panda-completion';
@@ -15,6 +17,7 @@ function EventCompletion(props) {
   useEffect(() => {
     async function fetchData() {
       await props.fetchBuddy();
+      await props.fetchActivities();
     }
     fetchData();
   }, []);
@@ -41,15 +44,21 @@ function EventCompletion(props) {
             <Text style={styles.textLarge}>Yay!</Text>
             <Text style={styles.textSmall}>You completed a wellness activity. Your buddy had an apple and is growing!</Text>
           </View>
-
           <TouchableOpacity>
             <View style={styles.starContainer}>
+            {
+                        activitiesList.map((act) => {
+                          if (act.title == props.activity){
+                            return (<Text style={styles.textStar}>+ {act.duration}/5 Stars</Text>);
+                        }
+                          <Text style={styles.textStar}>+ 10 Stars</Text>
+                      })
+                    }
               <Text style={styles.textStar}>+ 10 Stars</Text>
               <Star />
             </View>
           </TouchableOpacity>
         </ImageBackground>
-
       </View>
     </TouchableOpacity>
   );
@@ -135,3 +144,4 @@ const mapStateToProps = (state) => (
 );
 
 export default connect(mapStateToProps, { fetchBuddy })(EventCompletion);
+

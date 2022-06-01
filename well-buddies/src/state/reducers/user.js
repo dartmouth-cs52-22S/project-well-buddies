@@ -21,7 +21,6 @@ const UserReducer = produce((draftState, action = {}) => {
       draftState.authenticated = false;
       break;
     case ActionTypes.FETCH_USER:
-      console.log('fetch user info', action.payload);
       draftState.userName = action.payload.name;
       draftState.userEmail = action.payload.email;
       draftState.stars = action.payload.star;
