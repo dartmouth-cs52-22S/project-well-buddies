@@ -10,16 +10,14 @@ import RegularText from '../custom/regular_text';
 import CheckboxChecked from '../../assets/img/checkbox/checkbox-checked';
 import Checkbox from '../../assets/img/checkbox/checkbox';
 import MediumText from '../custom/medium_text';
-<<<<<<< HEAD
-import { completeEvent } from '../../state/actions/calendar';
 import { activitiesList } from '../../constants';
-=======
 import EventCompletion from '../event_completion';
 import { fetchCompletedEvents, completeEventAction } from '../../state/actions/calendar';
->>>>>>> origin
 
+// eslint-disable-next-line react/function-component-definition
 const CalendarEventCell = (props) => {
   const [checked, setChecked] = useState(false);
+  const wellness = (props.event.summary.substring(0, 8) === 'WELLNESS');
   const [event, setEvent] = useState(false);
 
   function checkChecked() {
@@ -35,13 +33,13 @@ const CalendarEventCell = (props) => {
       setChecked(false);
     }
   }
+
   useEffect(() => { async function func() { checkChecked(); } if (!checked) { func(); } }, [props.completedEvents]);
 
   function parseDate(dateTime) {
     Moment.locale('en');
     return Moment(dateTime).format('h:mm A');
   }
-<<<<<<< HEAD
 
   function renderLoadingView() {
     return (
@@ -75,58 +73,64 @@ const CalendarEventCell = (props) => {
     return props.event.summary;
   }
 
-=======
->>>>>>> origin
   return (
     <View>
-    <Card borderRadius={5}
-      backgroundColor="#d1dce0"
-      containerStyle={!checked ? styles.card : styles.checkedCard}
-      underlayColor="#d1dce0"
-      height={80}
-    >
-      <View style={styles.innerCard}>
-        <View>
+      <Card borderRadius={5}
+        backgroundColor="#d1dce0"
+        containerStyle={!checked ? styles.card : styles.checkedCard}
+        underlayColor="#d1dce0"
+        height={80}
+      >
+        <View style={styles.innerCard}>
           <View>
-            <View flexDirection="row">
-              <View>
-                {renderEmoji()}
+            <View>
+              <View flexDirection="row">
+                <View>
+                  {renderEmoji()}
+                </View>
+                <MediumText>
+                  <Text style={!checked ? styles.title : styles.checkedTitle}>
+                    {wellness ? props.event.summary.substring(9) : props.event.summary }
+                  </Text>
+                </MediumText>
               </View>
-              <MediumText>
-                <Text style={!checked ? styles.title : styles.checkedTitle}>
-                  {renderSummary()}
+            </View>
+            <View>
+              <RegularText>
+                <Text style={!checked ? styles.date : styles.checkedDate}>
+                  {parseDate(props.event.start.dateTime)}
+                  {' '}
+                  -
+                  {' '}
+                  {parseDate(props.event.end.dateTime)}
                 </Text>
-              </MediumText>
+              </RegularText>
             </View>
           </View>
           <View>
-            <RegularText>
-              <Text style={!checked ? styles.date : styles.checkedDate}>
-                {parseDate(props.event.start.dateTime)}
-                {' '}
-                -
-                {' '}
-                {parseDate(props.event.end.dateTime)}
-              </Text>
-            </RegularText>
+            <TouchableOpacity onPress={() => {
+              if (wellness) {
+                props.completeEventAction(props.event.id, '');
+              } else {
+                props.completeEventAction(props.event.id, 'true');
+              }
+              setEvent(true);
+            }}
+              disabled={checked}
+            >
+              {!checked ? <Checkbox /> : <CheckboxChecked />}
+            </TouchableOpacity>
           </View>
         </View>
-        <View>
-          <TouchableOpacity onPress={() => {
-            props.completeEventAction(props.event.id, '');
-            setEvent(true);
-          }}
-            disabled={checked}
-          >
-            {!checked ? <Checkbox /> : <CheckboxChecked />}
-          </TouchableOpacity>
-        </View>
+      </Card>
+      <View style={{ position: 'absolute' }}>
+        {event ? (
+          <Modal animationType="slide" transparent={false}>
+            <EventCompletion closeModal={() => setEvent(false)} />
+          </Modal>
+        ) : <View />}
+
       </View>
-    </Card>
-    <View style={{position: 'absolute'}}>
-      {event? <Modal animationType="slide" transparent={false}>
-        <EventCompletion closeModal={() => setEvent(false)}/>
-      </Modal> :<View/>}</View>
     </View>
   );
 };

@@ -21,7 +21,7 @@ export const signIn = async () => {
     return userObject;
   } catch (error) {
     if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-      return "cancelled";
+      return 'cancelled';
     /* } else if (error.code === statusCodes.IN_PROGRESS) {
       // operation (f.e. sign in) is in progress already
     } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
@@ -48,8 +48,7 @@ export const signOut = async () => {
 
 export const addScope = async () => {
   try {
-      await GoogleSignin.addScopes({ scopes: ['https://www.googleapis.com/auth/calendar', 'https://www.googleapis.com/auth/calendar.events'] });
-
+    await GoogleSignin.addScopes({ scopes: ['https://www.googleapis.com/auth/calendar', 'https://www.googleapis.com/auth/calendar.events'] });
   } catch (error) {
     throw new Error(`error in adding scope: ${error}`);
   }
