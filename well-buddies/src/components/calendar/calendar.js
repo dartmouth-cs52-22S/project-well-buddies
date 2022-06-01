@@ -88,7 +88,8 @@ const Calendar = (props) => {
       return (
         <View style={styles.emptyStateContainer}>
           <Cloud style={styles.cloud} />
-          <Text justifyContent="center" style={styles.emptyStateText}>No events found for this day</Text>
+          <Text style={styles.emptyStateText}>No events found</Text>
+          <Text style={styles.emptyStateText}>for this day</Text>
         </View>
       );
     } else return null;
@@ -158,9 +159,11 @@ const styles = StyleSheet.create({
     color: '363D4F',
     fontFamily: 'DMSans_Regular',
     fontSize: 18,
+    alignSelf:'center',
+    color:'#363D4F',
   },
   cloud: {
-    alignItems: 'center',
+    alignSelf:'center',
   },
 });
 
