@@ -10,12 +10,14 @@ import Panda from '../../assets/img/panda/panda';
 import Checkin from '../checkin';
 import { fetchEmotion } from '../../state/actions/emotion';
 import { fetchBuddy } from '../../state/actions/buddy';
+import { fetchCompletedEvents } from '../../state/actions/calendar';
 
 function Home(props) {
   useEffect(() => {
     async function fetchData() {
       await props.fetchBuddy();
       await props.fetchEmotion();
+      await props.fetchCompletedEvents();
     }
     fetchData();
   }, []);
@@ -114,4 +116,4 @@ const mapStateToProps = (state) => (
   }
 );
 
-export default connect(mapStateToProps, { fetchBuddy, fetchEmotion })(Home);
+export default connect(mapStateToProps, { fetchBuddy, fetchEmotion, fetchCompletedEvents })(Home);
