@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import {
-  SafeAreaView, StyleSheet, View, ImageBackground, Dimensions, Text, TouchableOpacity,
+  SafeAreaView, StyleSheet, View, ImageBackground, Dimensions, Text, TouchableOpacity,Modal,
 } from 'react-native';
-import constants from '../constants'
+import { activitiesList } from "../constants";
 import { connect } from 'react-redux';
 import Apple from '../assets/img/fruits/apple';
 import { fetchBuddy } from '../state/actions/buddy';
@@ -21,7 +21,6 @@ function EventCompletion(props) {
     }
     fetchData();
   }, []);
-  console.log(list_activities);
   return (
     <TouchableOpacity onPress={()=>{props.closeModal();}}>
       <View style={styles.container}>
@@ -46,21 +45,21 @@ function EventCompletion(props) {
             <Text style={styles.textSmall}>Your buddy had an apple</Text>
             <Text style={styles.textSmall}>and is growing!</Text>
           </View>
-
           <TouchableOpacity>
             <View style={styles.starContainer}>
             {
-                        constants.map((act_list) => {
-                          if (act_list.title == props.activity){
-                            return (<Text>{act_list.duration}/5</Text>);
-                        }})
+                        activitiesList.map((act) => {
+                          if (act.title == props.activity){
+                            return (<Text style={styles.textStar}>+ {act.duration}/5 Stars</Text>);
+                        }
+                          <Text style={styles.textStar}>+ 10 Stars</Text>
+                      })
                     }
               <Text style={styles.textStar}>+ 10 Stars</Text>
               <Star />
             </View>
           </TouchableOpacity>
         </ImageBackground>
-
       </View>
     </TouchableOpacity>
   );
@@ -145,3 +144,4 @@ const mapStateToProps = (state) => (
 );
 
 export default connect(mapStateToProps, { fetchBuddy })(EventCompletion);
+
