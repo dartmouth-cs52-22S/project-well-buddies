@@ -21,7 +21,6 @@ export function fetchEmotions() {
 
 export function fetchEmotion() {
   return (dispatch) => {
-    console.log('feting emotion');
     getEmotion()
       .then((response) => {
         dispatch({ type: ActionTypes.FETCH_EMOTION, payload: response });

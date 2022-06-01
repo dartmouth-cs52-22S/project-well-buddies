@@ -1,11 +1,6 @@
-/* eslint-disable camelcase */
-/* eslint-disable react/destructuring-assignment */
-/* eslint-disable react/function-component-definition */
-import React, { useEffect, useState,Modal } from 'react';
-// import { Dimensions } from 'react-native';
-
+import React, { useEffect, useState } from 'react';
 import {
-  StyleSheet, View, Text, ActivityIndicator, TouchableOpacity, Alert, SafeAreaView,
+  StyleSheet, View, Text, ActivityIndicator, TouchableOpacity, Modal,
 } from 'react-native';
 import { Card } from 'react-native-elements';
 import Moment from 'moment';
@@ -14,38 +9,38 @@ import RegularText from '../custom/regular_text';
 import CheckboxChecked from '../../assets/img/checkbox/checkbox-checked';
 import Checkbox from '../../assets/img/checkbox/checkbox';
 import MediumText from '../custom/medium_text';
-import { completeEvent } from '../../state/actions/calendar';
 import EventCompletion from '../event_completion';
-import DogCompletion from '../../assets/img/dog/dog-completion';
-import CatCompletion from '../../assets/img/cat/cat-completion';
-import PandaCompletion from '../../assets/img/panda/panda-completion';
+import { fetchCompletedEvents, completeEventAction } from '../../state/actions/calendar';
 
 const CalendarEventCell = (props) => {
   console.log('props', props);
   const [checked, setChecked] = useState(false);
+  const [event, setEvent] = useState(false);
+
+  function checkChecked() {
+    console.log(props.event.id);
+    console.log(props.completedEvents);
+    console.log(props.event.id in props.completedEvents);
+    let found = false;
+    for (let i = 0; i < props.completedEvents.length; i++) {
+      if (props.completedEvents[i] === props.event.id) {
+        found = true;
+      }
+    }
+    if (found) {
+      setChecked(true);
+    } else {
+      setChecked(false);
+    }
+  }
+  useEffect(() => { async function func() { checkChecked(); } if (!checked) { func(); } }, [props.completedEvents]);
 
   function parseDate(dateTime) {
     Moment.locale('en');
     return Moment(dateTime).format('h:mm A');
   }
-  const [editComplete, setEditComplete] = useState(false);
-  useEffect(() => {
-    async function fetchData() {
-      await props.fetchBuddy();
-    }
-    fetchData();
-  }, []);
-
-  function renderLoadingView() {
-    return (
-      <View style={styles.loading}>
-        <ActivityIndicator size="large" color="#0000ff" />
-      </View>
-    );
-  }
-
   return (
-    <SafeAreaView>
+    <View>
     <Card borderRadius={5}
       backgroundColor="#d1dce0"
       containerStyle={!checked ? styles.card : styles.checkedCard}
@@ -75,30 +70,19 @@ const CalendarEventCell = (props) => {
         </View>
         <View>
           <TouchableOpacity onPress={() => {
-            props.completeEvent(props.event);
-            setChecked(!checked);
-            }}
+            props.completeEventAction(props.event.id, '');
+            setEvent(true);
+          }}
+            disabled={checked}
           >
-            {/* {checked && props.pet === 'Dog' ? <DogCompletion /> :<View/>}
-            {checked && props.pet === 'Cat' ? <CatCompletion /> :<View/>}
-            {checked && props.pet === 'Panda' ? <PandaCompletion /> :<View/>} */}
             {!checked ? <Checkbox /> : <CheckboxChecked />}
-            <View>
-            {checked? <EventCompletion /> :<View/>}
-            </View>
           </TouchableOpacity>
         </View>
       </View>
-      {/* {checked
-        ? (
-          <Modal animationType="slide" transparent={false}>
-            <EventCompletion closeModal={() => setChecked(false)} />
-          </Modal>
-        )
-        : <View />} */}
     </Card>
-
-    </SafeAreaView>
+    <View style={{position: 'absolute'}}>{event? <Modal animationType="slide" transparent={false}><EventCompletion closeModal={() => setEvent(false)}/>
+      </Modal> :<View/>}</View>
+    </View>
   );
 };
 
@@ -148,4 +132,4 @@ const mapStateToProps = (state) => ({
   completedEvents: state.events.completed,
 });
 
-export default connect(mapStateToProps, { completeEvent })(CalendarEventCell);
+export default connect(mapStateToProps, { completeEventAction, fetchCompletedEvents })(CalendarEventCell);

@@ -10,11 +10,9 @@ const initialState = {
 const EmotionReducer = produce((draftState, action = {}) => {
   switch (action.type) {
     case ActionTypes.FETCH_EMOTIONS:
-      console.log('fetch emotions', action.payload);
       draftState.all = action.payload;
       break;
     case ActionTypes.FETCH_EMOTION:
-      console.log('fetch emotion');
       draftState.today = action.payload;
       break;
     default:
