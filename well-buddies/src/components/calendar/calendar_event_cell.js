@@ -1,9 +1,6 @@
-/* eslint-disable camelcase */
-/* eslint-disable react/destructuring-assignment */
-/* eslint-disable react/function-component-definition */
 import React, { useEffect, useState } from 'react';
 import {
-  StyleSheet, View, Text, ActivityIndicator, TouchableOpacity,
+  StyleSheet, View, Text, ActivityIndicator, TouchableOpacity, Modal,
 } from 'react-native';
 import { Card } from 'react-native-elements';
 import Moment from 'moment';
@@ -13,17 +10,38 @@ import RegularText from '../custom/regular_text';
 import CheckboxChecked from '../../assets/img/checkbox/checkbox-checked';
 import Checkbox from '../../assets/img/checkbox/checkbox';
 import MediumText from '../custom/medium_text';
+<<<<<<< HEAD
 import { completeEvent } from '../../state/actions/calendar';
 import { activitiesList } from '../../constants';
+=======
+import EventCompletion from '../event_completion';
+import { fetchCompletedEvents, completeEventAction } from '../../state/actions/calendar';
+>>>>>>> origin
 
 const CalendarEventCell = (props) => {
-  console.log('props', props);
   const [checked, setChecked] = useState(false);
+  const [event, setEvent] = useState(false);
+
+  function checkChecked() {
+    let found = false;
+    for (let i = 0; i < props.completedEvents.length; i++) {
+      if (props.completedEvents[i] === props.event.id) {
+        found = true;
+      }
+    }
+    if (found) {
+      setChecked(true);
+    } else {
+      setChecked(false);
+    }
+  }
+  useEffect(() => { async function func() { checkChecked(); } if (!checked) { func(); } }, [props.completedEvents]);
 
   function parseDate(dateTime) {
     Moment.locale('en');
     return Moment(dateTime).format('h:mm A');
   }
+<<<<<<< HEAD
 
   function renderLoadingView() {
     return (
@@ -57,7 +75,10 @@ const CalendarEventCell = (props) => {
     return props.event.summary;
   }
 
+=======
+>>>>>>> origin
   return (
+    <View>
     <Card borderRadius={5}
       backgroundColor="#d1dce0"
       containerStyle={!checked ? styles.card : styles.checkedCard}
@@ -92,16 +113,21 @@ const CalendarEventCell = (props) => {
         </View>
         <View>
           <TouchableOpacity onPress={() => {
-            props.completeEvent(props.event);
-            setChecked(!checked);
+            props.completeEventAction(props.event.id, '');
+            setEvent(true);
           }}
+            disabled={checked}
           >
             {!checked ? <Checkbox /> : <CheckboxChecked />}
           </TouchableOpacity>
         </View>
       </View>
-
     </Card>
+    <View style={{position: 'absolute'}}>
+      {event? <Modal animationType="slide" transparent={false}>
+        <EventCompletion closeModal={() => setEvent(false)}/>
+      </Modal> :<View/>}</View>
+    </View>
   );
 };
 
@@ -154,4 +180,4 @@ const mapStateToProps = (state) => ({
   completedEvents: state.events.completed,
 });
 
-export default connect(mapStateToProps, { completeEvent })(CalendarEventCell);
+export default connect(mapStateToProps, { completeEventAction, fetchCompletedEvents })(CalendarEventCell);

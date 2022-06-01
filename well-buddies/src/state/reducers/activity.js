@@ -9,7 +9,6 @@ const initialState = {
 const ActivityReducer = produce((draftState, action = {}) => {
   switch (action.type) {
     case ActionTypes.FETCH_ACTIVITIES:
-      console.log('fetch activity', action.payload);
       draftState.all.push(action.payload);
       break;
     default:

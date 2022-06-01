@@ -66,8 +66,6 @@ class CalendarHistory extends Component {
                     </Text>
                     </View>
                     )
-        
-        
         }}        
 
         />
