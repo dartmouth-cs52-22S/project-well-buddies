@@ -41,11 +41,16 @@ const CalendarEventCell = (props) => {
       <View style={styles.innerCard}>
         <View>
           <View>
-            <MediumText>
-              <Text style={!checked ? styles.title : styles.checkedTitle}>
-                {props.event.summary}
+            <View flexDirection="row">
+              <Text>
+                &#129496;
               </Text>
-            </MediumText>
+              <MediumText>
+                <Text style={!checked ? styles.title : styles.checkedTitle}>
+                  {props.event.summary}
+                </Text>
+              </MediumText>
+            </View>
           </View>
           <View>
             <RegularText>
