@@ -39,10 +39,8 @@ const Calendar = (props) => {
     orderBy: 'startTime',
   };
 
-  console.log(startOfDay, endOfDay);
   const start = Moment().hour(10);
   const end = Moment().hour(22);
-  console.log(Moment.duration(end.diff(start)).asMinutes());
 
   const body = {
     timeMin: Moment().hour(10).minute(0).second(0)
