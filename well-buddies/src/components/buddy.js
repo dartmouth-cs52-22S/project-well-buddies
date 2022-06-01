@@ -31,7 +31,7 @@ class Buddy extends Component {
     super(props);
     this.state = {
       isEditing: false,
-      name: '',
+      name: this.props.petName,
       pet: this.props.pet,
     };
   }
@@ -45,12 +45,15 @@ class Buddy extends Component {
   // eslint-disable-next-line react/no-arrow-function-lifecycle
   componentDidMount = async () => { await this.props.fetchBuddy(); };
 
-  changePet = (pet) => { console.log(pet); };
+  changePet = (pet) => { this.setState({ pet }); };
 
   onInputChangeName = (event) => {
     this.setState({ name: event.target.value });
   };
 
+  save = () => {
+    this.props.setNewBuddy(this.state.name, this.state.pet);
+  };
 
   render() {
     if (this.state.isEditing === false) {
@@ -132,7 +135,7 @@ class Buddy extends Component {
                 {this.state.pet === 'Panda' ? <PandaChosen /> : <PandaOption />}
               </TouchableOpacity>
             </View>
-            <Pressable style={styles.button} onPress={() => { this.editMode(); }}>
+            <Pressable style={styles.button} onPress={() => { this.editMode(); this.save(); }}>
               <Text style={styles.buttonTitle}>Save</Text>
             </Pressable>
           </View>

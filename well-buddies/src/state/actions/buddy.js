@@ -21,7 +21,8 @@ export function fetchBuddy() {
   };
 }
 
-export function setNewBuddy(buddy = '', buddyName = '') {
+export function setNewBuddy(buddy, buddyName) {
+  console.log('set', buddy, buddyName);
   return async (dispatch) => {
     const jwt = await AsyncStorage.getItem('jwt');
     if (jwt !== null) {
