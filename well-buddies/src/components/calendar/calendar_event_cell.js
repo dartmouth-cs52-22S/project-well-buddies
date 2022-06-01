@@ -12,24 +12,42 @@ import RegularText from '../custom/regular_text';
 import CheckboxChecked from '../../assets/img/checkbox/checkbox-checked';
 import Checkbox from '../../assets/img/checkbox/checkbox';
 import MediumText from '../custom/medium_text';
-import { completeEvent } from '../../state/actions/calendar';
+import { fetchCompletedEvents, completeEventAction } from '../../state/actions/calendar';
 
 const CalendarEventCell = (props) => {
   console.log('props', props);
   const [checked, setChecked] = useState(false);
+
+  function checkChecked() {
+    console.log(props.event.id);
+    console.log(props.completedEvents);
+    console.log(props.event.id in props.completedEvents);
+    let found = false;
+    for (let i = 0; i < props.completedEvents.length; i++) {
+      if (props.completedEvents[i] === props.event.id) {
+        found = true;
+      }
+    }
+    if (found) {
+      setChecked(true);
+    } else {
+      setChecked(false);
+    }
+  }
+  useEffect(() => { async function func() { checkChecked(); } if (!checked) { func(); } }, [props.completedEvents]);
 
   function parseDate(dateTime) {
     Moment.locale('en');
     return Moment(dateTime).format('h:mm A');
   }
 
-  function renderLoadingView() {
+  /* function renderLoadingView() {
     return (
       <View style={styles.loading}>
         <ActivityIndicator size="large" color="#0000ff" />
       </View>
     );
-  }
+  } */
 
   return (
     <Card borderRadius={5}
@@ -61,9 +79,9 @@ const CalendarEventCell = (props) => {
         </View>
         <View>
           <TouchableOpacity onPress={() => {
-            props.completeEvent(props.event);
-            setChecked(!checked);
+            props.completeEventAction(props.event.id, '');
           }}
+            disabled={checked}
           >
             {!checked ? <Checkbox /> : <CheckboxChecked />}
           </TouchableOpacity>
@@ -120,4 +138,4 @@ const mapStateToProps = (state) => ({
   completedEvents: state.events.completed,
 });
 
-export default connect(mapStateToProps, { completeEvent })(CalendarEventCell);
+export default connect(mapStateToProps, { completeEventAction, fetchCompletedEvents })(CalendarEventCell);

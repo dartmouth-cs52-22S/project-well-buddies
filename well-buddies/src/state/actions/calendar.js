@@ -1,4 +1,5 @@
 import { getCalendarEvents } from '../../services/google-cal-api';
+import { completedEvents, completeEvent } from '../../services/events';
 
 export const ActionTypes = {
   FETCH_EVENTS: 'FETCH_EVENTS',
@@ -32,8 +33,20 @@ export function fetchTodaysEvents(params) {
   };
 }
 
-export function completeEvent(event) {
+export function fetchCompletedEvents() {
   return (dispatch) => {
-    dispatch({ type: ActionTypes.COMPLETED_EVENTS, payload: event });
+    completedEvents()
+      .then((events) => {
+        dispatch({ type: ActionTypes.COMPLETED_EVENTS, payload: events });
+      });
+  };
+}
+
+export function completeEventAction(event, wellness) {
+  return (dispatch) => {
+    completeEvent(event, wellness)
+      .then((events) => {
+        dispatch({ type: ActionTypes.COMPLETED_EVENTS, payload: events });
+      });
   };
 }

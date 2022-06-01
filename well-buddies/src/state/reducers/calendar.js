@@ -24,10 +24,8 @@ const EventsReducer = produce((draftState, action = {}) => {
       draftState.today = action.payload;
       break;
     case ActionTypes.COMPLETED_EVENTS:
-      if (!Object.entries(draftState.completed).includes(action.payload)) {
-        draftState.completed.push(action.payload);
-      }
-      console.log(action.payload);
+      console.log('fetch todays events', action.payload);
+      draftState.completed = action.payload;
       break;
     default:
       break;
