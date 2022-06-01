@@ -1,5 +1,5 @@
 /* eslint-disable react/destructuring-assignment */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   SafeAreaView, StyleSheet, Dimensions, View, Text, ImageBackground, Modal, TouchableOpacity,
 } from 'react-native';
@@ -12,19 +12,40 @@ import Panda from '../../assets/img/panda/panda';
 import SleepyCat from '../../assets/img/cat/cat-sleepy';
 import SleepyDog from '../../assets/img/dog/dogs-sleepy';
 import SleepyPanda from '../../assets/img/panda/panda-sleepy';
+import Moment from 'moment';
 import Checkin from '../checkin';
 import { fetchEmotion } from '../../state/actions/emotion';
 import { fetchBuddy } from '../../state/actions/buddy';
-import { fetchCompletedEvents } from '../../state/actions/calendar';
+import { fetchCompletedEvents, fetchEvents } from '../../state/actions/calendar';
 import { fetchActivities, fetchTodayWellness } from '../../state/actions/activity';
 
 function Home(props) {
+  const [accessToken, setAccessToken] = useState('');
+  const [date, setDate] = useState(Moment());
+
+  const startOfDay = Moment(date).startOf('day').toISOString();
+  const endOfDay = Moment(date).endOf('day').toISOString();
+
+  const args = {
+    access_token: accessToken,
+    timeMin: startOfDay,
+    timeMax: endOfDay,
+    showDeleted: false,
+    singleEvents: true,
+    maxResults: 100,
+    orderBy: 'startTime',
+  };
+
   useEffect(() => {
     async function fetchData() {
       await props.fetchBuddy();
       await props.fetchEmotion();
       await props.fetchCompletedEvents();
       await props.fetchTodayWellness();
+      await AsyncStorage.getItem('googleAccessCode').then((token) => { setAccessToken(token); });
+      if (accessToken) {
+        props.fetchEvents(args);
+      }
     }
     fetchData();
   }, []);
@@ -161,4 +182,4 @@ const mapStateToProps = (state) => (
   }
 );
 
-export default connect(mapStateToProps, { fetchBuddy, fetchEmotion, fetchTodayWellness, fetchCompletedEvents,fetchActivities })(Home);
+export default connect(mapStateToProps, { fetchBuddy, fetchEvents, fetchEmotion, fetchTodayWellness, fetchCompletedEvents,fetchActivities })(Home);
