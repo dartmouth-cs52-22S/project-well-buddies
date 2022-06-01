@@ -61,7 +61,6 @@ export function fetchActivities() {
 export function fetchTodayWellness() {
   return async (dispatch) => {
     getTodayActivity().then((response) => {
-      console.log('RESPONSE WELLNESS', response);
       if (response === true) {
         dispatch({ type: ActionTypes.FETCH_TODAY, payload: true });
       } else {

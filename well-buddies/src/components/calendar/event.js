@@ -35,7 +35,6 @@ function EventDetail(props) {
   function renderEmoji() {
     if (event.summary.substring(0, 10) === ('WELLNESS: ')) {
       const foundActivity = activitiesList.filter((activity) => activity.title === event.summary.substring(10));
-      console.log('found', foundActivity[0]?.icon);
       return (
         <View>
           <TwemojiText style={styles.emoji}>
