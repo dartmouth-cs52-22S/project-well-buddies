@@ -31,8 +31,8 @@ class Buddy extends Component {
     super(props);
     this.state = {
       isEditing: false,
-      name: this.props.petName,
-      pet: this.props.pet,
+      name: 'Liz',
+      pet: 'Cat',
     };
   }
 
@@ -43,16 +43,16 @@ class Buddy extends Component {
   };
 
   // eslint-disable-next-line react/no-arrow-function-lifecycle
-  componentDidMount = async () => { await this.props.fetchBuddy(); };
+  componentDidMount = async () => { await this.props.fetchBuddy(); this.setState({ name: this.props.petName, pet: this.props.pet }); };
 
   changePet = (pet) => { this.setState({ pet }); };
 
-  onInputChangeName = (event) => {
-    this.setState({ name: event.target.value });
+  onInputChangeName = (name) => {
+    this.setState({ name });
   };
 
   save = () => {
-    this.props.setNewBuddy(this.state.name, this.state.pet);
+    this.props.setNewBuddy(this.state.pet, this.state.name);
   };
 
   render() {
