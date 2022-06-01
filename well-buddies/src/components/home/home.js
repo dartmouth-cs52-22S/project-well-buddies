@@ -47,7 +47,7 @@ function Home(props) {
             </View>
             <View style={styles.calendarContainer}>
               <Text style={styles.calendarContainerText}>
-                Today's Activities
+                Today&apos;s Activities
               </Text>
             </View>
             <View style={styles.calendarContainerInfo}>
