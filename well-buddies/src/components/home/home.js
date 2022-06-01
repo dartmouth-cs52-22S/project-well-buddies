@@ -58,20 +58,31 @@ function Home(props) {
             </View>
 
             <View style={styles.buddyContainer}>
-                { props.today ? 
+              { props.today
+                ? (
                   <View style={styles.buddyImage}>
-                  {props.pet === 'Dog' ? <Dog /> : <View />}
-                  {props.pet === 'Cat' ? <Cat /> : <View />}
-                  {props.pet === 'Panda' ? <Panda /> : <View />}
+                    {props.pet === 'Dog' ? <Dog /> : <View />}
+                    {props.pet === 'Cat' ? <Cat /> : <View />}
+                    {props.pet === 'Panda' ? <Panda /> : <View />}
                   </View>
-                : 
+                )
+                : (
                   <View style={styles.buddyImage}>
-                  {props.pet === 'Dog' ? <SleepyDog /> : <View />}
-                  {props.pet === 'Cat' ? <SleepyCat /> : <View />}
-                  {props.pet === 'Panda' ? <SleepyPanda /> : <View />}
+                    {props.pet === 'Dog' ? <SleepyDog /> : <View />}
+                    {props.pet === 'Cat' ? <SleepyCat /> : <View />}
+                    {props.pet === 'Panda' ? <View styles={styles.panda}><SleepyPanda /></View> : <View />}
                   </View>
-                }
+                )}
+              <View>
+                {props.today
+                  ? (
+                    <Text style={styles.buddyStatus}>Great job today!</Text>
+                  ) : (
+                    <Text style={styles.buddyStatus}>Do a wellness activity to wake your buddy up...</Text>
+                  )}
+              </View>
             </View>
+
             <TouchableOpacity onPress={() => props.fetchActivities()}>
               <View style={styles.buttonContainer}>
                 <Text style={styles.button}>NEW ACTIVITY</Text>
@@ -119,17 +130,15 @@ const styles = StyleSheet.create({
 
   buddyContainer: {
     justifyContent: 'flex-end',
-    // paddingBottom: 50,
-    height: '40%',
+    marginBottom: 20,
+    height: '38%',
   },
 
   buddyImage: {
     aspectRatio: 1,
     alignSelf: 'center',
     justifySelf: 'center',
-    height: '70%',
     marginLeft: 20,
-    marginBottom: 40,
     marginTop: 20,
   },
   buttonContainer: {
@@ -142,12 +151,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-
   button: {
     fontSize: 15,
     letterSpacing: 1.5,
     color: '#FFFF',
     fontFamily: 'DMSans_Medium',
+  },
+  buddyStatus: {
+    fontFamily: 'DMSans_Regular',
+    color: '#363D4F',
+    textAlign: 'center',
+    margin: 10,
   },
 });
 
@@ -157,8 +171,10 @@ const mapStateToProps = (state) => (
     petName: state.buddy.petName,
     emotion: state.emotion.today,
     activities: state.activities.all,
-    today: state.activities.today
+    today: state.activities.today,
   }
 );
 
-export default connect(mapStateToProps, { fetchBuddy, fetchEmotion, fetchTodayWellness, fetchCompletedEvents,fetchActivities })(Home);
+export default connect(mapStateToProps, {
+  fetchBuddy, fetchEmotion, fetchTodayWellness, fetchCompletedEvents, fetchActivities,
+})(Home);
