@@ -13,17 +13,17 @@ export const activitiesList = [
   {
     title: 'Go for a walk',
     duration: 30,
-    icon: '🚶‍♂️',
+    icon: '🚶',
   },
   {
     title: 'Go for a short walk',
     duration: 15,
-    icon: '🚶‍♂️',
+    icon: '🚶',
   },
   {
     title: 'Go to the gym',
     duration: 60,
-    icon: '🏋️‍♂️',
+    icon: '🏋️',
   },
   {
     title: 'Take a nap',
@@ -43,7 +43,7 @@ export const activitiesList = [
   {
     title: 'Meditate',
     duration: 15,
-    icon: '🧘‍♂️',
+    icon: '🧘',
   },
   {
     title: 'Clean a space',
@@ -88,7 +88,7 @@ export const activitiesList = [
   {
     title: 'Stretch',
     duration: 5,
-    icon: '🤸‍♂️',
+    icon: '🤸',
   },
   {
     title: 'Take a deep breath',

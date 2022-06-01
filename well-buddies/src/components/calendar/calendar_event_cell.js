@@ -3,7 +3,7 @@
 /* eslint-disable react/function-component-definition */
 import React, { useState, useEffect } from 'react';
 import {
-  StyleSheet, View, Text, ActivityIndicator, TouchableOpacity,
+  StyleSheet, View, Text, ActivityIndicator, TouchableOpacity, Modal,
 } from 'react-native';
 import { Card } from 'react-native-elements';
 import Moment from 'moment';
@@ -89,9 +89,7 @@ const CalendarEventCell = (props) => {
           <View>
             <View>
               <View flexDirection="row">
-                <View>
-                  {renderEmoji()}
-                </View>
+                {renderEmoji()}
                 <MediumText>
                   <Text style={!checked ? styles.title : styles.checkedTitle}>
                     {wellness ? props.event.summary.substring(9) : props.event.summary }
