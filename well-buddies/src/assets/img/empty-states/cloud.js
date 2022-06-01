@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Svg, { Path, Rect } from 'react-native-svg';
 
-function SvgComponent(props) {
+function Cloud(props) {
   return (
     <Svg
       width={149}
@@ -40,4 +40,4 @@ function SvgComponent(props) {
   );
 }
 
-export default SvgComponent;
+export default Cloud;
