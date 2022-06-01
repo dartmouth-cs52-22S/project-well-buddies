@@ -2,9 +2,11 @@ import React, { useEffect } from 'react';
 import {
   SafeAreaView, StyleSheet, View, ImageBackground, Dimensions, Text, TouchableOpacity,
 } from 'react-native';
+import constants from '../constants'
 import { connect } from 'react-redux';
 import Apple from '../assets/img/fruits/apple';
 import { fetchBuddy } from '../state/actions/buddy';
+import { fetchActivities } from '../state/actions/activity';
 import DogCompletion from '../assets/img/dog/dog-completion';
 import CatCompletion from '../assets/img/cat/cat-completion';
 import PandaCompletion from '../assets/img/panda/panda-completion';
@@ -14,9 +16,11 @@ function EventCompletion(props) {
   useEffect(() => {
     async function fetchData() {
       await props.fetchBuddy();
+      await props.fetchActivities();
     }
     fetchData();
   }, []);
+  console.log(list_activities);
   return (
     <TouchableOpacity onPress={()=>{props.closeModal();}}>
       <View style={styles.container}>
@@ -40,6 +44,12 @@ function EventCompletion(props) {
 
           <TouchableOpacity>
             <View style={styles.starContainer}>
+            {
+                        constants.map((act_list) => {
+                          if (act_list.title == props.activity){
+                            return (<Text>{act_list.duration}/5</Text>);
+                        }})
+                    }
               <Text style={styles.textStar}>+ 10 Stars</Text>
               <Star />
             </View>
