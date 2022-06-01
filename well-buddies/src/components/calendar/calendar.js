@@ -32,12 +32,14 @@ const Calendar = (props) => {
     orderBy: 'startTime',
   };
 
-  useEffect(() => {
-    AsyncStorage.getItem('googleAccessCode').then((token) => { setAccessToken(token); });
-    if (accessToken) {
-      props.fetchEvents(args);
+  useEffect(() => { async function fetch ()
+    { await AsyncStorage.getItem('googleAccessCode').then((token) => { setAccessToken(token); });
+      if (accessToken) {
+        props.fetchEvents(args);
+      }
     }
-  }, [accessToken, date]);
+    fetch();
+  }, []);
 
   function showEventDetail(event) {
     props.navigation.navigate('Detail', { event });
