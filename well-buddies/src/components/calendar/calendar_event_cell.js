@@ -16,6 +16,7 @@ import MediumText from '../custom/medium_text';
 import { activitiesList } from '../../constants';
 import EventCompletion from '../event_completion';
 import { fetchCompletedEvents, completeEventAction } from '../../state/actions/calendar';
+import { fetchTodayWellness } from '../../state/actions/activity';
 
 // eslint-disable-next-line react/function-component-definition
 const CalendarEventCell = (props) => {
@@ -23,7 +24,7 @@ const CalendarEventCell = (props) => {
   const wellness = (props.event.summary.substring(0, 8) === 'WELLNESS');
   const [event, setEvent] = useState(false);
 
-  function checkChecked() {
+  async function checkChecked() {
     let found = false;
     for (let i = 0; i < props.completedEvents.length; i++) {
       if (props.completedEvents[i] === props.event.id) {
@@ -35,6 +36,7 @@ const CalendarEventCell = (props) => {
     } else {
       setChecked(false);
     }
+    await props.fetchTodayWellness();
   }
 
   useEffect(() => { async function func() { checkChecked(); } if (!checked) { func(); } }, [props.completedEvents]);
@@ -112,9 +114,9 @@ const CalendarEventCell = (props) => {
           <View>
             <TouchableOpacity onPress={() => {
               if (wellness) {
-                props.completeEventAction(props.event.id, '');
-              } else {
                 props.completeEventAction(props.event.id, 'true');
+              } else {
+                props.completeEventAction(props.event.id, '');
               }
               setEvent(true);
             }}
@@ -186,4 +188,4 @@ const mapStateToProps = (state) => ({
   completedEvents: state.events.completed,
 });
 
-export default connect(mapStateToProps, { completeEventAction, fetchCompletedEvents })(CalendarEventCell);
+export default connect(mapStateToProps, { completeEventAction, fetchCompletedEvents, fetchTodayWellness })(CalendarEventCell);
