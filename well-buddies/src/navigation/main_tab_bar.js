@@ -14,7 +14,7 @@ import ProfileIcon from '../assets/img/tabIcons/profile';
 import ProfileIconFilled from '../assets/img/tabIcons/profile-chosen';
 import CalendarIcon from '../assets/img/tabIcons/calendar';
 import CalendarIconFilled from '../assets/img/tabIcons/calendar-chosen';
-import CalendarHistory from '../components/calendar/calendar_histor';
+import UserProfile from '../components/profile/user_profile';
 
 const Tab = createBottomTabNavigator();
 
@@ -65,7 +65,7 @@ function MainTabBar() {
               focused ? <ProfileIconFilled /> : <ProfileIcon />
             ),
           }}
-          component={CalendarHistory}
+          component={UserProfile}
         />
       </Tab.Navigator>
     </NavigationContainer>
