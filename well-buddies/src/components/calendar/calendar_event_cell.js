@@ -8,11 +8,13 @@ import {
 import { Card } from 'react-native-elements';
 import Moment from 'moment';
 import { connect } from 'react-redux';
+import TwemojiText from 'react-native-twemojis';
 import RegularText from '../custom/regular_text';
 import CheckboxChecked from '../../assets/img/checkbox/checkbox-checked';
 import Checkbox from '../../assets/img/checkbox/checkbox';
 import MediumText from '../custom/medium_text';
 import { completeEvent } from '../../state/actions/calendar';
+import { activitiesList } from '../../constants';
 
 const CalendarEventCell = (props) => {
   console.log('props', props);
@@ -31,6 +33,30 @@ const CalendarEventCell = (props) => {
     );
   }
 
+  function renderEmoji() {
+    if (props.event.summary.substring(0, 10) === ('WELLNESS: ')) {
+      const foundActivity = activitiesList.filter((activity) => activity.title === props.event.summary.substring(10));
+      console.log('found', foundActivity[0]?.icon);
+      return (
+        <View marginRight={4}>
+          <TwemojiText style={styles.emoji}>
+            {foundActivity[0]?.icon}
+            {' '}
+          </TwemojiText>
+        </View>
+      );
+    }
+    return null;
+  }
+  function renderSummary() {
+    if (props.event.summary.substring(0, 10) === ('WELLNESS: ')) {
+      return (
+        props.event.summary.substring(10)
+      );
+    }
+    return props.event.summary;
+  }
+
   return (
     <Card borderRadius={5}
       backgroundColor="#d1dce0"
@@ -42,12 +68,12 @@ const CalendarEventCell = (props) => {
         <View>
           <View>
             <View flexDirection="row">
-              <Text>
-                &#129496;
-              </Text>
+              <View>
+                {renderEmoji()}
+              </View>
               <MediumText>
                 <Text style={!checked ? styles.title : styles.checkedTitle}>
-                  {props.event.summary}
+                  {renderSummary()}
                 </Text>
               </MediumText>
             </View>
@@ -118,6 +144,9 @@ const styles = StyleSheet.create({
   backgroundImg: {
     resizeMode: 'cover',
     height: '100%',
+  },
+  emoji: {
+    fontSize: 20,
   },
 });
 

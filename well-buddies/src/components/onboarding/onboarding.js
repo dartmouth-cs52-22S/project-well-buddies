@@ -16,7 +16,7 @@ function Onboarding(props) {
   const screens = ['Name', 'Pet', 'BuddyName', 'Calm', 'Stress', 'SignUp'];
   const pets = ['Dog', 'Cat', 'Panda'];
   const calm = ['Going on a walk', 'Calling my parents', 'Cleaning my room', 'Watching the sunset', 'Talking to friends', 'Meditate', 'Go to the gym'];
-  const stress = ['Talking to my parents', 'Working out', 'Doing homework', 'Going outside'];
+  const stress = ['Talking to my parents', 'Going to the gym', 'Doing homework', 'Going outside'];
   const { closeModal } = props;
   const [stage, setStage] = useState(screens[0]);
   const [stageNum, setStageNum] = useState(0);

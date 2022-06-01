@@ -69,7 +69,7 @@ function Home(props) {
 const styles = StyleSheet.create({
   backgroundImage: {
     height: Dimensions.get('screen').height,
-    top: -88,
+    top: -158,
   },
   container: {
     marginTop: 70,
