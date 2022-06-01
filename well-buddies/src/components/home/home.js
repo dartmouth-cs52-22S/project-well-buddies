@@ -22,6 +22,7 @@ function Home(props) {
 
   return (
     <SafeAreaView style={{ backgroundColor: 'black' }}>
+<<<<<<< HEAD
       <ImageBackground source={require('../../assets/img/background_gradient.jpg')} resizeMode="cover" style={styles.backgroundImage}>
         <View style={styles.container}>
           {props.emotion === ''
@@ -33,6 +34,19 @@ function Home(props) {
             : (
               <View />
             )}
+=======
+      <View style={styles.container}>
+        {props.emotion === ''
+          ? (
+            <Modal animationType="slide" transparent={false} visable>
+              <Checkin />
+            </Modal>
+          )
+          : (
+            <View />
+          )}
+        <ImageBackground source={require('../../assets/img/background_gradient.jpg')} resizeMode="cover" style={styles.backgroundImage}>
+>>>>>>> 067eb41d037d54cc014640b7b88fc45295c51b10
           <View style={styles.welcomeContainer}>
             <Text style={styles.welcome}>
               Welcome!
@@ -54,8 +68,8 @@ function Home(props) {
               {props.pet === 'Panda' ? <Panda /> : <View />}
             </View>
           </View>
-        </View>
       </ImageBackground>
+      </View>
     </SafeAreaView>
   );
 }

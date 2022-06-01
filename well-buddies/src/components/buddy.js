@@ -84,7 +84,11 @@ class Buddy extends Component {
               <View style={styles.petDetails}>
                 <BoldText><Text style={styles.details}>Birthday:</Text></BoldText>
                 <RegularText>
+<<<<<<< HEAD
                   <Text style={styles.details}> May 10, 2022</Text>
+=======
+                  <Text style={styles.details}> Birthday: May 10, 2022</Text>
+>>>>>>> 067eb41d037d54cc014640b7b88fc45295c51b10
                 </RegularText>
               </View>
               <View style={styles.petDetails}>
