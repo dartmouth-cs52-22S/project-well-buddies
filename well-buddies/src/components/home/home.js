@@ -1,7 +1,7 @@
 /* eslint-disable react/destructuring-assignment */
 import React, { useEffect } from 'react';
 import {
-  SafeAreaView, StyleSheet, Dimensions, View, Text, ImageBackground, Modal,
+  SafeAreaView, StyleSheet, Dimensions, View, Text, ImageBackground, Modal, TouchableOpacity,
 } from 'react-native';
 import { connect } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -21,7 +21,7 @@ function Home(props) {
       await props.fetchBuddy();
       await props.fetchEmotion();
       await props.fetchCompletedEvents();
-      await props.fetchActivities();
+      // await props.fetchActivities();
     }
     fetchData();
   }, []);
@@ -29,7 +29,7 @@ function Home(props) {
   return (
     <SafeAreaView style={{ backgroundColor: 'black' }}>
       <View style={styles.container}>
-        <ImageBackground source={require('../../assets/img/background_gradient.jpg')} resizeMode="cover" style={styles.backgroundImage}>
+        <ImageBackground source={require('../../assets/img/background-2.png')} resizeMode="cover" style={styles.backgroundImage}>
           <View style={styles.container}>
             {props.emotion === ''
               ? (
@@ -61,6 +61,11 @@ function Home(props) {
                 {props.pet === 'Panda' ? <Panda /> : <View />}
               </View>
             </View>
+            <TouchableOpacity onPress={() => props.fetchActivities()}>
+              <View style={styles.buttonContainer}>
+                <Text style={styles.button}>NEW ACTIVITY</Text>
+              </View>
+            </TouchableOpacity>
           </View>
         </ImageBackground>
       </View>
@@ -103,14 +108,35 @@ const styles = StyleSheet.create({
 
   buddyContainer: {
     justifyContent: 'flex-end',
-    paddingBottom: 50,
-    height: '53%',
+    // paddingBottom: 50,
+    height: '40%',
   },
 
   buddyImage: {
     aspectRatio: 1,
-    marginLeft: 46,
+    alignSelf: 'center',
+    justifySelf: 'center',
+    height: '70%',
+    marginLeft: 20,
     marginBottom: 40,
+    marginTop: 20,
+  },
+  buttonContainer: {
+    backgroundColor: '#5EA985',
+    height: 55,
+    width: '45%',
+    alignSelf: 'center',
+    borderRadius: 13,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  button: {
+    fontSize: 15,
+    letterSpacing: 1.5,
+    color: '#FFFF',
+    fontFamily: 'DMSans_Medium',
   },
 });
 
@@ -123,4 +149,6 @@ const mapStateToProps = (state) => (
   }
 );
 
-export default connect(mapStateToProps, { fetchBuddy, fetchEmotion, fetchCompletedEvents,fetchActivities })(Home);
+export default connect(mapStateToProps, {
+  fetchBuddy, fetchEmotion, fetchCompletedEvents, fetchActivities,
+})(Home);
