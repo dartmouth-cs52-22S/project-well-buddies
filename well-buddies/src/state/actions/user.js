@@ -1,10 +1,11 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { signUp, signIn } from '../../services/user';
+import { signUp, signIn, getUser } from '../../services/user';
 
 export const ActionTypes = {
   AUTH_USER: 'AUTH_USER',
   DEAUTH_USER: 'DEAUTH_USER',
   AUTH_ERROR: 'AUTH_ERROR',
+  FETCH_USER: 'FETCH_USER',
 };
 
 // trigger to deauth if there is error
@@ -64,5 +65,18 @@ export function signoutUser() {
   return async (dispatch) => {
     await AsyncStorage.removeItem('jwt');
     dispatch({ type: ActionTypes.DEAUTH_USER });
+  };
+}
+
+export function fetchUser() {
+  return (dispatch) => {
+    getUser()
+      .then((response) => {
+        console.log('get response user', response);
+        dispatch({ type: ActionTypes.FETCH_USER, payload: response });
+      })
+      .catch((error) => {
+        console.log(`error fetching user ${error}`);
+      });
   };
 }

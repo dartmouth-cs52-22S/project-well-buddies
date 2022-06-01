@@ -1,20 +1,33 @@
+/* eslint-disable no-param-reassign */
+import { produce } from 'immer';
 import { ActionTypes } from '../actions/user';
 
 const initialState = {
   authenticated: false,
+  userName: '',
+  userEmail: '',
 };
 
-const UserReducer = (state = initialState, action = {}) => {
+const UserReducer = produce((draftState, action = {}) => {
   switch (action.type) {
     case ActionTypes.AUTH_USER:
-      return { ...state, authenticated: true };
+      draftState.authenticated = true;
+      break;
     case ActionTypes.DEAUTH_USER:
-      return { ...state, authenticated: false };
+      draftState.authenticated = false;
+      break;
     case ActionTypes.AUTH_ERROR:
-      return { ...state, authenticated: false };
+      draftState.authenticated = false;
+      break;
+    case ActionTypes.FETCH_USER:
+      console.log('fetch user info', action.payload);
+      draftState.userName = action.payload.name;
+      draftState.userEmail = action.payload.email;
+      break;
+
     default:
-      return state;
+      break;
   }
-};
+}, initialState);
 
 export default UserReducer;
