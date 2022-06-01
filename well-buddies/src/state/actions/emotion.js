@@ -11,7 +11,7 @@ export function fetchEmotions() {
   return (dispatch) => {
     getEmotions()
       .then((response) => {
-        dispatch({ type: ActionTypes.FETCH_EMOTIONS, payload: response.data.items });
+        dispatch({ type: ActionTypes.FETCH_EMOTIONS, payload: response });
       })
       .catch((error) => {
         console.log(`error fetching emotions ${error}`);

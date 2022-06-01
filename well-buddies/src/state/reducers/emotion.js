@@ -3,7 +3,7 @@ import { produce } from 'immer';
 import { ActionTypes } from '../actions/emotion';
 
 const initialState = {
-  all: [],
+  all: {},
   today: '',
 };
 

@@ -13,7 +13,6 @@ function CalendarTitle(props) {
 
   const handleConfirm = (date) => {
     setModalVisible(false);
-    console.log('date', date);
     props.setDate(date);
   };
 
