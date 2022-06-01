@@ -4,7 +4,7 @@ import {
   SafeAreaView, StyleSheet, Dimensions, View, Text, ImageBackground, Modal, TouchableOpacity,
 } from 'react-native';
 import { connect } from 'react-redux';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import TwemojiText from 'react-native-twemojis';
 import CalendarSummary from './calendar_summary';
 import Cat from '../../assets/img/cat/cat';
 import Dog from '../../assets/img/dog/dog';
@@ -17,6 +17,8 @@ import { fetchEmotion } from '../../state/actions/emotion';
 import { fetchBuddy } from '../../state/actions/buddy';
 import { fetchCompletedEvents } from '../../state/actions/calendar';
 import { fetchActivities, fetchTodayWellness } from '../../state/actions/activity';
+import { fetchUser } from '../../state/actions/user';
+import Star from '../../assets/img/star';
 
 function Home(props) {
   useEffect(() => {
@@ -25,9 +27,12 @@ function Home(props) {
       await props.fetchEmotion();
       await props.fetchCompletedEvents();
       await props.fetchTodayWellness();
+      await props.fetchUser();
     }
     fetchData();
+    console.log('props', props);
   }, []);
+  console.log('props', props);
 
   return (
     <SafeAreaView style={{ backgroundColor: 'black' }}>
@@ -43,16 +48,26 @@ function Home(props) {
               : (
                 <View />
               )}
-            <View style={styles.welcomeContainer}>
-              <Text style={styles.welcome}>
-                Welcome!
-              </Text>
+            <View marginRight={16}
+              flexDirection="row"
+              justifyContent="space-between"
+            >
+              <View style={styles.welcomeContainer}>
+                <Text style={styles.welcome}>Welcome!</Text>
+              </View>
+              <View style={styles.starsContainer}>
+                <Text style={styles.stars}>
+                  {props.stars}
+                </Text>
+                <Star />
+              </View>
             </View>
             <View style={styles.calendarContainer}>
               <Text style={styles.calendarContainerText}>
                 Today&apos;s Activities
               </Text>
             </View>
+
             <View style={styles.calendarContainerInfo}>
               <CalendarSummary style={styles.calendar} />
             </View>
@@ -163,6 +178,15 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     margin: 10,
   },
+  stars: {
+    color: '#FFF',
+    fontSize: 18,
+    fontFamily: 'DMSans_Regular',
+  },
+  starsContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
 });
 
 const mapStateToProps = (state) => (
@@ -172,9 +196,10 @@ const mapStateToProps = (state) => (
     emotion: state.emotion.today,
     activities: state.activities.all,
     today: state.activities.today,
+    stars: state.auth.stars,
   }
 );
 
 export default connect(mapStateToProps, {
-  fetchBuddy, fetchEmotion, fetchTodayWellness, fetchCompletedEvents, fetchActivities,
+  fetchBuddy, fetchEmotion, fetchTodayWellness, fetchCompletedEvents, fetchActivities, fetchUser,
 })(Home);
