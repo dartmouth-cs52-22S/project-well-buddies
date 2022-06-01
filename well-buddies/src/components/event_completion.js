@@ -22,7 +22,7 @@ function EventCompletion(props) {
     fetchData();
   }, []);
   return (
-    <TouchableOpacity onPress={()=>{props.closeModal();}}>
+    <TouchableOpacity onPress={() => { props.closeModal(); }}>
       <View style={styles.container}>
         <ImageBackground style={styles.backgroundImg} resizeMode="cover" source={require('../assets/img/background_completion.png')}>
           <View style={styles.IconContainer}>
@@ -42,8 +42,7 @@ function EventCompletion(props) {
 
           <View style={styles.textContainer}>
             <Text style={styles.textLarge}>Yay!</Text>
-            <Text style={styles.textSmall}>Your buddy had an apple</Text>
-            <Text style={styles.textSmall}>and is growing!</Text>
+            <Text style={styles.textSmall}>You completed a wellness activity. Your buddy had an apple and is growing!</Text>
           </View>
           <TouchableOpacity>
             <View style={styles.starContainer}>
@@ -114,6 +113,7 @@ const styles = StyleSheet.create({
   textSmall: {
     fontSize: 20,
     lineHeight: 30,
+    width: '90%',
     fontFamily: 'DMSans_Regular',
     color: '#363D4F',
   },

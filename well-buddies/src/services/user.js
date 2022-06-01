@@ -54,3 +54,15 @@ export const setUser = async (updatedName) => {
     throw new Error(error);
   }
 };
+
+export const getStar = async () => {
+  try {
+    const jwt = await AsyncStorage.getItem('jwt');
+    const response = await axios.get(`${URL}/star/${jwt}`);
+    console.log('res', response);
+    return response;
+  } catch (error) {
+    console.log(error);
+    throw new Error(error);
+  }
+};

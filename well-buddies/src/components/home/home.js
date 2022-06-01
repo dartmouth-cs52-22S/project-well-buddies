@@ -4,7 +4,8 @@ import {
   SafeAreaView, StyleSheet, Dimensions, View, Text, ImageBackground, Modal, TouchableOpacity,
 } from 'react-native';
 import { connect } from 'react-redux';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import TwemojiText from 'react-native-twemojis';
+import Moment from 'moment';
 import CalendarSummary from './calendar_summary';
 import Cat from '../../assets/img/cat/cat';
 import Dog from '../../assets/img/dog/dog';
@@ -12,12 +13,13 @@ import Panda from '../../assets/img/panda/panda';
 import SleepyCat from '../../assets/img/cat/cat-sleepy';
 import SleepyDog from '../../assets/img/dog/dogs-sleepy';
 import SleepyPanda from '../../assets/img/panda/panda-sleepy';
-import Moment from 'moment';
 import Checkin from '../checkin';
 import { fetchEmotion } from '../../state/actions/emotion';
 import { fetchBuddy } from '../../state/actions/buddy';
 import { fetchCompletedEvents, fetchEvents } from '../../state/actions/calendar';
 import { fetchActivities, fetchTodayWellness } from '../../state/actions/activity';
+import { fetchUser } from '../../state/actions/user';
+import Star from '../../assets/img/star';
 
 function Home(props) {
   const [accessToken, setAccessToken] = useState('');
@@ -42,13 +44,16 @@ function Home(props) {
       await props.fetchEmotion();
       await props.fetchCompletedEvents();
       await props.fetchTodayWellness();
+      await props.fetchUser();
       await AsyncStorage.getItem('googleAccessCode').then((token) => { setAccessToken(token); });
       if (accessToken) {
         props.fetchEvents(args);
       }
     }
     fetchData();
+    console.log('props', props);
   }, []);
+  console.log('props', props);
 
   return (
     <SafeAreaView style={{ backgroundColor: 'black' }}>
@@ -64,35 +69,56 @@ function Home(props) {
               : (
                 <View />
               )}
-            <View style={styles.welcomeContainer}>
-              <Text style={styles.welcome}>
-                Welcome!
-              </Text>
+            <View marginRight={16}
+              flexDirection="row"
+              justifyContent="space-between"
+            >
+              <View style={styles.welcomeContainer}>
+                <Text style={styles.welcome}>Welcome!</Text>
+              </View>
+              <View style={styles.starsContainer}>
+                <Text style={styles.stars}>
+                  {props.stars}
+                </Text>
+                <Star />
+              </View>
             </View>
             <View style={styles.calendarContainer}>
               <Text style={styles.calendarContainerText}>
                 Today&apos;s Activities
               </Text>
             </View>
+
             <View style={styles.calendarContainerInfo}>
               <CalendarSummary style={styles.calendar} />
             </View>
 
             <View style={styles.buddyContainer}>
-                { props.today ? 
+              { props.today
+                ? (
                   <View style={styles.buddyImage}>
-                  {props.pet === 'Dog' ? <Dog /> : <View />}
-                  {props.pet === 'Cat' ? <Cat /> : <View />}
-                  {props.pet === 'Panda' ? <Panda /> : <View />}
+                    {props.pet === 'Dog' ? <Dog /> : <View />}
+                    {props.pet === 'Cat' ? <Cat /> : <View />}
+                    {props.pet === 'Panda' ? <Panda /> : <View />}
                   </View>
-                : 
+                )
+                : (
                   <View style={styles.buddyImage}>
-                  {props.pet === 'Dog' ? <SleepyDog /> : <View />}
-                  {props.pet === 'Cat' ? <SleepyCat /> : <View />}
-                  {props.pet === 'Panda' ? <SleepyPanda /> : <View />}
+                    {props.pet === 'Dog' ? <SleepyDog /> : <View />}
+                    {props.pet === 'Cat' ? <SleepyCat /> : <View />}
+                    {props.pet === 'Panda' ? <View styles={styles.panda}><SleepyPanda /></View> : <View />}
                   </View>
-                }
+                )}
+              <View>
+                {props.today
+                  ? (
+                    <Text style={styles.buddyStatus}>Great job today!</Text>
+                  ) : (
+                    <Text style={styles.buddyStatus}>Do a wellness activity to wake your buddy up...</Text>
+                  )}
+              </View>
             </View>
+
             <TouchableOpacity onPress={() => props.fetchActivities()}>
               <View style={styles.buttonContainer}>
                 <Text style={styles.button}>NEW ACTIVITY</Text>
@@ -140,17 +166,15 @@ const styles = StyleSheet.create({
 
   buddyContainer: {
     justifyContent: 'flex-end',
-    // paddingBottom: 50,
-    height: '40%',
+    marginBottom: 20,
+    height: '38%',
   },
 
   buddyImage: {
     aspectRatio: 1,
     alignSelf: 'center',
     justifySelf: 'center',
-    height: '70%',
     marginLeft: 20,
-    marginBottom: 40,
     marginTop: 20,
   },
   buttonContainer: {
@@ -163,12 +187,26 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-
   button: {
     fontSize: 15,
     letterSpacing: 1.5,
     color: '#FFFF',
     fontFamily: 'DMSans_Medium',
+  },
+  buddyStatus: {
+    fontFamily: 'DMSans_Regular',
+    color: '#363D4F',
+    textAlign: 'center',
+    margin: 10,
+  },
+  stars: {
+    color: '#FFF',
+    fontSize: 18,
+    fontFamily: 'DMSans_Regular',
+  },
+  starsContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 });
 
@@ -178,8 +216,11 @@ const mapStateToProps = (state) => (
     petName: state.buddy.petName,
     emotion: state.emotion.today,
     activities: state.activities.all,
-    today: state.activities.today
+    today: state.activities.today,
+    stars: state.auth.stars,
   }
 );
 
-export default connect(mapStateToProps, { fetchBuddy, fetchEvents, fetchEmotion, fetchTodayWellness, fetchCompletedEvents,fetchActivities })(Home);
+export default connect(mapStateToProps, {
+  fetchBuddy, fetchEvents, fetchEmotion, fetchTodayWellness, fetchCompletedEvents, fetchUser, fetchActivities,
+})(Home);

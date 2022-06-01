@@ -1,5 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { signUp, signIn, getUser } from '../../services/user';
+import {
+  signUp, signIn, getUser, getStar,
+} from '../../services/user';
 
 export const ActionTypes = {
   AUTH_USER: 'AUTH_USER',
@@ -73,6 +75,18 @@ export function fetchUser() {
     getUser()
       .then((response) => {
         console.log('get response user', response);
+        dispatch({ type: ActionTypes.FETCH_USER, payload: response });
+      })
+      .catch((error) => {
+        console.log(`error fetching user ${error}`);
+      });
+  };
+}
+
+export function getStars() {
+  return (dispatch) => {
+    getStar()
+      .then((response) => {
         dispatch({ type: ActionTypes.FETCH_USER, payload: response });
       })
       .catch((error) => {

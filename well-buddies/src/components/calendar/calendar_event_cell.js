@@ -3,7 +3,7 @@
 /* eslint-disable react/function-component-definition */
 import React, { useState, useEffect } from 'react';
 import {
-  StyleSheet, View, Text, ActivityIndicator, TouchableOpacity, Modal
+  StyleSheet, View, Text, ActivityIndicator, TouchableOpacity, Modal,
 } from 'react-native';
 import { Card } from 'react-native-elements';
 import Moment from 'moment';
@@ -17,6 +17,7 @@ import { activitiesList } from '../../constants';
 import EventCompletion from '../event_completion';
 import { fetchCompletedEvents, completeEventAction } from '../../state/actions/calendar';
 import { fetchTodayWellness } from '../../state/actions/activity';
+import { fetchUser } from '../../state/actions/user';
 
 // eslint-disable-next-line react/function-component-definition
 const CalendarEventCell = (props) => {
@@ -37,6 +38,7 @@ const CalendarEventCell = (props) => {
       setChecked(false);
     }
     await props.fetchTodayWellness();
+    await props.fetchUser();
   }
 
   useEffect(() => { async function func() { checkChecked(); } if (!checked) { func(); } }, [props.completedEvents]);
@@ -90,9 +92,7 @@ const CalendarEventCell = (props) => {
           <View>
             <View>
               <View flexDirection="row">
-                <View>
-                  {renderEmoji()}
-                </View>
+                {renderEmoji()}
                 <MediumText>
                   <Text style={!checked ? styles.title : styles.checkedTitle}>
                     {wellness ? props.event.summary.substring(9) : props.event.summary }
@@ -189,4 +189,6 @@ const mapStateToProps = (state) => ({
   completedEvents: state.events.completed,
 });
 
-export default connect(mapStateToProps, { completeEventAction, fetchCompletedEvents, fetchTodayWellness })(CalendarEventCell);
+export default connect(mapStateToProps, {
+  completeEventAction, fetchCompletedEvents, fetchUser, fetchTodayWellness,
+})(CalendarEventCell);

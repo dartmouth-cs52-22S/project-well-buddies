@@ -6,6 +6,7 @@ const initialState = {
   authenticated: false,
   userName: '',
   userEmail: '',
+  stars: 0,
 };
 
 const UserReducer = produce((draftState, action = {}) => {
@@ -22,6 +23,7 @@ const UserReducer = produce((draftState, action = {}) => {
     case ActionTypes.FETCH_USER:
       draftState.userName = action.payload.name;
       draftState.userEmail = action.payload.email;
+      draftState.stars = action.payload.star;
       break;
 
     default:
