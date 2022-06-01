@@ -14,6 +14,7 @@ import { useNavigation } from '@react-navigation/native';
 import { fetchTodaysEvents } from '../../state/actions/calendar';
 import RegularText from '../custom/regular_text';
 import CalendarEventCell from '../calendar/calendar_event_cell';
+import { getFreeBusy } from '../../services/google-cal-api';
 
 const Calendar = (props) => {
   const [accessToken, setAccessToken] = useState('');
@@ -33,14 +34,28 @@ const Calendar = (props) => {
     orderBy: 'startTime',
   };
 
+  const freeBusyArgs = {
+    timeMin: Moment().hour(10).minute(0).second(0)
+      .toISOString(),
+    timeMax: Moment().hour(22).minute(0).second(0)
+      .toISOString(),
+    groupExpansionMax: 1,
+    calendarExpansionMax: 1,
+    items: [
+      {
+        id: 'primary',
+      },
+    ],
+  };
+
   useEffect(() => {
-    GoogleSignin.configure({
-      iosClientId: CLIENT_ID_IOS,
-    });
+    // GoogleSignin.configure({
+    //   iosClientId: CLIENT_ID_IOS,
+    // });
     AsyncStorage.getItem('googleAccessCode').then((token) => { setAccessToken(token); });
     if (accessToken) {
-      console.log('summary use effect');
       props.fetchTodaysEvents(args);
+      // getFreeBusy(freeBusyArgs, accessToken);
     }
   }, [accessToken]);
 

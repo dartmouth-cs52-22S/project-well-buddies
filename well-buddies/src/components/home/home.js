@@ -1,8 +1,10 @@
-import React, { Component, useEffect } from 'react';
+/* eslint-disable react/destructuring-assignment */
+import React, { useEffect } from 'react';
 import {
-  SafeAreaView, StyleSheet, Dimensions, View, Text, Image, ImageBackground, Modal,
+  SafeAreaView, StyleSheet, Dimensions, View, Text, ImageBackground, Modal,
 } from 'react-native';
 import { connect } from 'react-redux';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import CalendarSummary from './calendar_summary';
 import Cat from '../../assets/img/cat/cat';
 import Dog from '../../assets/img/dog/dog';
@@ -10,31 +12,22 @@ import Panda from '../../assets/img/panda/panda';
 import Checkin from '../checkin';
 import { fetchEmotion } from '../../state/actions/emotion';
 import { fetchBuddy } from '../../state/actions/buddy';
+import { fetchActivities } from '../../state/actions/activity';
 
 function Home(props) {
   useEffect(() => {
     async function fetchData() {
       await props.fetchBuddy();
       await props.fetchEmotion();
+      AsyncStorage.getItem('googleAccessCode').then((token) => {
+        props.fetchActivities(token);
+      });
     }
     fetchData();
   }, []);
 
   return (
     <SafeAreaView style={{ backgroundColor: 'black' }}>
-<<<<<<< HEAD
-      <ImageBackground source={require('../../assets/img/background_gradient.jpg')} resizeMode="cover" style={styles.backgroundImage}>
-        <View style={styles.container}>
-          {props.emotion === ''
-            ? (
-              <Modal animationType="slide" transparent={false} visable>
-                <Checkin />
-              </Modal>
-            )
-            : (
-              <View />
-            )}
-=======
       <View style={styles.container}>
         {props.emotion === ''
           ? (
@@ -46,7 +39,6 @@ function Home(props) {
             <View />
           )}
         <ImageBackground source={require('../../assets/img/background_gradient.jpg')} resizeMode="cover" style={styles.backgroundImage}>
->>>>>>> 067eb41d037d54cc014640b7b88fc45295c51b10
           <View style={styles.welcomeContainer}>
             <Text style={styles.welcome}>
               Welcome!
@@ -68,7 +60,7 @@ function Home(props) {
               {props.pet === 'Panda' ? <Panda /> : <View />}
             </View>
           </View>
-      </ImageBackground>
+        </ImageBackground>
       </View>
     </SafeAreaView>
   );
@@ -125,7 +117,8 @@ const mapStateToProps = (state) => (
     pet: state.buddy.pet,
     petName: state.buddy.petName,
     emotion: state.emotion.today,
+    activities: state.activities.all,
   }
 );
 
-export default connect(mapStateToProps, { fetchBuddy, fetchEmotion })(Home);
+export default connect(mapStateToProps, { fetchBuddy, fetchEmotion, fetchActivities })(Home);
