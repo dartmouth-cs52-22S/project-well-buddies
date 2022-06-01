@@ -30,7 +30,7 @@ class CalendarHistory extends Component {
         </View>
 
         <CalendarList style={styles.calendar}
-          markedDates={{ [today]: { selected: true, marked: true, selectedColor: 'grey' } }}
+          // markedDates={{ [today]: { selected: true, marked: true, selectedColor: 'grey' } }}
               // markedDates={{ [today]: {selected: true, marked: true, selectedColor: "grey"}}}
               // Callback which gets executed when visible months change in scroll view. Default = undefined
           onVisibleMonthsChange={(months) => { console.log('now these months are visible', months); }}
