@@ -64,72 +64,98 @@ function EventDetail(props) {
         width: Dimensions.get('window').width,
       }}
     >
-      <Card borderRadius={5}>
+      <View style={styles.emojiContainer}>
         {renderEmoji()}
-        <View marginVertical={10}>
-          <RegularText>
-            <Text style={styles.title}>{renderSummary()}</Text>
-          </RegularText>
-        </View>
-        <View marginVertical={2}>
-          <RegularText>
-            <Text style={styles.date}>
-              {parseDay(event.start.dateTime)}
-              ,
-              {parseDate(event.start.dateTime)}
-              {' '}
-            </Text>
-          </RegularText>
-        </View>
-        <View marginVertical={2}>
-          <RegularText>
-            <Text style={styles.time}>
-              {parseStartTime(event.start.dateTime)}
-              {' '}
-              -
-              {' '}
-              {parseEndTime(event.end.dateTime)}
-            </Text>
-          </RegularText>
-        </View>
-        <View marginVertical={2}>
-          <RegularText>
-            <Text style={styles.email}>
-              <View marginLeft={2}>
-                <Ionicons name="calendar-o" size={20} color="#45587C" />
-              </View>
-              {' '}
-              {event.organizer.email}
-            </Text>
-          </RegularText>
-        </View>
-      </Card>
+      </View>
+       
+      <View style={styles.contentContainer}>
+        <Card borderRadius={5}>
+
+          <View>
+            <Text style={styles.title}>{renderSummary()}</Text> 
+          </View>
+
+          <View>
+              <Text style={styles.date}>
+                {parseDay(event.start.dateTime)}
+                ,
+                {parseDate(event.start.dateTime)}
+                {' '}
+              </Text>
+          </View>
+
+          <View>
+              <Text style={styles.time}>
+                {parseStartTime(event.start.dateTime)}
+                {' '}
+                -
+                {' '}
+                {parseEndTime(event.end.dateTime)}
+              </Text>
+          </View>
+
+          <View>
+              <Text style={styles.email}>
+                  <Ionicons style={styles.calendarIcon} name="calendar-o" size={20} color="#45587C" />
+                {' '}
+                {event.organizer.email}
+              </Text>
+
+          </View>
+        </Card>
+      </View>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+
+  emojiContainer: {
+    alignItems:'flex-start',
+    height:'20%',
+    justifyContent: 'flex-end',
+    marginLeft: 20,
+  },
+
+  contentContainer: {
+    marginTop: '2%',
+  },
+
   title: {
-    fontWeight: '600',
-    fontSize: 28,
+    fontFamily: 'DMSans_Medium',
+    fontSize: 30,
     color: '#45587c',
+    paddingBottom: 10,
   },
+
   time: {
-    fontWeight: '600',
-    fontSize: 15,
+    fontFamily: 'DMSans_Regular',
+    fontSize: 18,
     color: '#45587c',
+    paddingBottom: 20,
   },
+
   date: {
-    fontWeight: '600',
-    fontSize: 15,
+    fontFamily: 'DMSans_Regular',
+    fontSize: 18,
     color: '#45587c',
+    paddingBottom: 8,
   },
+
   email: {
-    fontWeight: '600',
+    fontFamily: 'DMSans_Regular',
     color: '#45587c',
+    fontSize: 16,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
+
   emoji: {
-    fontSize: 40,
+    fontSize: 60,
+  },
+
+  calendarIcon: {
+    paddingRight:20,
   },
 
 });
