@@ -3,7 +3,9 @@ import React, { useEffect, useState } from 'react';
 import {
   SafeAreaView, StyleSheet, Dimensions, View, Text, ImageBackground, Modal,
 } from 'react-native';
+import { Button } from 'react-native-elements';
 import { connect } from 'react-redux';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import CalendarSummary from './calendar_summary';
 import Cat from '../../assets/img/cat/cat';
 import Dog from '../../assets/img/dog/dog';
@@ -12,7 +14,7 @@ import Checkin from '../checkin';
 import { fetchEmotion } from '../../state/actions/emotion';
 import { fetchBuddy } from '../../state/actions/buddy';
 import { fetchCompletedEvents } from '../../state/actions/calendar';
-import { fetchActivities, fetchTodayActivity } from '../../state/actions/activity';
+import { fetchTodayActivity, fetchActivities } from '../../state/actions/activity';
 import SleepyCat from '../../assets/img/cat/cat-sleepy';
 import SleepyDog from '../../assets/img/dog/dog-sleepy';
 import SleepyPanda from '../../assets/img/panda/panda-sleepy';
@@ -25,7 +27,6 @@ function Home(props) {
       await props.fetchBuddy();
       await props.fetchEmotion();
       await props.fetchCompletedEvents();
-      await props.fetchActivities();
       await props.fetchTodayActivity();
     }
     fetchData();
@@ -81,7 +82,11 @@ function Home(props) {
             <View style={styles.calendarContainerInfo}>
               <CalendarSummary style={styles.calendar} />
             </View>
-
+            <TouchableOpacity onPress={() => props.fetchActivities()}>
+              <View style={styles.buttonContainer}>
+                <Text style={styles.button}>NEW ACTIVITY</Text>
+              </View>
+            </TouchableOpacity>
             <View style={styles.buddyContainer}>
               <View style={styles.buddyImage}>
                 {renderPet(props.pet)}
@@ -90,6 +95,7 @@ function Home(props) {
                 {props.pet === 'Panda' ? <Panda /> : <View />} */}
               </View>
             </View>
+
           </View>
         </ImageBackground>
       </View>
@@ -141,6 +147,25 @@ const styles = StyleSheet.create({
     marginLeft: 46,
     marginBottom: 40,
   },
+  buttonContainer: {
+    backgroundColor: '#667BA4',
+    height: 55,
+    width: '45%',
+    alignSelf: 'center',
+    borderRadius: 13,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 60,
+  },
+
+  button: {
+    fontSize: 15,
+    letterSpacing: 1.5,
+    color: '#FFFF',
+    fontFamily: 'DMSans_Medium',
+  },
+
 });
 
 const mapStateToProps = (state) => (

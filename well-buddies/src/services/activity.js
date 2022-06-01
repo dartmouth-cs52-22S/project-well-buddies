@@ -14,6 +14,7 @@ export const getActivity = async (token, duration) => {
 export const getTodayActivity = async (token) => {
   try {
     const response = await axios.get(`${URL}/activity/today/${token}`);
+    console.log('response');
     return response;
   } catch (error) {
     throw new Error(error);

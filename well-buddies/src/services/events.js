@@ -2,10 +2,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { URL } from '../constants';
 
-export const completeEvent = async (event, wellness) => {
+export const completeEvent = async (eventID, summary, wellness) => {
   try {
     const payload = {
-      event,
+      eventID,
+      summary,
       wellness,
     };
     const jwt = await AsyncStorage.getItem('jwt');

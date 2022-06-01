@@ -3,7 +3,7 @@
 /* eslint-disable react/function-component-definition */
 import React, { useEffect, useState } from 'react';
 import {
-  StyleSheet, View, Text, ActivityIndicator, TouchableOpacity,
+  StyleSheet, View, Text, ActivityIndicator, TouchableOpacity, Modal,
 } from 'react-native';
 import { Card } from 'react-native-elements';
 import Moment from 'moment';
@@ -56,13 +56,13 @@ const CalendarEventCell = (props) => {
     if (props.event.summary.substring(0, 10) === ('WELLNESS: ')) {
       const foundActivity = activitiesList.filter((activity) => activity.title === props.event.summary.substring(10));
       console.log('found', foundActivity[0]?.icon);
+      console.log('foundd', foundActivity);
       return (
-        <View marginRight={4}>
-          <TwemojiText style={styles.emoji}>
-            {foundActivity[0]?.icon}
-            {' '}
-          </TwemojiText>
-        </View>
+        <TwemojiText style={styles.emoji}>
+          {/* <Text> */}
+          {foundActivity[0]?.icon}
+          {/* </Text> */}
+        </TwemojiText>
       );
     }
     return null;
@@ -114,9 +114,9 @@ const CalendarEventCell = (props) => {
           <View>
             <TouchableOpacity onPress={() => {
               if (wellness) {
-                props.completeEventAction(props.event.id, '');
+                props.completeEventAction(props.event.id, props.event.summary, '');
               } else {
-                props.completeEventAction(props.event.id, 'true');
+                props.completeEventAction(props.event.id, props.event.summary, 'true');
               }
               setEvent(true);
             }}
