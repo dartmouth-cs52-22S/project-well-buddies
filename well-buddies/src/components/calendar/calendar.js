@@ -3,25 +3,21 @@
 /* eslint-disable react/function-component-definition */
 import React, { useEffect, useState } from 'react';
 import {
-  StyleSheet, View, Text, FlatList, TouchableOpacity, ActivityIndicator, ImageBackground, Button,
+  StyleSheet, View, Text, FlatList, TouchableOpacity, ActivityIndicator, ImageBackground, Button, Dimensions,
 } from 'react-native';
-import { Card } from 'react-native-elements';
-import {
-  GoogleSignin,
-  GoogleSigninButton,
-  statusCodes,
-} from '@react-native-google-signin/google-signin';
 import { connect } from 'react-redux';
 import Moment from 'moment';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { fetchEvents } from '../../state/actions/calendar';
-import RegularText from '../custom/regular_text';
+import { fetchActivities } from '../../state/actions/activity';
 import CalendarTitle from './calendar_title';
+import CalendarEventCell from './calendar_event_cell';
+import Cloud from '../../assets/img/empty-states/cloud';
 
 const Calendar = (props) => {
   const [accessToken, setAccessToken] = useState('');
   const [date, setDate] = useState(Moment());
-  const CLIENT_ID_IOS = '301956188397-rtuq8kgubluo5ismq4g9pq4cn9bag7ul.apps.googleusercontent.com';
 
   const startOfDay = Moment(date).startOf('day').toISOString();
   const endOfDay = Moment(date).endOf('day').toISOString();
@@ -32,61 +28,20 @@ const Calendar = (props) => {
     timeMax: endOfDay,
     showDeleted: false,
     singleEvents: true,
-    maxResults: 10,
+    maxResults: 100,
     orderBy: 'startTime',
   };
 
   useEffect(() => {
-    GoogleSignin.configure({
-      iosClientId: CLIENT_ID_IOS,
-    });
     AsyncStorage.getItem('googleAccessCode').then((token) => { setAccessToken(token); });
     if (accessToken) {
       props.fetchEvents(args);
     }
   }, [accessToken, date]);
 
-  function parseDate(dateTime) {
-    Moment.locale('en');
-    return Moment(dateTime).format('h:mm A');
-  }
-
   function showEventDetail(event) {
     props.navigation.navigate('Detail', { event });
   }
-
-  function renderEventCell(event) {
-    return (
-      <TouchableOpacity onPress={() => { showEventDetail(event); }}>
-        <Card borderRadius={5}
-          style={styles.card}
-          onPress={() => { showEventDetail(event); }}
-          underlayColor="#d1dce0"
-          height={80}
-        >
-          <View>
-            <RegularText>
-              <Text style={styles.title}>
-                {event.summary}
-              </Text>
-            </RegularText>
-          </View>
-          <View>
-            <RegularText>
-              <Text>
-                {parseDate(event.start.dateTime)}
-                {' '}
-                -
-                {' '}
-                {parseDate(event.end.dateTime)}
-              </Text>
-            </RegularText>
-          </View>
-        </Card>
-      </TouchableOpacity>
-    );
-  }
-
   function renderLoadingView() {
     return (
       <View style={styles.loading}>
@@ -95,16 +50,40 @@ const Calendar = (props) => {
     );
   }
 
+  function renderEmptyState() {
+    if (Object.entries(props.events).length === 0) {
+      return (
+        <View style={styles.emptyStateContainer}>
+          <Cloud style={styles.cloud} />
+          <Text style={styles.emptyStateText}>No events found</Text>
+          <Text style={styles.emptyStateText}>for this day</Text>
+        </View>
+      );
+    } else return null;
+  }
+
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <ImageBackground style={styles.backgroundImg} source={require('../../assets/img/background_gradient.jpg')}>
-        <CalendarTitle date={date} setDate={(time) => { setDate(time); }} />
+        <View marginTop={50}>
+          <CalendarTitle date={date} setDate={(time) => { setDate(time); }} />
+        </View>
         <FlatList
           data={props.events}
-          renderItem={({ item }) => { return renderEventCell(item); }}
+          renderItem={({ item }) => {
+            return (
+              <TouchableOpacity onPress={() => { showEventDetail(item); }}>
+                <CalendarEventCell event={item} activities={props.activities} />
+              </TouchableOpacity>
+            );
+          }}
         />
+        <View>
+          {renderEmptyState()}
+        </View>
+
       </ImageBackground>
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -129,13 +108,34 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   backgroundImg: {
-    resizeMode: 'cover',
-    height: '100%',
+    height: Dimensions.get('screen').height,
+    top: -88,
+    // resizeMode: 'cover',
+    // height: '100%',
+  },
+  emptyStateContainer: {
+    alignContent: 'center',
+    display: 'flex',
+    // margin: 50,
+    // height: Dimensions.get('screen').height,
+    bottom: 380,
+    // right: -130,
+    justifyContent: 'center',
+  },
+  emptyStateText: {
+    fontFamily: 'DMSans_Regular',
+    fontSize: 18,
+    alignSelf: 'center',
+    color: '#363D4F',
+  },
+  cloud: {
+    alignSelf: 'center',
   },
 });
 
 const mapStateToProps = (state) => ({
   events: state.events.all,
+  activities: state.activities.all,
 });
 
-export default connect(mapStateToProps, { fetchEvents })(Calendar);
+export default connect(mapStateToProps, { fetchEvents, fetchActivities })(Calendar);

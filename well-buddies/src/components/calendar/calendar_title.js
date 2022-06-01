@@ -10,16 +10,14 @@ import RegularText from '../custom/regular_text';
 
 function CalendarTitle(props) {
   const [modalVisible, setModalVisible] = useState(false);
-  console.log('modal', modalVisible);
 
   const handleConfirm = (date) => {
     setModalVisible(false);
-    console.log('date', date);
     props.setDate(date);
   };
 
   return (
-    <View paddingLeft={16} paddingTop={20}>
+    <View paddingLeft={16} paddingTop={50}>
       <DateTimePicker
         isVisible={modalVisible}
         mode="date"
@@ -30,7 +28,6 @@ function CalendarTitle(props) {
       <TouchableOpacity underlayColor="#D7E1EA"
         onPress={() => {
           setModalVisible(!modalVisible);
-          console.log('click');
         }}
       >
         <View style={styles.dateButton}>

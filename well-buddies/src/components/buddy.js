@@ -1,6 +1,5 @@
 import React, { Component, componentDidMount, useState } from 'react';
 import { connect } from 'react-redux';
-import { Icon } from 'react-native-elements';
 import {
   StyleSheet,
   Text,
@@ -10,20 +9,29 @@ import {
   Pressable,
   TouchableOpacity,
   SafeAreaView,
+  Dimensions,
 } from 'react-native';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { fetchBuddy, setNewBuddy } from '../state/actions/buddy';
 import Cat from '../assets/img/cat/cat';
 import Dog from '../assets/img/dog/dog';
 import Panda from '../assets/img/panda/panda';
+import CatOption from '../assets/img/cat/cat-option';
+import DogOption from '../assets/img/dog/dog-option';
+import PandaOption from '../assets/img/panda/panda-option';
+import CatChosen from '../assets/img/cat/cat-chosen';
+import DogChosen from '../assets/img/dog/dog-chosen';
+import PandaChosen from '../assets/img/panda/panda-chosen';
 import RegularText from './custom/regular_text';
+import BoldText from './custom/bold_text';
+import EditIcon from '../assets/img/edit';
 
 class Buddy extends Component {
   constructor(props) {
     super(props);
     this.state = {
       isEditing: false,
-      name: '',
+      name: 'Liz',
+      pet: 'Cat',
     };
   }
 
@@ -34,24 +42,26 @@ class Buddy extends Component {
   };
 
   // eslint-disable-next-line react/no-arrow-function-lifecycle
-  componentDidMount = async () => { await this.props.fetchBuddy(); };
+  componentDidMount = async () => { await this.props.fetchBuddy(); this.setState({ name: this.props.petName, pet: this.props.pet }); };
 
-  onInputChangeName = (newName) => {
-    this.setState({ name: newName });
+  changePet = (pet) => { this.setState({ pet }); };
+
+  onInputChangeName = (name) => {
+    this.setState({ name });
+  };
+
+  save = () => {
+    this.props.setNewBuddy(this.state.pet, this.state.name);
   };
 
   render() {
     if (this.state.isEditing === false) {
       return (
-        <SafeAreaView>
+        <SafeAreaView style={{ backgroundColor: '#F6F6EE' }}>
           <View style={styles.container}>
             <View style={styles.editIcon}>
               <TouchableOpacity style={styles.iconContainer} onPress={() => { this.editMode(); }}>
-                <FontAwesome
-                  name="edit"
-                  size={30}
-                  color="#000000"
-                />
+                <EditIcon />
               </TouchableOpacity>
             </View>
             <View style={styles.header}>
@@ -68,19 +78,24 @@ class Buddy extends Component {
             </View>
 
             <View style={styles.body}>
-              <RegularText>
-                <Text style={styles.age}>Age: 10 days</Text>
-              </RegularText>
-              <RegularText>
-                <Text style={styles.birthday}>Birthday: May 10, 2022</Text>
-              </RegularText>
-              <RegularText>
-                <Text style={styles.fav}>
-                  Favorite Wellness Activities:
-                  {'\n'}
-                  taking walks, cleaning room
-                </Text>
-              </RegularText>
+              <View style={styles.petDetails}>
+                <BoldText><Text style={styles.details}>Age:</Text></BoldText>
+                <RegularText>
+                  <Text style={styles.details}> 10 days</Text>
+                </RegularText>
+              </View>
+              <View style={styles.petDetails}>
+                <BoldText><Text style={styles.details}>Birthday:</Text></BoldText>
+                <RegularText>
+                  <Text style={styles.details}> May 10, 2022</Text>
+                </RegularText>
+              </View>
+              <View style={styles.petDetails}>
+                <BoldText><Text style={styles.details}>Favorite Wellness Activities: </Text></BoldText>
+                <RegularText>
+                  <Text style={styles.details}>Taking walks, cleaning room</Text>
+                </RegularText>
+              </View>
             </View>
           </View>
         </SafeAreaView>
@@ -104,26 +119,22 @@ class Buddy extends Component {
               value={this.state.name}
               placeholder="Name"
             />
-            {/* <Button
-        title="Save"
-        onPress={() => { this.editMode(); }}
-      /> */}
             <View style={styles.buddyChange}>
               <Text style={styles.editChange}>Change Buddy</Text>
             </View>
             <View style={styles.buddyOption}>
               {/* replace all with head I'm just lazy */}
-              <View style={{ aspectRatio: 1, width: '30%' }}>
-                <Cat />
-              </View>
-              <View style={{ aspectRatio: 1, width: '30%' }}>
-                <Dog />
-              </View>
-              <View style={{ aspectRatio: 1, width: '30%' }}>
-                <Panda />
-              </View>
+              <TouchableOpacity style={{ margin: 10, width: '30%', aspectRatio: 1 }} onPress={() => { this.changePet('Dog'); }}>
+                {this.state.pet === 'Dog' ? <DogChosen /> : <DogOption />}
+              </TouchableOpacity>
+              <TouchableOpacity style={{ margin: 10, width: '30%', aspectRatio: 1 }} onPress={() => { this.changePet('Cat'); }}>
+                {this.state.pet === 'Cat' ? <CatChosen /> : <CatOption />}
+              </TouchableOpacity>
+              <TouchableOpacity style={{ margin: 10, width: '35%', aspectRatio: 1 }} onPress={() => { this.changePet('Panda'); }}>
+                {this.state.pet === 'Panda' ? <PandaChosen /> : <PandaOption />}
+              </TouchableOpacity>
             </View>
-            <Pressable style={styles.button} onPress={() => { this.editMode(); }}>
+            <Pressable style={styles.button} onPress={() => { this.editMode(); this.save(); }}>
               <Text style={styles.buttonTitle}>Save</Text>
             </Pressable>
           </View>
@@ -139,10 +150,18 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 10,
   },
+  petDetails: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    flexWrap: 'wrap',
+    marginVertical: 5,
+  },
   buddyOption: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+    width: Dimensions.get('window').width * 0.8,
   },
   bodyEdit: {
     alignItems: 'flex-start',
@@ -165,8 +184,7 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     paddingHorizontal: 18,
     borderRadius: 2,
-    marginLeft: 90,
-
+    alignSelf: 'center',
   },
   input: {
     marginTop: 20,
@@ -179,45 +197,32 @@ const styles = StyleSheet.create({
   container: {
     // flex: 1,
     height: '100%',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
     backgroundColor: '#F6F6EE',
   },
   name: {
     fontSize: 35,
-    marginBottom: 30,
+    color: '#363D4F',
   },
   editIcon: {
-    marginLeft: 300,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    width: '100%',
+    paddingRight: 30,
+    paddingTop: 30,
   },
   body: {
     alignItems: 'flex-start',
+    marginLeft: 60,
   },
-  age: {
-    marginTop: 25,
+  details: {
     fontSize: 20,
-    marginBottom: 10,
-  },
-  birthday: {
-    fontSize: 20,
-    marginBottom: 10,
-  },
-  fav: {
-    fontSize: 20,
-    marginBottom: 10,
-  },
-  points: {
-    fontSize: 20,
-    marginBottom: 10,
-  },
-
-  body: {
-    alignItems: 'flex-start',
-    // marginTop:350,
-    // marginLeft:95,
   },
   header: {
     fontSize: 100,
+    padding: 30,
   },
   headerEdit: {
     marginTop: -10,
@@ -225,8 +230,9 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   pet: {
-    width: '50%',
+    height: '30%',
     aspectRatio: 1,
+    margin: 60,
   },
 
 });

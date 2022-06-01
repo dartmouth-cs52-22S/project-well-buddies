@@ -9,6 +9,7 @@ LogBox.ignoreAllLogs();
 
 const App = (props) => {
   const { auth } = props;
+
   return (
     <RootNavigator auth={auth} />
   );

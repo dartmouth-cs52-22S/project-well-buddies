@@ -9,13 +9,11 @@ export const signUp = async (userData, token) => {
     token,
   };
   try {
-    console.log('payload', payload);
     const response = await axios.post(`${URL}/signup`, payload);
     const newToken = response.data;
     return newToken;
   } catch (error) {
-    console.log(error);
-    throw new Error(error);
+    throw new Error(error.response.status);
   }
 };
 
@@ -28,8 +26,7 @@ export const signIn = async (tokenId) => {
     const newToken = response.data;
     return newToken;
   } catch (error) {
-    console.log(error);
-    throw new Error(error);
+    throw new Error(error.response.status);
   }
 };
 
@@ -38,17 +35,17 @@ export const getUser = async () => {
     const jwt = await AsyncStorage.getItem('jwt');
     const response = await axios.get(`${URL}/user/${jwt}`);
     const user = response.data;
-    return user;  
+    return user;
   } catch (error) {
     console.log(error);
     throw new Error(error);
   }
-}
+};
 
-export const setUser = async ( updatedName ) => {
+export const setUser = async (updatedName) => {
   try {
     const jwt = await AsyncStorage.getItem('jwt');
-    const payload = { name:updatedName };
+    const payload = { name: updatedName };
     const response = await axios.patch(`${URL}/user/${jwt}`, payload);
     const user = response.data;
     return user;
@@ -56,4 +53,4 @@ export const setUser = async ( updatedName ) => {
     console.log(error);
     throw new Error(error);
   }
-}
+};

@@ -77,7 +77,6 @@ export const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 16,
     fontSize: 18,
-    fontFamily: 'DMSans_400Regular',
     color: '#AABBCB',
   },
   buddy: {
@@ -127,6 +126,5 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 15,
     color: '#767E95',
     fontSize: 16,
-    fontFamily: 'DMSans_400Regular',
   },
 });

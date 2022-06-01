@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View, Text, TouchableOpacity,
 } from 'react-native';
@@ -12,7 +12,7 @@ import PandaChosen from '../../assets/img/panda/panda-chosen';
 import MediumText from '../custom/medium_text';
 
 function Pet(props) {
-  const { pets, setTempPet } = props;
+  const { pets, setTempPet, tempPet } = props;
 
   const [pet, setPet] = useState('');
 
@@ -26,6 +26,8 @@ function Pet(props) {
     }
   };
 
+  useEffect(() => { setPet(tempPet); }, [tempPet]);
+
   return (
     <View style={styles.nameContainer}>
       <View style={styles.name}>
@@ -34,13 +36,13 @@ function Pet(props) {
         </MediumText>
       </View>
       <View style={styles.buddy}>
-        <TouchableOpacity style={{ margin: 20 }} onPress={() => { changePet(0); }}>
+        <TouchableOpacity style={{ margin: 10, height: '25%', aspectRatio: 1}} onPress={() => { changePet(0); }}>
           {pet === pets[0] ? <DogChosen /> : <DogOption />}
         </TouchableOpacity>
-        <TouchableOpacity style={{ margin: 20 }} onPress={() => { changePet(1); }}>
+        <TouchableOpacity style={{ margin: 10, height: '25%', aspectRatio: 1 }} onPress={() => { changePet(1); }}>
           {pet === pets[1] ? <CatChosen /> : <CatOption />}
         </TouchableOpacity>
-        <TouchableOpacity style={{ margin: 20 }} onPress={() => { changePet(2); }}>
+        <TouchableOpacity style={{ margin: 10, height: '30%', aspectRatio: 1 }} onPress={() => { changePet(2); }}>
           {pet === pets[2] ? <PandaChosen /> : <PandaOption />}
         </TouchableOpacity>
       </View>
