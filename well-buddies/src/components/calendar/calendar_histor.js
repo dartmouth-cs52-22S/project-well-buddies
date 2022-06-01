@@ -18,11 +18,11 @@ class CalendarHistory extends Component {
   componentDidMount = async () => { await this.props.fetchEmotions(); };
 
   render() {
-    const today = moment().format('YYYY-MM-DD');
+    // const today = moment().format('YYYY-MM-DD');
     return (
       <View>
         <CalendarList
-          markedDates={{ [today]: { selected: true, marked: true, selectedColor: 'grey' } }}
+          // markedDates={{ '2022-06-01': { selected: true, marked: true, selectedColor: 'grey' } }}
               // markedDates={{ [today]: {selected: true, marked: true, selectedColor: "grey"}}}
               // Callback which gets executed when visible months change in scroll view. Default = undefined
           onVisibleMonthsChange={(months) => { console.log('now these months are visible', months); }}
@@ -32,6 +32,7 @@ class CalendarHistory extends Component {
           futureScrollRange={12}
               // Enable or disable scrolling of calendar list
           scrollEnabled
+          firstDay={1}
               // Enable or disable vertical scroll indicator. Default = false
           showScrollIndicator
               // only show up to the current date
@@ -46,7 +47,8 @@ class CalendarHistory extends Component {
             const dateString = dateDate.toDateString();
             if (dateString in this.props.allEmotions) {
               return (
-                <Text style={{ textAlign: 'center', color: state === 'disabled' ? 'gray' : 'black' }}>
+                <View style={{flex: 1, flexDirection: 'column'}}>
+                <Text style={{flex: 1,textAlign: 'right', color: state === 'disabled' ? 'gray' : 'black' }}>
                   {date.day}
                   {this.props.allEmotions[dateString] === 'Anguish' ? <Anguish /> : <View />}
                   {this.props.allEmotions[dateString] === 'Confused' ? <Confused /> : <View />}
@@ -54,12 +56,20 @@ class CalendarHistory extends Component {
                   {this.props.allEmotions[dateString] === 'SlightSmile' ? <SlightSmile /> : <View />}
                   {this.props.allEmotions[dateString] === 'Smile' ? <Smile /> : <View />}
                 </Text>
+                </View>
               );
             }
-            return (<Text style={{ textAlign: 'center', color: state === 'disabled' ? 'gray' : 'black' }}>
+            return (
+            <View style={{flex: 1, flexDirection: 'column'}}>
+            <Text style={{flex: 1, textAlign: 'right',color: state === 'disabled' ? 'gray' : 'black' }}>
                       {date.day}
-                    </Text>)
-          }}
+                    </Text>
+                    </View>
+                    )
+        
+        
+        }}        
+
         />
       </View>
     );
@@ -73,3 +83,4 @@ const mapStateToProps = (state) => (
 );
 
 export default connect(mapStateToProps, { fetchEmotions })(CalendarHistory);
+
