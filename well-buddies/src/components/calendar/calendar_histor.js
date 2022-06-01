@@ -12,6 +12,7 @@ import Confused from '../../assets/img/emotions/confused';
 import Neutral from '../../assets/img/emotions/neutral';
 import SlightSmile from '../../assets/img/emotions/slight-smile';
 import Smile from '../../assets/img/emotions/smile';
+import CloseIcon from '../../assets/img/tabIcons/close';
 
 // how to make the calendar is learnt and adopted from https://www.npmjs.com/package/react-native-calendars
 class CalendarHistory extends Component {
@@ -20,9 +21,16 @@ class CalendarHistory extends Component {
   render() {
     // const today = moment().format('YYYY-MM-DD');
     return (
-      <View>
-        <CalendarList
-          // markedDates={{ '2022-06-01': { selected: true, marked: true, selectedColor: 'grey' } }}
+      <View style={styles.pageContainer}>
+
+        <View style={styles.iconContainer}>
+          <TouchableOpacity onPress={() => { this.props.closeModal(); }}>
+            <CloseIcon  />
+          </TouchableOpacity>
+        </View>
+
+        <CalendarList style={styles.calendar}
+          markedDates={{ [today]: { selected: true, marked: true, selectedColor: 'grey' } }}
               // markedDates={{ [today]: {selected: true, marked: true, selectedColor: "grey"}}}
               // Callback which gets executed when visible months change in scroll view. Default = undefined
           onVisibleMonthsChange={(months) => { console.log('now these months are visible', months); }}
@@ -73,6 +81,26 @@ class CalendarHistory extends Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  pageContainer: {
+    height: '100%',
+    justifyContent: 'flex-end',
+  },
+
+  iconContainer: {
+    position: 'absolute',
+    top: '10%',
+    backgroundColor:'#45587C',
+    left: '5%',
+    zIndex: 1,
+},
+
+calendar: {
+  height: '100%',
+},
+
+})
 
 const mapStateToProps = (state) => (
   {

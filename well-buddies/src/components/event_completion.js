@@ -8,6 +8,7 @@ import { fetchBuddy } from '../state/actions/buddy';
 import DogCompletion from '../assets/img/dog/dog-completion';
 import CatCompletion from '../assets/img/cat/cat-completion';
 import PandaCompletion from '../assets/img/panda/panda-completion';
+import CloseIcon from '../assets/img/tabIcons/close';
 import Star from '../assets/img/star';
 
 function EventCompletion(props) {
@@ -21,6 +22,10 @@ function EventCompletion(props) {
     <TouchableOpacity onPress={()=>{props.closeModal();}}>
       <View style={styles.container}>
         <ImageBackground style={styles.backgroundImg} resizeMode="cover" source={require('../assets/img/background_completion.png')}>
+          <View style={styles.IconContainer}>
+            <CloseIcon style={styles.closeIcon} />
+          </View>
+
           <View style={styles.imagecontainer}>
             <View style={styles.fruit}>
               <Apple />
@@ -55,6 +60,12 @@ const styles = StyleSheet.create({
   backgroundImg: {
     height: Dimensions.get('screen').height,
     top: -50,
+  },
+
+  IconContainer: {
+    height: '12%',
+    justifyContent: 'flex-end',
+    paddingLeft: 20,
   },
 
   imagecontainer: {
