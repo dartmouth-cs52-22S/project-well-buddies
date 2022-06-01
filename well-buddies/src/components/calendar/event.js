@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-<<<<<<< HEAD
   StyleSheet, View, Text, Dimensions,
 } from 'react-native';
 import { Card } from 'react-native-elements';
@@ -82,63 +81,6 @@ function EventDetail(props) {
   );
 }
 
-=======
-  StyleSheet, View, Text,
-} from 'react-native';
-import { Card } from 'react-native-elements';
-// import CustomText from '../custom/custom_text';
-import Moment from 'moment';
-import Ionicons from 'react-native-vector-icons/FontAwesome';
-
-function parseStartTime(dateTime) {
-  Moment.locale('en');
-  return Moment(dateTime).format('h:mm');
-}
-
-function parseEndTime(dateTime) {
-  Moment.locale('en');
-  return Moment(dateTime).format('h:mm A');
-}
-function parseDay(dateTime) {
-  Moment.locale('en');
-  return Moment(dateTime).format('dddd');
-}
-function parseDate(dateTime) {
-  Moment.locale('en');
-  return Moment(dateTime).format(' MMMM D, YYYY');
-}
-
-function EventDetail(props) {
-  // example of destructuring, the below is equivalent to props.route.params.video
-  const { route } = props;
-  const { event } = route.params;
-
-  return (
-    <Card>
-      <Text style={styles.title}>{event.summary}</Text>
-      <Text style={styles.date}>
-        {parseDay(event.start.dateTime)}
-        ,
-        {parseDate(event.start.dateTime)}
-        {' '}
-      </Text>
-      <Text style={styles.time}>
-        {parseStartTime(event.start.dateTime)}
-        {' '}
-        -
-        {' '}
-        {parseEndTime(event.end.dateTime)}
-      </Text>
-      <Text style={styles.email}>
-        <Ionicons name="calendar-o" size={20} color="#818589" />
-        {' '}
-        {event.organizer.email}
-      </Text>
-    </Card>
-  );
-}
-
->>>>>>> 067eb41d037d54cc014640b7b88fc45295c51b10
 const styles = StyleSheet.create({
   title: {
     fontWeight: '600',
