@@ -33,7 +33,8 @@ export const signIn = async (tokenId) => {
 export const getUser = async () => {
   try {
     const jwt = await AsyncStorage.getItem('jwt');
-    const response = await axios.get(`${URL}/user/${jwt}`);
+    const response = await axios.get(`${URL}/profile/${jwt}`);
+    console.log('get user success');
     const user = response.data;
     return user;
   } catch (error) {
