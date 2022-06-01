@@ -11,7 +11,6 @@ export function fetchActivities() {
   return async (dispatch) => {
     const jwt = await AsyncStorage.getItem('jwt');
     const accessToken = await AsyncStorage.getItem('googleAccessCode');
-    console.log(accessToken, 'access');
     const freeBusyArgs = {
       timeMin: Moment().hour(10).minute(0).second(0)
         .toISOString(),

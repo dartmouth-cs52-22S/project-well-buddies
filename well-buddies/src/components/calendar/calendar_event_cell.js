@@ -1,9 +1,6 @@
-/* eslint-disable camelcase */
-/* eslint-disable react/destructuring-assignment */
-/* eslint-disable react/function-component-definition */
 import React, { useEffect, useState } from 'react';
 import {
-  StyleSheet, View, Text, ActivityIndicator, TouchableOpacity,
+  StyleSheet, View, Text, ActivityIndicator, TouchableOpacity, Modal,
 } from 'react-native';
 import { Card } from 'react-native-elements';
 import Moment from 'moment';
@@ -12,16 +9,14 @@ import RegularText from '../custom/regular_text';
 import CheckboxChecked from '../../assets/img/checkbox/checkbox-checked';
 import Checkbox from '../../assets/img/checkbox/checkbox';
 import MediumText from '../custom/medium_text';
+import EventCompletion from '../event_completion';
 import { fetchCompletedEvents, completeEventAction } from '../../state/actions/calendar';
 
 const CalendarEventCell = (props) => {
-  console.log('props', props);
   const [checked, setChecked] = useState(false);
+  const [event, setEvent] = useState(false);
 
   function checkChecked() {
-    console.log(props.event.id);
-    console.log(props.completedEvents);
-    console.log(props.event.id in props.completedEvents);
     let found = false;
     for (let i = 0; i < props.completedEvents.length; i++) {
       if (props.completedEvents[i] === props.event.id) {
@@ -40,16 +35,8 @@ const CalendarEventCell = (props) => {
     Moment.locale('en');
     return Moment(dateTime).format('h:mm A');
   }
-
-  /* function renderLoadingView() {
-    return (
-      <View style={styles.loading}>
-        <ActivityIndicator size="large" color="#0000ff" />
-      </View>
-    );
-  } */
-
   return (
+    <View>
     <Card borderRadius={5}
       backgroundColor="#d1dce0"
       containerStyle={!checked ? styles.card : styles.checkedCard}
@@ -80,6 +67,7 @@ const CalendarEventCell = (props) => {
         <View>
           <TouchableOpacity onPress={() => {
             props.completeEventAction(props.event.id, '');
+            setEvent(true);
           }}
             disabled={checked}
           >
@@ -87,8 +75,12 @@ const CalendarEventCell = (props) => {
           </TouchableOpacity>
         </View>
       </View>
-
     </Card>
+    <View style={{position: 'absolute'}}>
+      {event? <Modal animationType="slide" transparent={false}>
+        <EventCompletion closeModal={() => setEvent(false)}/>
+      </Modal> :<View/>}</View>
+    </View>
   );
 };
 

@@ -88,9 +88,7 @@ export function getCalendarEvent(accessToken, eventID) {
 
 export function getFreeBusy(body, accessToken) {
   const start = Moment().startOf('day').hour(10).toISOString();
-  console.log('start', start);
   const end = Moment().startOf('day').hour(22).toISOString();
-  console.log('end', end);
   // const diff = Moment.duration(end.diff(start)).asMinutes();
 
   const config = {
@@ -99,7 +97,6 @@ export function getFreeBusy(body, accessToken) {
   return new Promise((resolve, reject) => {
     axios.post(`${API_URL}freeBusy`, body, config)
       .then((response) => {
-        console.log('freebusy', response);
         const busyTimes = response?.data?.calendars?.primary?.busy;
         const freeTimes = [];
         if (Object.entries(busyTimes).length === 0) {
@@ -119,12 +116,10 @@ export function getFreeBusy(body, accessToken) {
             freeTimes.push({ start: busyTimes[i].end, end: busyTimes[i + 1].start, duration: 0 });
           }
         }
-        console.log('free', freeTimes);
         Object.entries(freeTimes).forEach((time, idx) => {
           const diff = Moment.duration(Moment(freeTimes[idx].end).diff(Moment(freeTimes[idx].start))).asMinutes();
           freeTimes[idx].duration = diff;
         });
-        console.log(freeTimes);
         const activityTime = freeTimes[Math.floor(Math.random() * freeTimes.length)];
         resolve(activityTime);
       })

@@ -17,16 +17,14 @@ function EventCompletion(props) {
     }
     fetchData();
   }, []);
-
   return (
-    <SafeAreaView>
+    <TouchableOpacity onPress={()=>{props.closeModal();}}>
       <View style={styles.container}>
         <ImageBackground style={styles.backgroundImg} resizeMode="cover" source={require('../assets/img/background_completion.png')}>
           <View style={styles.imagecontainer}>
             <View style={styles.fruit}>
               <Apple />
             </View>
-
             <View style={styles.buddy}>
               {props.pet === 'Dog' ? <DogCompletion /> : <View />}
               {props.pet === 'Cat' ? <CatCompletion /> : <View />}
@@ -49,7 +47,7 @@ function EventCompletion(props) {
         </ImageBackground>
 
       </View>
-    </SafeAreaView>
+    </TouchableOpacity>
   );
 }
 
