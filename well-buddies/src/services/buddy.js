@@ -17,8 +17,8 @@ export const setBuddy = async (token, newBuddy, newBuddyName) => {
     petName: newBuddyName,
   };
   try {
-    const { data } = await axios.patch(`${URL}/buddy`, payload);
-    return data;
+    const response = await axios.patch(`${URL}/buddy`, payload);
+    return response;
   } catch (error) {
     console.log(error);
     throw new Error(error);

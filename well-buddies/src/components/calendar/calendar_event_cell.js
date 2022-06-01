@@ -1,6 +1,9 @@
-import React, { useEffect, useState } from 'react';
+/* eslint-disable camelcase */
+/* eslint-disable react/destructuring-assignment */
+/* eslint-disable react/function-component-definition */
+import React, { useState, useEffect } from 'react';
 import {
-  StyleSheet, View, Text, ActivityIndicator, TouchableOpacity, Modal,
+  StyleSheet, View, Text, ActivityIndicator, TouchableOpacity,
 } from 'react-native';
 import { Card } from 'react-native-elements';
 import Moment from 'moment';
@@ -64,6 +67,7 @@ const CalendarEventCell = (props) => {
     }
     return null;
   }
+
   function renderSummary() {
     if (props.event.summary.substring(0, 10) === ('WELLNESS: ')) {
       return (
