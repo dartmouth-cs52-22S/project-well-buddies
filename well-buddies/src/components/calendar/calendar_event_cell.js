@@ -57,7 +57,6 @@ const CalendarEventCell = (props) => {
   function renderEmoji() {
     if (props.event.summary.substring(0, 10) === ('WELLNESS: ')) {
       const foundActivity = activitiesList.filter((activity) => activity.title === props.event.summary.substring(10));
-      console.log('found', foundActivity[0]?.icon);
       return (
         <View marginRight={4}>
           <TwemojiText style={styles.emoji}>
