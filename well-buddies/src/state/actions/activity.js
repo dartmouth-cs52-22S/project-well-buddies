@@ -1,10 +1,11 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Moment from 'moment';
-import getActivity from '../../services/activity';
+import { getTodayActivity, getActivity } from '../../services/activity';
 import { getFreeBusy, addEvent } from '../../services/google-cal-api';
 
 export const ActionTypes = {
   FETCH_ACTIVITIES: 'FETCH_ACTIVITIES',
+  FETCH_TODAY_ACTIVITY: 'FETCH_TODAY_ACTIVITY',
 };
 
 export function fetchActivities() {
@@ -52,6 +53,21 @@ export function fetchActivities() {
         })
         .catch((error) => {
           console.log(`error getting activity: ${error}`);
+        });
+    }
+  };
+}
+
+export function fetchTodayActivity() {
+  return async (dispatch) => {
+    const jwt = await AsyncStorage.getItem('jwt');
+    if (jwt !== null) {
+      getTodayActivity(jwt)
+        .then((response) => {
+          dispatch({ type: ActionTypes.FETCH_TODAY_ACTIVITY, payload: response.data });
+        })
+        .catch((error) => {
+          console.log(`error getting activity today: ${error}`);
         });
     }
   };

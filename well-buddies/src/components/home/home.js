@@ -1,10 +1,9 @@
 /* eslint-disable react/destructuring-assignment */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   SafeAreaView, StyleSheet, Dimensions, View, Text, ImageBackground, Modal,
 } from 'react-native';
 import { connect } from 'react-redux';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import CalendarSummary from './calendar_summary';
 import Cat from '../../assets/img/cat/cat';
 import Dog from '../../assets/img/dog/dog';
@@ -13,18 +12,47 @@ import Checkin from '../checkin';
 import { fetchEmotion } from '../../state/actions/emotion';
 import { fetchBuddy } from '../../state/actions/buddy';
 import { fetchCompletedEvents } from '../../state/actions/calendar';
-import { fetchActivities } from '../../state/actions/activity';
+import { fetchActivities, fetchTodayActivity } from '../../state/actions/activity';
+import SleepyCat from '../../assets/img/cat/cat-sleepy';
+import SleepyDog from '../../assets/img/dog/dog-sleepy';
+import SleepyPanda from '../../assets/img/panda/panda-sleepy';
 
 function Home(props) {
+  const [wellnessDone, setWellnessDone] = useState(false);
+
   useEffect(() => {
     async function fetchData() {
       await props.fetchBuddy();
       await props.fetchEmotion();
       await props.fetchCompletedEvents();
       await props.fetchActivities();
+      await props.fetchTodayActivity();
     }
     fetchData();
+    if (props.completedEvents.includes(props.activity)) {
+      setWellnessDone(true);
+    }
   }, []);
+
+  function renderPet(pet) {
+    if (pet === 'Dog') {
+      if (wellnessDone) {
+        return <Dog />;
+      } else {
+        return <SleepyDog />;
+      }
+    } else if (pet === 'Cat') {
+      if (wellnessDone) {
+        return <Cat />;
+      } else {
+        return <SleepyCat />;
+      }
+    } else if (wellnessDone) {
+      return <Panda />;
+    } else {
+      return <SleepyPanda />;
+    }
+  }
 
   return (
     <SafeAreaView style={{ backgroundColor: 'black' }}>
@@ -56,9 +84,10 @@ function Home(props) {
 
             <View style={styles.buddyContainer}>
               <View style={styles.buddyImage}>
-                {props.pet === 'Dog' ? <Dog /> : <View />}
+                {renderPet(props.pet)}
+                {/* {props.pet === 'Dog' ? <Dog /> : <View />}
                 {props.pet === 'Cat' ? <Cat /> : <View />}
-                {props.pet === 'Panda' ? <Panda /> : <View />}
+                {props.pet === 'Panda' ? <Panda /> : <View />} */}
               </View>
             </View>
           </View>
@@ -119,8 +148,11 @@ const mapStateToProps = (state) => (
     pet: state.buddy.pet,
     petName: state.buddy.petName,
     emotion: state.emotion.today,
-    activities: state.activities.all,
+    activity: state.activities.today,
+    completedEvents: state.events.completed,
   }
 );
 
-export default connect(mapStateToProps, { fetchBuddy, fetchEmotion, fetchCompletedEvents,fetchActivities })(Home);
+export default connect(mapStateToProps, {
+  fetchBuddy, fetchEmotion, fetchCompletedEvents, fetchActivities, fetchTodayActivity,
+})(Home);
