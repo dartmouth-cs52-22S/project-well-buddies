@@ -36,7 +36,7 @@ export function fetchActivities() {
           activity.end = Moment(activityTime.start).add(activity.duration, 'm');
 
           const addEventBody = {
-            summary: activity.title,
+            summary: `WELLNESS: ${activity.title}`,
             start: { dateTime: activity.start },
             end: { dateTime: activity.end },
           };

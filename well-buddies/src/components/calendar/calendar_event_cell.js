@@ -17,11 +17,11 @@ import { fetchCompletedEvents, completeEventAction } from '../../state/actions/c
 const CalendarEventCell = (props) => {
   console.log('props', props);
   const [checked, setChecked] = useState(false);
+  const wellness = (props.event.summary.substring(0, 8) === 'WELLNESS');
+  console.log(props.event.summary);
+  console.log(wellness);
 
   function checkChecked() {
-    console.log(props.event.id);
-    console.log(props.completedEvents);
-    console.log(props.event.id in props.completedEvents);
     let found = false;
     for (let i = 0; i < props.completedEvents.length; i++) {
       if (props.completedEvents[i] === props.event.id) {
@@ -34,6 +34,7 @@ const CalendarEventCell = (props) => {
       setChecked(false);
     }
   }
+
   useEffect(() => { async function func() { checkChecked(); } if (!checked) { func(); } }, [props.completedEvents]);
 
   function parseDate(dateTime) {
@@ -65,7 +66,7 @@ const CalendarEventCell = (props) => {
               </Text>
               <MediumText>
                 <Text style={!checked ? styles.title : styles.checkedTitle}>
-                  {props.event.summary}
+                  {wellness ? props.event.summary.substring(9) : props.event.summary }
                 </Text>
               </MediumText>
             </View>
@@ -84,7 +85,11 @@ const CalendarEventCell = (props) => {
         </View>
         <View>
           <TouchableOpacity onPress={() => {
-            props.completeEventAction(props.event.id, '');
+            if (wellness) {
+              props.completeEventAction(props.event.id, '');
+            } else {
+              props.completeEventAction(props.event.id, 'true');
+            }
           }}
             disabled={checked}
           >
