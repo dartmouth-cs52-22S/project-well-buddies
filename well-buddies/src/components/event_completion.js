@@ -27,7 +27,6 @@ function EventCompletion(props) {
                     <View style={styles.fruit}>
                         <Apple/>
                     </View>
-
                     <View style={styles.buddy}>
                         {props.pet === 'Dog' ? <DogCompletion /> : <View />}
                         {props.pet === 'Cat' ? <CatCompletion /> : <View />}
@@ -55,8 +54,14 @@ function EventCompletion(props) {
 }
 
 const styles = StyleSheet.create({
+    container: {
+        width: Dimensions.get('screen').width,
+        // aspectRatio: 10 / 3, //height will be "30%" of your width
+    },
+
     backgroundImg: {
         height: Dimensions.get('screen').height,
+        width: Dimensions.get('screen').width,
         top: -50,
     },
 

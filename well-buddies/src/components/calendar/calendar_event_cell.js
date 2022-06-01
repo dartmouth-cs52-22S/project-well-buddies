@@ -1,9 +1,11 @@
 /* eslint-disable camelcase */
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/function-component-definition */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState,Modal } from 'react';
+// import { Dimensions } from 'react-native';
+
 import {
-  StyleSheet, View, Text, ActivityIndicator, TouchableOpacity,
+  StyleSheet, View, Text, ActivityIndicator, TouchableOpacity, Alert, SafeAreaView,
 } from 'react-native';
 import { Card } from 'react-native-elements';
 import Moment from 'moment';
@@ -13,6 +15,10 @@ import CheckboxChecked from '../../assets/img/checkbox/checkbox-checked';
 import Checkbox from '../../assets/img/checkbox/checkbox';
 import MediumText from '../custom/medium_text';
 import { completeEvent } from '../../state/actions/calendar';
+import EventCompletion from '../event_completion';
+import DogCompletion from '../../assets/img/dog/dog-completion';
+import CatCompletion from '../../assets/img/cat/cat-completion';
+import PandaCompletion from '../../assets/img/panda/panda-completion';
 
 const CalendarEventCell = (props) => {
   console.log('props', props);
@@ -22,6 +28,13 @@ const CalendarEventCell = (props) => {
     Moment.locale('en');
     return Moment(dateTime).format('h:mm A');
   }
+  const [editComplete, setEditComplete] = useState(false);
+  useEffect(() => {
+    async function fetchData() {
+      await props.fetchBuddy();
+    }
+    fetchData();
+  }, []);
 
   function renderLoadingView() {
     return (
@@ -32,6 +45,7 @@ const CalendarEventCell = (props) => {
   }
 
   return (
+    <SafeAreaView>
     <Card borderRadius={5}
       backgroundColor="#d1dce0"
       containerStyle={!checked ? styles.card : styles.checkedCard}
@@ -63,14 +77,28 @@ const CalendarEventCell = (props) => {
           <TouchableOpacity onPress={() => {
             props.completeEvent(props.event);
             setChecked(!checked);
-          }}
+            }}
           >
+            {/* {checked && props.pet === 'Dog' ? <DogCompletion /> :<View/>}
+            {checked && props.pet === 'Cat' ? <CatCompletion /> :<View/>}
+            {checked && props.pet === 'Panda' ? <PandaCompletion /> :<View/>} */}
             {!checked ? <Checkbox /> : <CheckboxChecked />}
+            <View>
+            {checked? <EventCompletion /> :<View/>}
+            </View>
           </TouchableOpacity>
         </View>
       </View>
-
+      {/* {checked
+        ? (
+          <Modal animationType="slide" transparent={false}>
+            <EventCompletion closeModal={() => setChecked(false)} />
+          </Modal>
+        )
+        : <View />} */}
     </Card>
+
+    </SafeAreaView>
   );
 };
 

@@ -51,14 +51,6 @@ class Buddy extends Component {
     this.setState({ name: event.target.value });
   };
 
-  // // Save the name (update to props)
-  //   editName = () => {
-  //     this.props.updateName(this.props.current._id, {
-  //       name: this.state.name,
-  //     },
-  //     // change editing mode
-  //     this.editMode();
-  //   };
 
   render() {
     if (this.state.isEditing === false) {
