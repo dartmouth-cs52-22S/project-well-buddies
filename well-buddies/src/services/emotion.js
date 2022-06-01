@@ -45,7 +45,6 @@ export const newEmotion = async (emotion) => {
     const payload = { title: emotion };
     const response = await axios.post(`${URL}/emotion/${jwt}`, payload);
     const emotions = response.data;
-    console.log(emotion);
     return emotions;
   } catch (error) {
     console.log(error);

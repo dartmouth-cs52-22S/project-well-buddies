@@ -1,25 +1,24 @@
-/* eslint-disable camelcase */
-/* eslint-disable react/destructuring-assignment */
-/* eslint-disable react/function-component-definition */
 import React, { useEffect, useState } from 'react';
 import {
-  StyleSheet, View, Text, ActivityIndicator, TouchableOpacity,
+  StyleSheet, View, Text, ActivityIndicator, TouchableOpacity, Modal,
 } from 'react-native';
 import { Card } from 'react-native-elements';
 import Moment from 'moment';
 import { connect } from 'react-redux';
+import TwemojiText from 'react-native-twemojis';
 import RegularText from '../custom/regular_text';
 import CheckboxChecked from '../../assets/img/checkbox/checkbox-checked';
 import Checkbox from '../../assets/img/checkbox/checkbox';
 import MediumText from '../custom/medium_text';
+import { activitiesList } from '../../constants';
+import EventCompletion from '../event_completion';
 import { fetchCompletedEvents, completeEventAction } from '../../state/actions/calendar';
 
+// eslint-disable-next-line react/function-component-definition
 const CalendarEventCell = (props) => {
-  console.log('props', props);
   const [checked, setChecked] = useState(false);
   const wellness = (props.event.summary.substring(0, 8) === 'WELLNESS');
-  console.log(props.event.summary);
-  console.log(wellness);
+  const [event, setEvent] = useState(false);
 
   function checkChecked() {
     let found = false;
@@ -42,63 +41,97 @@ const CalendarEventCell = (props) => {
     return Moment(dateTime).format('h:mm A');
   }
 
-  /* function renderLoadingView() {
+  function renderLoadingView() {
     return (
       <View style={styles.loading}>
         <ActivityIndicator size="large" color="#0000ff" />
       </View>
     );
-  } */
+  }
+
+  function renderEmoji() {
+    if (props.event.summary.substring(0, 10) === ('WELLNESS: ')) {
+      const foundActivity = activitiesList.filter((activity) => activity.title === props.event.summary.substring(10));
+      console.log('found', foundActivity[0]?.icon);
+      return (
+        <View marginRight={4}>
+          <TwemojiText style={styles.emoji}>
+            {foundActivity[0]?.icon}
+            {' '}
+          </TwemojiText>
+        </View>
+      );
+    }
+    return null;
+  }
+  function renderSummary() {
+    if (props.event.summary.substring(0, 10) === ('WELLNESS: ')) {
+      return (
+        props.event.summary.substring(10)
+      );
+    }
+    return props.event.summary;
+  }
 
   return (
-    <Card borderRadius={5}
-      backgroundColor="#d1dce0"
-      containerStyle={!checked ? styles.card : styles.checkedCard}
-      underlayColor="#d1dce0"
-      height={80}
-    >
-      <View style={styles.innerCard}>
-        <View>
+    <View>
+      <Card borderRadius={5}
+        backgroundColor="#d1dce0"
+        containerStyle={!checked ? styles.card : styles.checkedCard}
+        underlayColor="#d1dce0"
+        height={80}
+      >
+        <View style={styles.innerCard}>
           <View>
-            <View flexDirection="row">
-              <Text>
-                &#129496;
-              </Text>
-              <MediumText>
-                <Text style={!checked ? styles.title : styles.checkedTitle}>
-                  {wellness ? props.event.summary.substring(9) : props.event.summary }
+            <View>
+              <View flexDirection="row">
+                <View>
+                  {renderEmoji()}
+                </View>
+                <MediumText>
+                  <Text style={!checked ? styles.title : styles.checkedTitle}>
+                    {wellness ? props.event.summary.substring(9) : props.event.summary }
+                  </Text>
+                </MediumText>
+              </View>
+            </View>
+            <View>
+              <RegularText>
+                <Text style={!checked ? styles.date : styles.checkedDate}>
+                  {parseDate(props.event.start.dateTime)}
+                  {' '}
+                  -
+                  {' '}
+                  {parseDate(props.event.end.dateTime)}
                 </Text>
-              </MediumText>
+              </RegularText>
             </View>
           </View>
           <View>
-            <RegularText>
-              <Text style={!checked ? styles.date : styles.checkedDate}>
-                {parseDate(props.event.start.dateTime)}
-                {' '}
-                -
-                {' '}
-                {parseDate(props.event.end.dateTime)}
-              </Text>
-            </RegularText>
+            <TouchableOpacity onPress={() => {
+              if (wellness) {
+                props.completeEventAction(props.event.id, '');
+              } else {
+                props.completeEventAction(props.event.id, 'true');
+              }
+              setEvent(true);
+            }}
+              disabled={checked}
+            >
+              {!checked ? <Checkbox /> : <CheckboxChecked />}
+            </TouchableOpacity>
           </View>
         </View>
-        <View>
-          <TouchableOpacity onPress={() => {
-            if (wellness) {
-              props.completeEventAction(props.event.id, '');
-            } else {
-              props.completeEventAction(props.event.id, 'true');
-            }
-          }}
-            disabled={checked}
-          >
-            {!checked ? <Checkbox /> : <CheckboxChecked />}
-          </TouchableOpacity>
-        </View>
-      </View>
+      </Card>
+      <View style={{ position: 'absolute' }}>
+        {event ? (
+          <Modal animationType="slide" transparent={false}>
+            <EventCompletion closeModal={() => setEvent(false)} />
+          </Modal>
+        ) : <View />}
 
-    </Card>
+      </View>
+    </View>
   );
 };
 
@@ -141,6 +174,9 @@ const styles = StyleSheet.create({
   backgroundImg: {
     resizeMode: 'cover',
     height: '100%',
+  },
+  emoji: {
+    fontSize: 20,
   },
 });
 

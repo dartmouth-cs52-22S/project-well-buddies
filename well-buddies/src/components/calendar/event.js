@@ -6,7 +6,9 @@ import { Card } from 'react-native-elements';
 import Moment from 'moment';
 import Ionicons from 'react-native-vector-icons/FontAwesome';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import TwemojiText from 'react-native-twemojis';
 import RegularText from '../custom/regular_text';
+import { activitiesList } from '../../constants';
 
 function EventDetail(props) {
   // example of destructuring, the below is equivalent to props.route.params.video
@@ -29,6 +31,31 @@ function EventDetail(props) {
     Moment.locale('en');
     return Moment(dateTime).format(' MMMM D, YYYY');
   }
+
+  function renderEmoji() {
+    if (event.summary.substring(0, 10) === ('WELLNESS: ')) {
+      const foundActivity = activitiesList.filter((activity) => activity.title === event.summary.substring(10));
+      console.log('found', foundActivity[0]?.icon);
+      return (
+        <View>
+          <TwemojiText style={styles.emoji}>
+            {foundActivity[0]?.icon}
+            {' '}
+          </TwemojiText>
+        </View>
+      );
+    }
+    return null;
+  }
+
+  function renderSummary() {
+    if (event.summary.substring(0, 10) === ('WELLNESS: ')) {
+      return (
+        event.summary.substring(10)
+      );
+    }
+    return event.summary;
+  }
   return (
     <SafeAreaView
       style={{
@@ -39,9 +66,10 @@ function EventDetail(props) {
       }}
     >
       <Card borderRadius={5}>
+        {renderEmoji()}
         <View marginVertical={10}>
           <RegularText>
-            <Text style={styles.title}>{event.summary}</Text>
+            <Text style={styles.title}>{renderSummary()}</Text>
           </RegularText>
         </View>
         <View marginVertical={2}>
@@ -100,6 +128,9 @@ const styles = StyleSheet.create({
   email: {
     fontWeight: '600',
     color: '#45587c',
+  },
+  emoji: {
+    fontSize: 40,
   },
 
 });

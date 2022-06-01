@@ -9,7 +9,6 @@ export const signUp = async (userData, token) => {
     token,
   };
   try {
-    console.log('payload', payload);
     const response = await axios.post(`${URL}/signup`, payload);
     const newToken = response.data;
     return newToken;
