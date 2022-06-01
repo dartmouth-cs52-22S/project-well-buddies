@@ -11,7 +11,6 @@ import {
   SafeAreaView,
   Dimensions,
 } from 'react-native';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { fetchBuddy, setNewBuddy } from '../state/actions/buddy';
 import Cat from '../assets/img/cat/cat';
 import Dog from '../assets/img/dog/dog';
