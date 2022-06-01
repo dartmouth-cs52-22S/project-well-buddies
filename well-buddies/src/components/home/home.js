@@ -27,35 +27,37 @@ function Home(props) {
   return (
     <SafeAreaView style={{ backgroundColor: 'black' }}>
       <View style={styles.container}>
-        {props.emotion === ''
-          ? (
-            <Modal animationType="slide" transparent={false} visable>
-              <Checkin />
-            </Modal>
-          )
-          : (
-            <View />
-          )}
         <ImageBackground source={require('../../assets/img/background_gradient.jpg')} resizeMode="cover" style={styles.backgroundImage}>
-          <View style={styles.welcomeContainer}>
-            <Text style={styles.welcome}>
-              Welcome!
-            </Text>
-          </View>
-          <View style={styles.calendarContainer}>
-            <Text style={styles.calendarContainerText}>
-              Today's Activities
-            </Text>
-          </View>
-          <View style={styles.calendarContainerInfo}>
-            <CalendarSummary style={styles.calendar} />
-          </View>
+          <View style={styles.container}>
+            {props.emotion === ''
+              ? (
+                <Modal animationType="slide" transparent={false} visable>
+                  <Checkin />
+                </Modal>
+              )
+              : (
+                <View />
+              )}
+            <View style={styles.welcomeContainer}>
+              <Text style={styles.welcome}>
+                Welcome!
+              </Text>
+            </View>
+            <View style={styles.calendarContainer}>
+              <Text style={styles.calendarContainerText}>
+                Today's Activities
+              </Text>
+            </View>
+            <View style={styles.calendarContainerInfo}>
+              <CalendarSummary style={styles.calendar} />
+            </View>
 
-          <View style={styles.buddyContainer}>
-            <View style={styles.buddyImage}>
-              {props.pet === 'Dog' ? <Dog /> : <View />}
-              {props.pet === 'Cat' ? <Cat /> : <View />}
-              {props.pet === 'Panda' ? <Panda /> : <View />}
+            <View style={styles.buddyContainer}>
+              <View style={styles.buddyImage}>
+                {props.pet === 'Dog' ? <Dog /> : <View />}
+                {props.pet === 'Cat' ? <Cat /> : <View />}
+                {props.pet === 'Panda' ? <Panda /> : <View />}
+              </View>
             </View>
           </View>
         </ImageBackground>
