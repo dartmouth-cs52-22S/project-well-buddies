@@ -3,7 +3,7 @@ import { SafeAreaView, StyleSheet, View, Text, Image, TouchableOpacity, Modal } 
 import { TextInput } from 'react-native-gesture-handler';
 import { Button } from 'react-native-elements';
 import Ionicons from 'react-native-vector-icons/FontAwesome';
-import Profile from './profile';
+// import Profile from './profile';
 
 
 function EditProfile(props) {
@@ -23,7 +23,7 @@ function EditProfile(props) {
                 </TouchableOpacity>
                 <View style={{alignItems:"center"}}>
                     <Text style={{marginTop: -18, fontSize:16, marginBottom:17, color:'#45587C', fontWeight:'600'}}>Edit Profile</Text>
-                    <Image source={require('../../assets/user_profile.jpeg')} style={styles.profileImage}></Image>
+                    <Image source={require('../../assets/img/user_profile.jpeg')} style={styles.profileImage}></Image>
                 </View>
                 
             </View>
@@ -85,13 +85,13 @@ function EditProfile(props) {
             </View>
             </View>
 
-        {backToProfile
+        {/* {backToProfile
         ? (
           <Modal animationType="slide" transparent={false}>
             <Profile closeModal={() => setBackToProfile(false)} />
           </Modal>
         )
-        : <View />}         
+        : <View />} */}         
         </SafeAreaView>
       );
     }

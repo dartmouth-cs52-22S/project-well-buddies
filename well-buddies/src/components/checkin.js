@@ -1,150 +1,107 @@
-import React, { Component, componentDidMount,useState } from 'react';
-import { Icon } from 'react-native-elements'
-import { TouchableOpacity,SafeAreaView,StyleSheet, View, Text, Image, ImageBackground } from 'react-native';
-import Ionicons from 'react-native-vector-icons/FontAwesome';
+import React, { Component, componentDidMount, useState } from 'react';
+import {
+  TouchableOpacity, SafeAreaView, StyleSheet, View, Dimensions, Text, Image, ImageBackground,
+} from 'react-native';
+import { connect } from 'react-redux';
+import Cat from '../assets/img/cat/cat';
+import Dog from '../assets/img/dog/dog';
+import Panda from '../assets/img/panda/panda';
+import { fetchBuddy } from '../state/actions/buddy';
+import { createEmotion, fetchEmotion } from '../state/actions/emotion';
+import RegularText from './custom/regular_text';
+import Anguish from '../assets/img/emotions/anguish';
+import Confused from '../assets/img/emotions/confused';
+import Neutral from '../assets/img/emotions/neutral';
+import SlightSmile from '../assets/img/emotions/slight-smile';
+import Smile from '../assets/img/emotions/smile';
 
+class Checkin extends Component {
+  // eslint-disable-next-line react/no-arrow-function-lifecycle
+  componentDidMount = async () => { await this.props.fetchBuddy(); };
 
-export default class Checkin extends Component {
-    render() {
-      return (
-        <SafeAreaView>
+  render() {
+    return (
+      <SafeAreaView style={{ backgroundColor: '#F6F6EE' }}>
         <View style={styles.container}>
-            <View style={styles.topPortion}>
-                <Text style={styles.checkin}>
-                How are you{"\n"}doing today?
-                </Text >
-                <Image style={styles.checkinBuddy} source={require('../assets/buddy.png')}/>
-            </View>
-            <View style={styles.bottomPortion1}>
-                <TouchableOpacity style={styles.icon1}>
-                <Ionicons
-                    name={"smile-o"}
-                    size={80}
-                    color="#000000"/>
-                <Text style={styles.emoji}>
-                Awesome
-                </Text >
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.icon2}>
-                <Ionicons
-                    name={"frown-o"}
-                    size={80}
-                    color="#000000"/>
-                <Text style={styles.emoji}>
-                Sad
-                </Text >
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.icon3}>
-                <Ionicons
-                    name={"meh-o"}
-                    size={80}
-                    color="#000000"/>
-                <Text style={styles.emoji}>
-                Meh
-                </Text >
-                </TouchableOpacity>
-                </View>
-                <View style={styles.bottomPortion2}>
-                <TouchableOpacity style={styles.icon4}>
-                <Ionicons
-                    name={"spinner"}
-                    size={75}
-                    color="#000000"/>
-                <Text style={styles.emoji}>
-                Not Sure..
-                </Text >
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.icon5}>
-                <Ionicons
-                    name={"battery-full"}
-                    size={75}
-                    color="#000000"/>
-                <Text style={styles.emoji}>
-                Energized
-                </Text >
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.icon6}>
-                <Ionicons
-                    name={"fire"}
-                    size={75}
-                    color="#000000"/>
-                <Text style={styles.emoji}>
-                Angry
-                </Text >
-                </TouchableOpacity>
-            </View>
+          <View style={styles.pet}>
+            {this.props.pet === 'Dog' ? <Dog /> : <View />}
+            {this.props.pet === 'Cat' ? <Cat /> : <View />}
+            {this.props.pet === 'Panda' ? <Panda /> : <View />}
+          </View>
+          <RegularText>
+            <Text style={styles.checkin}>
+              How are you
+              {'\n'}
+              doing today?
+            </Text>
+          </RegularText>
+          <View style={styles.buttons}>
+            <TouchableOpacity onPress={async () => { await this.props.createEmotion('Anguish'); await this.props.fetchEmotion(); }}>
+              <Anguish />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={async () => { await this.props.createEmotion('Confused'); await this.props.fetchEmotion(); }}>
+              <Confused />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={async () => { await this.props.createEmotion('Neutral'); await this.props.fetchEmotion(); }}>
+              <Neutral />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={async () => { await this.props.createEmotion('SlightSmile'); await this.props.fetchEmotion(); }}>
+              <SlightSmile />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={async () => { await this.props.createEmotion('Smile'); await this.props.fetchEmotion(); }}>
+              <Smile />
+            </TouchableOpacity>
+          </View>
         </View>
-        </SafeAreaView>
-      );
-    }
+      </SafeAreaView>
+    );
   }
-  const styles = StyleSheet.create({
-    container:{
-        justifyContent:"center",
-        alignItems:"center",
-        flexDirection:"column",
-    },
-    checkin:{
-        fontSize:30,
-        backgroundColor:"#D0E5F0",
-        textAlignVertical: "center",
-        height:80,
-        width:200,
-        textAlign:"center",
-        borderRadius:10, 
-        overflow:'hidden',
-        marginTop:30,
-    },
-    checkinBuddy:{
-        height:200,
-        width:100,
-        justifyContent:"center",
-        alignItems:"center",
-        marginLeft:50,
-        marginTop:30,
-    },
-    emoji:{
-        fontSize:20,
-    },
-    bottomPortion1:{
-        marginTop:40,
-        flexDirection:"row",
-        marginBottom:50,
+}
 
-    },
-    bottomPortion2:{
-        flexDirection:"row",
+const styles = StyleSheet.create({
+  container: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'column',
+    height: '100%',
+  },
+  checkin: {
+    fontSize: 32,
+    color: '#363D4F',
+    textAlignVertical: 'center',
+    textAlign: 'center',
+    borderRadius: 10,
+    overflow: 'hidden',
+    fontWeight: '500',
+  },
+  checkinBuddy: {
+    height: 200,
+    width: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft: 50,
+    marginTop: 30,
+  },
+  buttons: {
+    width: Dimensions.get('window').width * 0.7,
+    marginTop: 40,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 50,
+  },
+  pet: {
+    width: '50%',
+    aspectRatio: 1,
+    marginBottom: 30,
+  },
 
-    },
-    icon1:{
-        justifyContent:"center",
-        alignItems:"center",
-        marginRight:30,
-    },
-    icon2:{
-        justifyContent:"center",
-        alignItems:"center",
-        marginRight:30,
-    },
-    icon3:{
-        justifyContent:"center",
-        alignItems:"center",
-    },
-    icon4:{
-        justifyContent:"center",
-        alignItems:"center",
-        marginRight:20,
-    },
-    icon5:{
-        justifyContent:"center",
-        alignItems:"center",
-        marginRight:23,
+});
 
-    },
-    icon6:{
-        justifyContent:"center",
-        alignItems:"center",
-    },
-    
-    });
-  
+const mapStateToProps = (state) => (
+  {
+    pet: state.buddy.pet,
+  }
+);
+
+export default connect(mapStateToProps, { fetchBuddy, createEmotion, fetchEmotion })(Checkin);

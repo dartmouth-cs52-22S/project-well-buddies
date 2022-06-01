@@ -5,24 +5,25 @@ import {
 import { connect } from 'react-redux';
 import Onboarding from './onboarding';
 import { styles } from './styles';
-import CatHead from '../../assets/cat-head';
+import CatHead from '../../assets/img/cat/cat-head';
 import { signIn } from '../../services/google-login';
-import GetStarted from '../../assets/get-started';
+import GetStarted from '../../assets/img/get-started';
 import { signinUser } from '../../state/actions/user';
 import { fetchBuddy } from '../../state/actions/buddy';
+import RegularText from '../custom/regular_text';
+import BoldText from '../custom/bold_text';
+import MediumText from '../custom/medium_text';
 
 function Landing(props) {
   const [onboarding, setOnboarding] = useState(false);
 
   const signInFunction = async () => {
     const userInfo = await signIn();
-    if (userInfo === null){
-      alert('Something went wrong during sign in.')
-    } else {
-      if (userInfo !== "cancelled") {
-        await props.signinUser(userInfo.idToken);
-        await props.fetchBuddy();
-      }
+    if (userInfo === null) {
+      alert('Something went wrong during sign in.');
+    } else if (userInfo !== 'cancelled') {
+      await props.signinUser(userInfo.idToken);
+      await props.fetchBuddy();
     }
   };
 
@@ -39,15 +40,23 @@ function Landing(props) {
       <View style={styles.landingPage}>
         <CatHead />
         <View style={{ display: 'flex', alignItems: 'center' }}>
-          <Text style={styles.welcome}>Welcome to</Text>
-          <Text style={styles.title}>WellBuddies</Text>
+          <RegularText>
+            <Text style={styles.welcome}>Welcome to</Text>
+          </RegularText>
+          <BoldText>
+            <Text style={styles.title}>WellBuddies</Text>
+          </BoldText>
         </View>
         <TouchableOpacity onPress={() => { setOnboarding(true); }} style={{ paddingTop: '20%' }}>
           <GetStarted />
         </TouchableOpacity>
         <TouchableOpacity onPress={signInFunction} style={{ display: 'flex', flexDirection: 'row', paddingBottom: '20%' }}>
-          <Text style={styles.signInText}>or</Text>
-          <Text style={{ ...styles.signInText, textDecorationLine: 'underline' }}> SIGN IN </Text>
+          <RegularText>
+            <Text style={styles.signInText}>or</Text>
+          </RegularText>
+          <MediumText>
+            <Text style={{ ...styles.signInText, textDecorationLine: 'underline' }}> SIGN IN </Text>
+          </MediumText>
         </TouchableOpacity>
 
       </View>

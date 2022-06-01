@@ -1,54 +1,79 @@
 import React, { Component, useEffect } from 'react';
-import { SafeAreaView, StyleSheet, View, Text, Image, ImageBackground } from 'react-native';
+import {
+  SafeAreaView, StyleSheet, View, Text, Image, ImageBackground, Modal,
+} from 'react-native';
 import { connect } from 'react-redux';
-import { fetchBuddy } from '../../state/actions/user';
 import CalendarSummary from './calendar_summary';
-import Cat from '../../assets/cat';
-import Dog from '../../assets/dog';
-import Panda from '../../assets/panda';
+import Cat from '../../assets/img/cat/cat';
+import Dog from '../../assets/img/dog/dog';
+import Panda from '../../assets/img/panda/panda';
+import Checkin from '../checkin';
+import { fetchEmotion } from '../../state/actions/emotion';
+import { fetchBuddy } from '../../state/actions/buddy';
 
 function Home(props) {
+  useEffect(() => {
+    async function fetchData() {
+      await props.fetchBuddy();
+      await props.fetchEmotion();
+    }
+    fetchData();
+  }, []);
 
-  useEffect(()=>{ async () => {await props.fetchBuddy();}}, []);
-
-    return (
-      <SafeAreaView>
+  return (
+    <SafeAreaView>
       <View style={styles.container}>
-          <ImageBackground source={require('../../assets/home_background.png')} resizeMode="cover" style={styles.backgroundImage}>
-          <Text style={styles.welcome}>
-            Welcome!
-          </Text >
+        {props.emotion === ''
+          ? (
+            <Modal animationType="slide" transparent={false} visable>
+              <Checkin />
+            </Modal>
+          )
+          : (
+            <View />
+          )}
+        <ImageBackground source={require('../../assets/img/background_gradient.jpg')} resizeMode="cover" style={styles.backgroundImage}>
+          <View style={styles.welcomeContainer}>
+            <Text style={styles.welcome}>
+              Welcome!
+            </Text>
+          </View>
           <View style={styles.calendarContainer}>
             <Text style={styles.calendarContainerText}>
-                Today at a glance
-            </Text >
+              Today's Activities
+            </Text>
           </View>
           <View style={styles.calendarContainerInfo}>
-            <CalendarSummary style={styles.calendar}/>
+            <CalendarSummary style={styles.calendar} />
           </View>
 
           <View style={styles.buddyContainer}>
             <View style={styles.buddyImage}>
-              {props.pet === "Dog" ? <Dog/> : <View/>}
-              {props.pet === "Cat" ? <Cat/> : <View/>}
-              {props.pet === "Panda" ? <Panda/> : <View/>}                        
-            </View>   
+              {props.pet === 'Dog' ? <Dog /> : <View />}
+              {props.pet === 'Cat' ? <Cat /> : <View />}
+              {props.pet === 'Panda' ? <Panda /> : <View />}
+            </View>
           </View>
 
-      </ImageBackground>  
+        </ImageBackground>
       </View>
-      </SafeAreaView>
-    );
-  }
+
+    </SafeAreaView>
+  );
+}
 
 const styles = StyleSheet.create({
   backgroundImage: {
     height: '100%',
   },
-
+  welcomeContainer: {
+    marginTop: 60,
+    marginLeft: 16,
+    marginBottom: 8,
+  },
   welcome: {
-    margin: 16,
-    fontSize: 25,
+    fontSize: 32,
+    fontFamily: 'DMSans_700Bold',
     color: 'white',
   },
 
@@ -57,6 +82,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginBottom: 15,
     marginLeft: 16,
+    fontFamily: 'DMSans_400Regular',
   },
 
   calendarContainerInfo: {
@@ -64,22 +90,24 @@ const styles = StyleSheet.create({
   },
 
   buddyContainer: {
-    justifyContent:'flex-end',
-    height:'53%',
+    justifyContent: 'flex-end',
+    height: '53%',
   },
 
   buddyImage: {
-    width:181,
-    height:250,
-    marginLeft:46,
-  }
+    width: 181,
+    height: 250,
+    marginLeft: 46,
+    marginBottom: 40,
+  },
 });
 
 const mapStateToProps = (state) => (
   {
     pet: state.buddy.pet,
     petName: state.buddy.petName,
+    emotion: state.emotion.today,
   }
 );
 
-export default connect(mapStateToProps, { fetchBuddy })(Home);
+export default connect(mapStateToProps, { fetchBuddy, fetchEmotion })(Home);

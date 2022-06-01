@@ -13,17 +13,15 @@ import {
 } from '@react-native-google-signin/google-signin';
 import { connect } from 'react-redux';
 import Moment from 'moment';
-import { fetchEvents } from '../../state/actions/calendar';
-import CustomText from '../custom/custom_text';
-import CalendarTitle from './calendar_title';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { fetchEvents } from '../../state/actions/calendar';
+import RegularText from '../custom/regular_text';
+import CalendarTitle from './calendar_title';
 
 const Calendar = (props) => {
   const [accessToken, setAccessToken] = useState('');
   const [date, setDate] = useState(Moment());
   const CLIENT_ID_IOS = '301956188397-rtuq8kgubluo5ismq4g9pq4cn9bag7ul.apps.googleusercontent.com';
-
-  console.log('start moment', Moment().endOf('day').toISOString());
 
   const startOfDay = Moment(date).startOf('day').toISOString();
   const endOfDay = Moment(date).endOf('day').toISOString();
@@ -42,7 +40,7 @@ const Calendar = (props) => {
     GoogleSignin.configure({
       iosClientId: CLIENT_ID_IOS,
     });
-    AsyncStorage.getItem('googleAccessCode').then((token) => {setAccessToken(token);})
+    AsyncStorage.getItem('googleAccessCode').then((token) => { setAccessToken(token); });
     if (accessToken) {
       props.fetchEvents(args);
     }
@@ -67,22 +65,22 @@ const Calendar = (props) => {
           height={80}
         >
           <View>
-            <CustomText>
+            <RegularText>
               <Text style={styles.title}>
                 {event.summary}
               </Text>
-            </CustomText>
+            </RegularText>
           </View>
           <View>
-            <CustomText>
-            <Text>
-              {parseDate(event.start.dateTime)}
-              {' '}
-              -
-              {' '}
-              {parseDate(event.end.dateTime)}
-            </Text>
-            </CustomText>
+            <RegularText>
+              <Text>
+                {parseDate(event.start.dateTime)}
+                {' '}
+                -
+                {' '}
+                {parseDate(event.end.dateTime)}
+              </Text>
+            </RegularText>
           </View>
         </Card>
       </TouchableOpacity>
@@ -99,7 +97,7 @@ const Calendar = (props) => {
 
   return (
     <View style={styles.container}>
-      <ImageBackground style={styles.backgroundImg} source={require('../../assets/background_gradient.jpg')}>
+      <ImageBackground style={styles.backgroundImg} source={require('../../assets/img/background_gradient.jpg')}>
         <CalendarTitle date={date} setDate={(time) => { setDate(time); }} />
         <FlatList
           data={props.events}

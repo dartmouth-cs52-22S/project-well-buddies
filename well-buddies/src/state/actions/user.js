@@ -16,7 +16,7 @@ export function authError(error) {
   };
 }
 
-export  function signinUser(idToken) {
+export function signinUser(idToken) {
   // takes in an object with email and password (minimal user object)
   // returns a thunk method that takes dispatch as an argument (just like our create post method really)
   // does an axios.post on the /signin endpoint and passes in { email, password}
@@ -27,7 +27,7 @@ export  function signinUser(idToken) {
   return (dispatch) => {
     signIn(idToken).then(async (jwt) => {
       dispatch({ type: ActionTypes.AUTH_USER });
-      await AsyncStorage.setItem('jwt', jwt)
+      await AsyncStorage.setItem('jwt', jwt);
     }).catch((error) => {
       console.log(`ERROR IN SIGNIN: ${error}`);
       dispatch(authError(`Sign In Failed: ${error.response.data}`));
@@ -44,7 +44,7 @@ export function signupUser(userData, idToken) {
   //  AsyncStorage.setItem('token', response.data.token);
   // on error should dispatch(authError(`Sign Up Failed: ${error.response.data}`));
   return (dispatch) => {
-    signUp(userData, idToken).then( async (jwt) => {
+    signUp(userData, idToken).then(async (jwt) => {
       dispatch({ type: ActionTypes.AUTH_USER });
       await AsyncStorage.setItem('jwt', jwt);
     }).catch((error) => {

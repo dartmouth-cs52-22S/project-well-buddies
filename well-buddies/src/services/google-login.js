@@ -47,5 +47,10 @@ export const signOut = async () => {
 };
 
 export const addScope = async () => {
-  GoogleSignin.addScopes({ scopes: ['https://www.googleapis.com/auth/calendar', 'https://www.googleapis.com/auth/calendar.events'] });
+  try {
+      await GoogleSignin.addScopes({ scopes: ['https://www.googleapis.com/auth/calendar', 'https://www.googleapis.com/auth/calendar.events'] });
+
+  } catch (error) {
+    throw new Error(`error in adding scope: ${error}`);
+  }
 };

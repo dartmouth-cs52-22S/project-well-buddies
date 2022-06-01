@@ -3,12 +3,13 @@ import {
   View, Text, TouchableOpacity,
 } from 'react-native';
 import { styles } from './styles';
-import CatOption from '../../assets/cat-option';
-import DogOption from '../../assets/dog-option';
-import PandaOption from '../../assets/panda-option';
-import CatChosen from '../../assets/cat-chosen';
-import DogChosen from '../../assets/dog-chosen';
-import PandaChosen from '../../assets/panda-chosen';
+import CatOption from '../../assets/img/cat/cat-option';
+import DogOption from '../../assets/img/dog/dog-option';
+import PandaOption from '../../assets/img/panda/panda-option';
+import CatChosen from '../../assets/img/cat/cat-chosen';
+import DogChosen from '../../assets/img/dog/dog-chosen';
+import PandaChosen from '../../assets/img/panda/panda-chosen';
+import MediumText from '../custom/medium_text';
 
 function Pet(props) {
   const { pets, setTempPet } = props;
@@ -28,7 +29,9 @@ function Pet(props) {
   return (
     <View style={styles.nameContainer}>
       <View style={styles.name}>
-        <Text style={styles.nameText}>Choose a Buddy</Text>
+        <MediumText>
+          <Text style={styles.nameText}>Choose a Buddy</Text>
+        </MediumText>
       </View>
       <View style={styles.buddy}>
         <TouchableOpacity style={{ margin: 20 }} onPress={() => { changePet(0); }}>
