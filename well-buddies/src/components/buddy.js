@@ -9,7 +9,7 @@ import {
   Pressable,
   TouchableOpacity,
   SafeAreaView,
-  Dimensions
+  Dimensions,
 } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { fetchBuddy, setNewBuddy } from '../state/actions/buddy';
@@ -84,7 +84,7 @@ class Buddy extends Component {
               <View style={styles.petDetails}>
                 <BoldText><Text style={styles.details}>Birthday:</Text></BoldText>
                 <RegularText>
-                  <Text style={styles.details}> Birthday: May 10, 2022</Text>
+                  <Text style={styles.details}> May 10, 2022</Text>
                 </RegularText>
               </View>
               <View style={styles.petDetails}>
@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    width: Dimensions.get('window').width*0.8,
+    width: Dimensions.get('window').width * 0.8,
   },
   bodyEdit: {
     alignItems: 'flex-start',

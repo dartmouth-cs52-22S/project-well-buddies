@@ -3,7 +3,7 @@
 /* eslint-disable react/function-component-definition */
 import React, { useEffect, useState } from 'react';
 import {
-  StyleSheet, View, Text, FlatList, TouchableOpacity, ActivityIndicator, ImageBackground, Button,
+  StyleSheet, View, Text, FlatList, TouchableOpacity, ActivityIndicator, ImageBackground, Button, Dimensions,
 } from 'react-native';
 import { Card } from 'react-native-elements';
 import {
@@ -12,9 +12,12 @@ import {
 import { connect } from 'react-redux';
 import Moment from 'moment';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { AuditOutlined } from '@ant-design/icons';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { fetchEvents } from '../../state/actions/calendar';
 import CalendarTitle from './calendar_title';
 import CalendarEventCell from './calendar_event_cell';
+import Cloud from '../../assets/img/empty-states/cloud';
 
 import { getFreeBusy } from '../../services/google-cal-api';
 
@@ -82,10 +85,23 @@ const Calendar = (props) => {
     );
   }
 
+  function renderEmptyState() {
+    if (Object.entries(props.events).length === 0) {
+      return (
+        <View style={styles.emptyStateContainer}>
+          <Cloud style={styles.cloud} />
+          <Text justifyContent="center" style={styles.emptyStateText}>No events found for this day</Text>
+        </View>
+      );
+    } else return null;
+  }
+
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <ImageBackground style={styles.backgroundImg} source={require('../../assets/img/background_gradient.jpg')}>
-        <CalendarTitle date={date} setDate={(time) => { setDate(time); }} />
+        <View marginTop={50}>
+          <CalendarTitle date={date} setDate={(time) => { setDate(time); }} />
+        </View>
         <FlatList
           data={props.events}
           renderItem={({ item }) => {
@@ -95,10 +111,13 @@ const Calendar = (props) => {
               </TouchableOpacity>
             );
           }}
-
         />
+        <View>
+          {renderEmptyState()}
+        </View>
+
       </ImageBackground>
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -123,8 +142,27 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   backgroundImg: {
-    resizeMode: 'cover',
-    height: '100%',
+    height: Dimensions.get('screen').height,
+    top: -88,
+    // resizeMode: 'cover',
+    // height: '100%',
+  },
+  emptyStateContainer: {
+    alignContent: 'center',
+    display: 'flex',
+    // margin: 50,
+    // height: Dimensions.get('screen').height,
+    bottom: 380,
+    // right: -130,
+    justifyContent: 'center',
+  },
+  emptyStateText: {
+    color: '363D4F',
+    fontFamily: 'DMSans_Regular',
+    fontSize: 18,
+  },
+  cloud: {
+    alignItems: 'center',
   },
 });
 
