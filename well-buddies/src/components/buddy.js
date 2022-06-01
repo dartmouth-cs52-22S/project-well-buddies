@@ -123,7 +123,6 @@ class Buddy extends Component {
               <Text style={styles.editChange}>Change Buddy</Text>
             </View>
             <View style={styles.buddyOption}>
-              {/* replace all with head I'm just lazy */}
               <TouchableOpacity style={{ margin: 10, width: '30%', aspectRatio: 1 }} onPress={() => { this.changePet('Dog'); }}>
                 {this.state.pet === 'Dog' ? <DogChosen /> : <DogOption />}
               </TouchableOpacity>

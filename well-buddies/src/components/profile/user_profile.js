@@ -20,6 +20,10 @@ import SlightSmile from '../../assets/img/emotions/slight-smile';
 import Smile from '../../assets/img/emotions/smile';
 import { useNavigation } from '@react-navigation/native';
 import CalendarHistory from '../calendar/calendar_histor';
+// change starts here
+import { getUser } from '../../services/user';
+import { fetchUser } from '../../state/actions/user';
+
 
 function UserProfile(props) {
     const [emotionHist, setEmotionHist] = useState(false);
@@ -28,6 +32,7 @@ function UserProfile(props) {
         async function fetchData() {
           await props.fetchBuddy();
           await props.fetchEmotion();
+          await props.fetchUser();
         }
         fetchData();
       }, []);
@@ -57,7 +62,9 @@ function UserProfile(props) {
                 </View>
 
                 <View style={styles.userInfo}>
-                    <Text style={styles.userName}>USER NAME</Text>
+                    <Text style={styles.userName}>{props.name}</Text>
+                    <Text style={styles.userEmail}>{props.email}</Text>
+                    
                 </View>
 
                 <View style={styles.emotionContainer}>
@@ -132,6 +139,12 @@ const styles = StyleSheet.create({
         color: '#363D4F',
     },
 
+    userEmail: {
+        fontSize: 15,
+        fontFamily: 'DMSans_Regular',
+        color: '#363D4F',
+    },
+
     emotionContainer: {
         height:'5%',
         flexDirection:'row',
@@ -187,8 +200,10 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => (
     {
       pet: state.buddy.pet,
-      emotion: state.emotion.today
+      emotion: state.emotion.today,
+      name: state.auth.userName,
+      email: state.auth.userEmail,
     }
   );
   
-export default connect(mapStateToProps, { signoutUser, fetchBuddy, fetchEmotion })(UserProfile);
+export default connect(mapStateToProps, { signoutUser, fetchBuddy, fetchEmotion, fetchUser })(UserProfile);
