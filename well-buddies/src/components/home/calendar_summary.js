@@ -49,9 +49,6 @@ const Calendar = (props) => {
   };
 
   useEffect(() => {
-    // GoogleSignin.configure({
-    //   iosClientId: CLIENT_ID_IOS,
-    // });
     AsyncStorage.getItem('googleAccessCode').then((token) => { setAccessToken(token); });
     if (accessToken) {
       props.fetchTodaysEvents(args);

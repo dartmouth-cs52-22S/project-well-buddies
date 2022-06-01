@@ -19,9 +19,7 @@ function Home(props) {
     async function fetchData() {
       await props.fetchBuddy();
       await props.fetchEmotion();
-      AsyncStorage.getItem('googleAccessCode').then((token) => {
-        props.fetchActivities(token);
-      });
+      await props.fetchActivities();
     }
     fetchData();
   }, []);
