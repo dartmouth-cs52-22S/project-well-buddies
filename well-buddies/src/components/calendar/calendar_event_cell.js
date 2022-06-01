@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/function-component-definition */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   StyleSheet, View, Text, ActivityIndicator, TouchableOpacity,
 } from 'react-native';
@@ -188,8 +188,4 @@ const mapStateToProps = (state) => ({
   completedEvents: state.events.completed,
 });
 
-<<<<<<< HEAD
-export default connect(mapStateToProps, { completeEvent })(CalendarEventCell);
-=======
 export default connect(mapStateToProps, { completeEventAction, fetchCompletedEvents })(CalendarEventCell);
->>>>>>> origin

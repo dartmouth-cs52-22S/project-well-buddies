@@ -15,7 +15,7 @@ import Smile from '../../assets/img/emotions/smile';
 
 // how to make the calendar is learnt and adopted from https://www.npmjs.com/package/react-native-calendars
 class CalendarHistory extends Component {
-  componentDidMount = async () => { await this.props.fetchEmotions(); };
+  componentDidMount() { await this.props.fetchEmotions(); };
 
   render() {
     // const today = moment().format('YYYY-MM-DD');
@@ -47,8 +47,8 @@ class CalendarHistory extends Component {
             const dateString = dateDate.toDateString();
             if (dateString in this.props.allEmotions) {
               return (
-                <View style={{flex: 1, flexDirection: 'column'}}>
-                <Text style={{flex: 1,textAlign: 'right', color: state === 'disabled' ? 'gray' : 'black' }}>
+                <View style={{ flex: 1, flexDirection: 'column' }}>
+                  <Text style={{ flex: 1, textAlign: 'right', color: state === 'disabled' ? 'gray' : 'black' }}>
                   {date.day}
                   {this.props.allEmotions[dateString] === 'Anguish' ? <Anguish /> : <View />}
                   {this.props.allEmotions[dateString] === 'Confused' ? <Confused /> : <View />}
@@ -60,13 +60,13 @@ class CalendarHistory extends Component {
               );
             }
             return (
-            <View style={{flex: 1, flexDirection: 'column'}}>
-            <Text style={{flex: 1, textAlign: 'right',color: state === 'disabled' ? 'gray' : 'black' }}>
-                      {date.day}
-                    </Text>
-                    </View>
-                    )
-        }}        
+              <View style={{ flex: 1, flexDirection: 'column' }}>
+              <Text style={{ flex: 1, textAlign: 'right', color: state === 'disabled' ? 'gray' : 'black' }}>
+              {date.day}
+            </Text>
+            </View>
+            );
+          }}
 
         />
       </View>
@@ -81,4 +81,3 @@ const mapStateToProps = (state) => (
 );
 
 export default connect(mapStateToProps, { fetchEmotions })(CalendarHistory);
-
