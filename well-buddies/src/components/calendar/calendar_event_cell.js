@@ -13,14 +13,10 @@ import EventCompletion from '../event_completion';
 import { fetchCompletedEvents, completeEventAction } from '../../state/actions/calendar';
 
 const CalendarEventCell = (props) => {
-  console.log('props', props);
   const [checked, setChecked] = useState(false);
   const [event, setEvent] = useState(false);
 
   function checkChecked() {
-    console.log(props.event.id);
-    console.log(props.completedEvents);
-    console.log(props.event.id in props.completedEvents);
     let found = false;
     for (let i = 0; i < props.completedEvents.length; i++) {
       if (props.completedEvents[i] === props.event.id) {
@@ -80,7 +76,9 @@ const CalendarEventCell = (props) => {
         </View>
       </View>
     </Card>
-    <View style={{position: 'absolute'}}>{event? <Modal animationType="slide" transparent={false}><EventCompletion closeModal={() => setEvent(false)}/>
+    <View style={{position: 'absolute'}}>
+      {event? <Modal animationType="slide" transparent={false}>
+        <EventCompletion closeModal={() => setEvent(false)}/>
       </Modal> :<View/>}</View>
     </View>
   );
