@@ -9,11 +9,14 @@ import CalendarSummary from './calendar_summary';
 import Cat from '../../assets/img/cat/cat';
 import Dog from '../../assets/img/dog/dog';
 import Panda from '../../assets/img/panda/panda';
+import SleepyCat from '../../assets/img/cat/cat-sleepy';
+import SleepyDog from '../../assets/img/dog/dogs-sleepy';
+import SleepyPanda from '../../assets/img/panda/panda-sleepy';
 import Checkin from '../checkin';
 import { fetchEmotion } from '../../state/actions/emotion';
 import { fetchBuddy } from '../../state/actions/buddy';
 import { fetchCompletedEvents } from '../../state/actions/calendar';
-import { fetchActivities } from '../../state/actions/activity';
+import { fetchActivities, fetchTodayWellness } from '../../state/actions/activity';
 
 function Home(props) {
   useEffect(() => {
@@ -22,6 +25,7 @@ function Home(props) {
       await props.fetchEmotion();
       await props.fetchCompletedEvents();
       await props.fetchActivities();
+      await props.fetchTodayWellness();
     }
     fetchData();
   }, []);
@@ -55,11 +59,19 @@ function Home(props) {
             </View>
 
             <View style={styles.buddyContainer}>
-              <View style={styles.buddyImage}>
-                {props.pet === 'Dog' ? <Dog /> : <View />}
-                {props.pet === 'Cat' ? <Cat /> : <View />}
-                {props.pet === 'Panda' ? <Panda /> : <View />}
-              </View>
+                { props.today ? 
+                  <View style={styles.buddyImage}>
+                  {props.pet === 'Dog' ? <Dog /> : <View />}
+                  {props.pet === 'Cat' ? <Cat /> : <View />}
+                  {props.pet === 'Panda' ? <Panda /> : <View />}
+                  </View>
+                : 
+                  <View style={styles.buddyImage}>
+                  {props.pet === 'Dog' ? <SleepyDog /> : <View />}
+                  {props.pet === 'Cat' ? <SleepyCat /> : <View />}
+                  {props.pet === 'Panda' ? <SleepyPanda /> : <View />}
+                  </View>
+                }
             </View>
           </View>
         </ImageBackground>
@@ -120,7 +132,8 @@ const mapStateToProps = (state) => (
     petName: state.buddy.petName,
     emotion: state.emotion.today,
     activities: state.activities.all,
+    today: state.activities.today
   }
 );
 
-export default connect(mapStateToProps, { fetchBuddy, fetchEmotion, fetchCompletedEvents,fetchActivities })(Home);
+export default connect(mapStateToProps, { fetchBuddy, fetchEmotion, fetchTodayWellness, fetchCompletedEvents,fetchActivities })(Home);
