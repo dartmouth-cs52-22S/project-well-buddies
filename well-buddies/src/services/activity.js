@@ -13,8 +13,8 @@ const getActivity = async (token, duration) => {
 
 export const getTodayActivity = async () => {
   try {
-    const token = await AsyncStorage.getItem('token');
-    const response = await axios.get(`${URL}/activity/today/${token}`);
+    const token = await AsyncStorage.getItem('jwt');
+    const response = await axios.get(`${URL}/today/${token}`);
     return response.data;
   } catch (error) {
     throw new Error(error);
