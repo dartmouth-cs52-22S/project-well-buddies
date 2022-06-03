@@ -39,7 +39,7 @@ const Calendar = (props) => {
       }
     }
     fetch();
-  }, [accessToken]);
+  }, [accessToken, date]);
 
   function showEventDetail(event) {
     props.navigation.navigate('Detail', { event });
