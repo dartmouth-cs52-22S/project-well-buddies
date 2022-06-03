@@ -104,7 +104,7 @@ class Buddy extends Component {
       return (
         <View style={styles.container}>
           <View style={styles.headerEdit}>
-            <Text style={styles.headerEdit}>Edit Buddy Profile</Text>
+            <Text style={styles.headerEdit}></Text>
           </View>
           <View style={styles.pet}>
             {this.props.pet === 'Dog' ? <Dog /> : <View />}
@@ -134,7 +134,7 @@ class Buddy extends Component {
               </TouchableOpacity>
             </View>
             <Pressable style={styles.button} onPress={() => { this.editMode(); this.save(); }}>
-              <Text style={styles.buttonTitle}>Save</Text>
+              <Text style={styles.buttonTitle}>SAVE</Text>
             </Pressable>
           </View>
         </View>
@@ -146,6 +146,7 @@ class Buddy extends Component {
 const styles = StyleSheet.create({
   editChange: {
     fontSize: 16,
+    color: '#363D4F',
     marginTop: 20,
     marginBottom: 10,
   },
@@ -167,23 +168,31 @@ const styles = StyleSheet.create({
   },
   editName: {
     fontSize: 16,
+    color: '#363D4F',
   },
+
   buttonTitle: {
     fontWeight: 'bold',
     color: 'white',
     fontSize: 16,
     lineHeight: 21,
-    letterSpacing: 0.25,
+    letterSpacing: 1.5,
+    color: '#FFFF',
+    fontSize: 15,
+    fontFamily: 'DMSans_Regular',
   },
+
   button: {
-    marginTop: 30,
-    backgroundColor: 'green',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: 15,
-    paddingHorizontal: 18,
-    borderRadius: 2,
+    backgroundColor: '#5EA985',
+    height: 60,
+    width: '60%',
+    marginTop: '5%',
     alignSelf: 'center',
+    borderRadius: 13,
+    alignItems: 'center',
+    alignSelf: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 40,
   },
   input: {
     marginTop: 20,
@@ -203,7 +212,9 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 35,
     color: '#363D4F',
+    fontFamily: 'DMSans_Regular',
   },
+
   editIcon: {
     display: 'flex',
     flexDirection: 'row',
@@ -212,21 +223,25 @@ const styles = StyleSheet.create({
     paddingRight: 30,
     paddingTop: 30,
   },
+
   body: {
     alignItems: 'flex-start',
     marginLeft: 60,
   },
   details: {
     fontSize: 20,
+    color: '#363D4F',
   },
   header: {
     fontSize: 100,
     padding: 30,
+    color: '#363D4F',
   },
   headerEdit: {
     marginTop: -10,
     fontSize: 30,
     marginBottom: 10,
+    color: '#363D4F',
   },
   pet: {
     height: '30%',
