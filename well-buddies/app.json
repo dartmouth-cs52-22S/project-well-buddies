@@ -1,0 +1,37 @@
+{
+  "expo": {
+    "name": "wellbuddies",
+    "slug": "wellbuddies",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./src/assets/img/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./src/assets/img/splash.png",
+      "resizeMode": "cover",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.wellbuddies123.wellbuddies",
+      "googleServicesFile": "./GoogleService-Info.plist"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./src/assets/img/adaptive-icon.png",
+        "backgroundColor": "#FFFFFF"
+      },
+      "package": "com.wellbuddies123.wellbuddies"
+    },
+    "web": {
+      "favicon": "./assets/img/favicon.png"
+    },
+    "plugins": ["@react-native-google-signin/google-signin"]
+  }
+}
